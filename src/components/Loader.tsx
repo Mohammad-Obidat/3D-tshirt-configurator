@@ -1,11 +1,10 @@
-import React from 'react'
-
+import React from 'react';
 const Loader: React.FC = () => {
   return (
     <>
-    <img src="../images/preloader_shirt_final.gif" alt="Loader image" />
+      <img src='/assets/images/preloader_shirt_final.gif' alt='Loader image' />
     </>
-  )
-}
+  );
+};
 
-export default Loader
+export default Loader;

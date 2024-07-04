@@ -64,7 +64,7 @@ export default class SceneInit {
     this.animationFrameId = window.requestAnimationFrame(this.animate);
     this.render();
     this.controls.update();
-    // this.autoRotateModel();
+    this.autoRotateModel();
   }
 
   render(): void {

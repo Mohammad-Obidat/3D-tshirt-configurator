@@ -1,0 +1,97 @@
+import * as THREE from 'three';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+
+export default class SceneInit {
+  scene: THREE.Scene;
+  tShirtModel: THREE.Object3D | null = null;
+  private camera: THREE.PerspectiveCamera;
+  private renderer: THREE.WebGLRenderer;
+  private fov: number = 5;
+  private near: number = 0.1;
+  private far: number = 1000;
+  private controls: OrbitControls;
+  private ambientLight: THREE.AmbientLight;
+  private directionalLight: THREE.DirectionalLight;
+  private animationFrameId: number | null = null;
+
+  constructor(canvasId: string) {
+    this.scene = new THREE.Scene();
+    this.scene.background = new THREE.Color(0xfaebd7);
+
+    this.camera = new THREE.PerspectiveCamera(
+      this.fov,
+      window.innerWidth / window.innerHeight,
+      this.near,
+      this.far
+    );
+    this.camera.position.z = 10;
+
+    const canvas = document.getElementById(canvasId) as HTMLCanvasElement;
+    this.renderer = new THREE.WebGLRenderer({
+      canvas,
+      antialias: true,
+    });
+    this.renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(this.renderer.domElement);
+
+    this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+    this.controls.enableDamping = true;
+    this.controls.zoomToCursor = true;
+    this.controls.minPolarAngle = 1;
+    this.controls.maxPolarAngle = 2;
+    this.controls.minDistance = 5;
+    this.controls.maxDistance = 10;
+    this.controls.mouseButtons.RIGHT = null;
+
+    this.ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+    this.ambientLight.castShadow = true;
+    this.camera.add(this.ambientLight);
+
+    this.directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+    this.directionalLight.position.set(10, 10, 10);
+    this.directionalLight.castShadow = true;
+    this.camera.add(this.directionalLight);
+
+    this.scene.add(this.camera);
+
+    window.addEventListener('resize', this.onWindowResize.bind(this), false);
+
+    this.animate = this.animate.bind(this);
+    // this.autoRotateModel = this.autoRotateModel.bind(this);
+  }
+
+  animate(): void {
+    this.animationFrameId = window.requestAnimationFrame(this.animate);
+    this.render();
+    this.controls.update();
+    // this.autoRotateModel();
+  }
+
+  render(): void {
+    this.renderer.render(this.scene, this.camera);
+  }
+
+  onWindowResize(): void {
+    this.camera.aspect = window.innerWidth / window.innerHeight;
+    this.camera.updateProjectionMatrix();
+    this.renderer.setSize(window.innerWidth, window.innerHeight);
+  }
+
+  stopAnimation(): void {
+    if (this.animationFrameId !== null) {
+      window.cancelAnimationFrame(this.animationFrameId);
+      this.animationFrameId = null;
+    }
+  }
+
+  setTShirtModel(model: THREE.Object3D): void {
+    this.tShirtModel = model;
+    this.tShirtModel.position.y = -1.35;
+  }
+
+  autoRotateModel(): void {
+    if (this.tShirtModel) {
+      this.tShirtModel.rotation.y += 0.025;
+    }
+  }
+}

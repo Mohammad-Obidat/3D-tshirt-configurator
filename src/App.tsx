@@ -3,6 +3,7 @@ import ThreeCanvas from './components/ThreeCanvas';
 import { GlobalStoreProvider } from './store/GlobalStore.tsx';
 import './styles/App.css';
 import NavBar from './components/NavBar.tsx';
+import Footer from './components/Footer.tsx';
 
 const App: React.FC = () => {
   return (
@@ -11,6 +12,7 @@ const App: React.FC = () => {
       <GlobalStoreProvider>
         <ThreeCanvas />
       </GlobalStoreProvider>
+      <Footer />
     </>
   );
 };

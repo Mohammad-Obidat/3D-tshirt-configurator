@@ -1,27 +1,44 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { Object3D } from 'three';
 import SceneInit from '../lib/SceneInit.ts';
-import ShirtModel from '../config/ShirtModel.ts';
+import ShirtModel from '../config/LoadModel.ts';
+import { useGlobalStore } from '../store/GlobalStore.tsx';
+import Loader from './Loader.tsx';
 
 const ThreeCanvas: React.FC = () => {
-  useEffect(() => {
-    const initScene = new SceneInit('myThreeJsCanvas');
+  const { isLoading, setIsLoading, setProgress } = useGlobalStore();
+  const [tshirtModel, setTshirtModel] = useState<Object3D | null>(null);
 
-    ShirtModel()
+  useEffect(() => {
+    const handleLoad = () => setIsLoading(false);
+    const handleError = () => setIsLoading(false);
+
+    setIsLoading(true);
+    ShirtModel(setProgress, handleLoad, handleError)
       .then((tshirtModel) => {
-        initScene.setTShirtModel(tshirtModel);
-        initScene.scene.add(tshirtModel);
+        setTshirtModel(tshirtModel);
+        setIsLoading(false);
       })
       .catch((error) => {
         console.error('Error adding the t-shirt model to the scene:', error);
+        setIsLoading(false);
       });
+  }, [setIsLoading, setProgress]);
 
-    initScene.animate();
-    return () => {
-      initScene.stopAnimation();
-    };
-  }, []);
+  useEffect(() => {
+    if (tshirtModel && !isLoading) {
+      const sceneInit = new SceneInit('myThreeJsCanvas');
+      sceneInit.setTShirtModel(tshirtModel);
+      sceneInit.scene.add(tshirtModel);
+      sceneInit.animate();
 
-  return <canvas id='myThreeJsCanvas' />;
+      return () => {
+        sceneInit.stopAnimation();
+      };
+    }
+  }, [tshirtModel, isLoading]);
+
+  return <>{isLoading ? <Loader /> : <canvas id='myThreeJsCanvas' />}</>;
 };
 
 export default ThreeCanvas;

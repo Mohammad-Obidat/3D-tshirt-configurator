@@ -2,8 +2,21 @@ body {
   margin: 0;
   padding: 0;
   background-color: #faebd7;
+  height: 100vh;
 }
 
 canvas {
   display: block;
+}
+
+.grid-container {
+  height: 83.7vh;
+  display: grid;
+  grid-template-columns: 45% 45%;
+  grid-template-areas: 'content canvas ';
+}
+
+.canvas-container {
+  position: relative;
+  grid-area: canvas;
 }

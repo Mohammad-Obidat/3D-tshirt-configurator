@@ -13,14 +13,17 @@ export default class SceneInit {
   private ambientLight: THREE.AmbientLight;
   private directionalLight: THREE.DirectionalLight;
   private animationFrameId: number | null = null;
+  private CanvasContainer: HTMLDivElement | null;
 
   constructor(canvasId: string) {
+    this.CanvasContainer = document.querySelector('div.canvas-container');
+
     this.scene = new THREE.Scene();
     this.scene.background = new THREE.Color(0xfaebd7);
 
     this.camera = new THREE.PerspectiveCamera(
       this.fov,
-      window.innerWidth / window.innerHeight,
+      this.CanvasContainer!.clientWidth / this.CanvasContainer!.clientHeight,
       this.near,
       this.far
     );
@@ -31,7 +34,11 @@ export default class SceneInit {
       canvas,
       antialias: true,
     });
-    this.renderer.setSize(window.innerWidth, window.innerHeight);
+
+    this.renderer.setSize(
+      this.CanvasContainer!.clientWidth,
+      this.CanvasContainer!.clientHeight
+    );
 
     this.controls = new OrbitControls(this.camera, this.renderer.domElement);
     this.controls.enableDamping = true;
@@ -71,9 +78,13 @@ export default class SceneInit {
   }
 
   onWindowResize(): void {
-    this.camera.aspect = window.innerWidth / window.innerHeight;
-    this.camera.updateProjectionMatrix();
-    this.renderer.setSize(window.innerWidth, window.innerHeight);
+    (this.camera.aspect =
+      this.CanvasContainer!.clientWidth / this.CanvasContainer!.clientHeight),
+      this.camera.updateProjectionMatrix();
+    this.renderer.setSize(
+      this.CanvasContainer!.clientWidth,
+      this.CanvasContainer!.clientHeight
+    );
   }
 
   stopAnimation(): void {

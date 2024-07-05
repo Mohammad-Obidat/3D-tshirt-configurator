@@ -6,7 +6,7 @@ export default class SceneInit {
   tShirtModel: THREE.Object3D | null = null;
   private camera: THREE.PerspectiveCamera;
   private renderer: THREE.WebGLRenderer;
-  private fov: number = 5;
+  private fov: number = 7;
   private near: number = 0.1;
   private far: number = 1000;
   private controls: OrbitControls;

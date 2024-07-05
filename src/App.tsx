@@ -1,25 +1,19 @@
 import React from 'react';
-import ThreeCanvas from './components/ThreeCanvas';
-import { GlobalStoreProvider } from './store/GlobalStore.tsx';
-import './styles/App.css';
-import NavBar from './components/NavBar.tsx';
-import Footer from './components/Footer.tsx';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home.tsx';
+import Customizer from './pages/Customizer.tsx';
+import Layout from './components/Layout.tsx';
 
 const App: React.FC = () => {
   return (
-    <>
-      <NavBar />
-      <div className='grid-container'>
-        <Home />
-        <GlobalStoreProvider>
-          <div className='canvas-container'>
-            <ThreeCanvas />
-          </div>
-        </GlobalStoreProvider>
-      </div>
-      <Footer />
-    </>
+    <Router>
+      <Routes>
+        <Route path='/' element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route path='/customizer' element={<Customizer />} />
+        </Route>
+      </Routes>
+    </Router>
   );
 };
 

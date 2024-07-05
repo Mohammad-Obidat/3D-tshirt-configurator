@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import '../styles/Navbar.css';
 
 const NavBar: React.FC = () => {
@@ -10,12 +11,12 @@ const NavBar: React.FC = () => {
             <img src='/assets/textures/Logo.png' alt='Store Logo' />
           </div>
           <div className='navbar-buttons'>
-            <a href='#' className='btn'>
+            <Link to='/' className='btn home-link'>
               Home
-            </a>
-            <a href='#' className='btn'>
+            </Link>
+            <Link to='/customizer' className='btn home-link'>
               Customizer
-            </a>
+            </Link>
           </div>
         </div>
       </nav>

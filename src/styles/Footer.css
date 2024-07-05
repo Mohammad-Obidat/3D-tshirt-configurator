@@ -1,7 +1,10 @@
-.footerContainer {
-  display: flex;
+.footer {
   background-color: #333;
   color: #fff;
   padding: 5px 0;
+}
+
+.footerContainer {
+  display: flex;
   justify-content: center;
 }

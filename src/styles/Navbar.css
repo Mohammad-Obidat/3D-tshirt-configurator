@@ -37,6 +37,10 @@
   background-color: #777;
 }
 
+.home-link {
+  text-decoration: none;
+}
+
 /* Responsive styles */
 @media (max-width: 768px) {
   .container {

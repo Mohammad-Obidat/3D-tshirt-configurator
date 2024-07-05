@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import '../styles/Home.css';
 
 const Home: React.FC = () => {
@@ -12,7 +13,11 @@ const Home: React.FC = () => {
         customization tool. <strong>Unleash your imagination</strong> and define
         your own style.
       </p>
-      <button className='customize-btn'>Customize it</button>
+      <button className='customize-btn'>
+        <Link className='home-link' to='/customizer'>
+          Customize it
+        </Link>
+      </button>
     </div>
   );
 };

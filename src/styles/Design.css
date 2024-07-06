@@ -1,0 +1,30 @@
+.design-container {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  grid-template-rows: auto auto auto;
+  background-color: white;
+  padding: 5px;
+}
+
+.design-item {
+  border: 0.5px solid rgba(228, 228, 228, 0.8);
+}
+
+.design-item:hover {
+    border: 0.5px solid rgba(119, 119, 119, 0.849);
+  }
+
+.img-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  padding: 20px;
+}
+
+.design-img {
+  height: 80px;
+  width: 80px;
+  padding-bottom: 10px;
+}

@@ -1,4 +1,4 @@
-import { TabsProps } from '../interfaces/Tabs.interface';
+import { TabsProps } from '../../interfaces/Tabs.interface';
 
 export const EditorTabs: TabsProps = [
   {

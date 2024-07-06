@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Tabs from '../components/Tabs';
 import TabContentViewer from '../components/TabContentViewer';
-import { EditorTabs } from '../config/constants';
+import { EditorTabs } from '../config/constants/EditorTabs.constant';
 import { TabProps, TabsProps } from '../interfaces/Tabs.interface';
 import '../styles/Customizer.css';
 

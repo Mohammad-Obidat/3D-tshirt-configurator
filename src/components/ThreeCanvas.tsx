@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Object3D } from 'three';
 import SceneInit from '../lib/SceneInit.ts';
-import ShirtModel from '../config/LoadModel.ts';
+import ShirtModel from '../config/helpers/LoadModel.ts';
 import { useGlobalStore } from '../store/GlobalStore.tsx';
 import Loader from './Loader.tsx';
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { TabContent } from '../interfaces/TabContent.interface';
+import { TabContent } from '../../interfaces/TabContent.interface';
 import Design from './Design';
 import Colors from './Colors';
 import Text from './Text';

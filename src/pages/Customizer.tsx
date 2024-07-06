@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Tabs from '../components/Tabs';
-import TabContentViewer from '../components/TabContentViewer';
+import TabContentViewer from '../components/customizer/TabContentViewer';
 import { EditorTabs } from '../config/constants/EditorTabs.constant';
 import { TabProps, TabsProps } from '../interfaces/Tabs.interface';
 import { useGlobalStore } from '../store/GlobalStore';

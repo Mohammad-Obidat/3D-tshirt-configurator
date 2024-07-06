@@ -1,11 +1,12 @@
 import React from 'react';
+import { TabProps } from '../interfaces/Tabs.interface';
 
-interface TabProps {
-  title: string;
-}
-
-const Tab: React.FC<TabProps> = ({ title }) => {
-  return <div>{title}</div>;
+const Tab: React.FC<TabProps> = ({ id, title, isActive }) => {
+  return (
+    <div key={id} className={`tab ${isActive ? 'active' : ''}`}>
+      {title}
+    </div>
+  );
 };
 
 export default Tab;

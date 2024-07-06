@@ -1,0 +1,20 @@
+.tab {
+  padding: 10px 20px;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  cursor: pointer;
+  outline: none;
+}
+
+.tab:not(:last-child) {
+  border-right: none;
+}
+
+.tab:hover {
+  background-color: aliceblue;
+}
+
+.tab.active {
+  background-color: #ddd;
+  font-weight: bold;
+}

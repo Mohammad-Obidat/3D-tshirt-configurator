@@ -1,20 +1,14 @@
 import React from 'react';
 import Tab from './Tab';
+import { TabsComponentProps } from '../interfaces/Tabs.interface';
+import '../styles/Tabs.css';
 
-interface Tab {
-  title: string;
-}
-
-interface TabsProps {
-  editorTabs: Tab[];
-}
-
-const Tabs: React.FC<TabsProps> = ({ editorTabs }) => {
+const Tabs: React.FC<TabsComponentProps> = ({ editorTabs, setActiveTab }) => {
   return (
     <>
-      {editorTabs.map((tab, index) => (
-        <div key={index}>
-          <Tab title={tab.title} />
+      {editorTabs.map((tab) => (
+        <div key={tab.id} onClick={() => setActiveTab(tab.id)}>
+          <Tab id={tab.id} title={tab.title} isActive={tab.isActive} />
         </div>
       ))}
     </>

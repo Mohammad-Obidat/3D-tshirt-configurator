@@ -1,8 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useGlobalStore } from '../store/GlobalStore';
+
 import '../styles/Home.css';
 
 const Home: React.FC = () => {
+  const { setIsIntro } = useGlobalStore();
+
+  useEffect(() => {
+    setIsIntro(true);
+  }, [setIsIntro]);
+
   return (
     <div className='content'>
       <h1 className='content-text'>
@@ -13,6 +21,7 @@ const Home: React.FC = () => {
         customization tool. <strong>Unleash your imagination</strong> and define
         your own style.
       </p>
+
       <button className='customize-btn'>
         <Link className='home-link' to='/customizer'>
           Customize it

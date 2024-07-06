@@ -4,6 +4,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 export default class SceneInit {
   scene: THREE.Scene;
   tShirtModel: THREE.Object3D | null = null;
+  isAnimate: boolean = true;
   private camera: THREE.PerspectiveCamera;
   private renderer: THREE.WebGLRenderer;
   private fov: number = 7;
@@ -70,7 +71,15 @@ export default class SceneInit {
     this.animationFrameId = window.requestAnimationFrame(this.animate);
     this.render();
     this.controls.update();
-    this.autoRotateModel();
+
+    if (this.isAnimate) {
+      this.autoRotateModel();
+    } else {
+      this.tShirtModel!.rotation.y = 0;
+      this.camera.fov = 5;
+    }
+
+    this.camera.updateProjectionMatrix();
   }
 
   render(): void {

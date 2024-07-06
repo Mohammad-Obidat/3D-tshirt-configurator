@@ -6,7 +6,7 @@ import { useGlobalStore } from '../store/GlobalStore.tsx';
 import Loader from './Loader.tsx';
 
 const ThreeCanvas: React.FC = () => {
-  const { isLoading, setIsLoading, setProgress } = useGlobalStore();
+  const { isLoading, setIsLoading, setProgress, isIntro } = useGlobalStore();
   const [tshirtModel, setTshirtModel] = useState<Object3D | null>(null);
 
   useEffect(() => {
@@ -30,13 +30,15 @@ const ThreeCanvas: React.FC = () => {
       const sceneInit = new SceneInit('myThreeJsCanvas');
       sceneInit.setTShirtModel(tshirtModel);
       sceneInit.scene.add(tshirtModel);
+
+      isIntro ? (sceneInit.isAnimate = true) : (sceneInit.isAnimate = false);
       sceneInit.animate();
 
       return () => {
         sceneInit.stopAnimation();
       };
     }
-  }, [tshirtModel, isLoading]);
+  }, [tshirtModel, isLoading, isIntro]);
 
   return <>{isLoading ? <Loader /> : <canvas id='myThreeJsCanvas' />}</>;
 };

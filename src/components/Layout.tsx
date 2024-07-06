@@ -11,8 +11,8 @@ const Layout: React.FC = () => {
     <>
       <NavBar />
       <div className='grid-container'>
-        <Outlet />
         <GlobalStoreProvider>
+          <Outlet />
           <div className='canvas-container'>
             <ThreeCanvas />
           </div>

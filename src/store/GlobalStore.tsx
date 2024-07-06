@@ -8,14 +8,17 @@ const GlobalStoreProvider: React.FC<{ children: ReactNode }> = ({
 }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [progress, setProgress] = useState(0);
+  const [isIntro, setIsIntro] = useState(true);
 
   return (
     <GlobalStoreContext.Provider
       value={{
         isLoading,
         progress,
+        isIntro,
         setIsLoading,
         setProgress,
+        setIsIntro,
       }}
     >
       {children}

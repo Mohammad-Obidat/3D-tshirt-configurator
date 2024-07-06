@@ -1,13 +1,19 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Tabs from '../components/Tabs';
 import TabContentViewer from '../components/TabContentViewer';
 import { EditorTabs } from '../config/constants/EditorTabs.constant';
 import { TabProps, TabsProps } from '../interfaces/Tabs.interface';
+import { useGlobalStore } from '../store/GlobalStore';
 import '../styles/Customizer.css';
 
 const Customizer: React.FC = () => {
   const [tabs, setTabs] = useState<TabsProps>(EditorTabs);
   const [chosenTab, setChosenTab] = useState<TabProps>(EditorTabs[0]);
+  const { isIntro, setIsIntro } = useGlobalStore();
+
+  useEffect(() => {
+    setIsIntro(false);
+  }, [isIntro, setIsIntro]);
 
   const setActiveTab = (id: number) => {
     const updatedTabs = tabs.map((tab) => {

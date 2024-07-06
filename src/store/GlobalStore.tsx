@@ -1,11 +1,5 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
-
-interface AppState {
-  isLoading: boolean;
-  progress: number;
-  setIsLoading: (loading: boolean) => void;
-  setProgress: (progress: number) => void;
-}
+import { AppState } from '../interfaces/App.interface';
 
 const GlobalStoreContext = createContext<AppState | undefined>(undefined);
 

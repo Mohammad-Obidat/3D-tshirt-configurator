@@ -5,8 +5,12 @@ import loadShirtModel from '../../config/helpers/ThreeLoaders.ts';
 import { useGlobalStore } from '../../store/GlobalStore.tsx';
 import Loader from '../Loader.tsx';
 
-const ThreeCanvas: React.FC = () => {
-  const { isIntro } = useGlobalStore();
+interface ThreeCanvasProps {
+  onLoaded: () => void;
+}
+
+const ThreeCanvas: React.FC<ThreeCanvasProps> = ({ onLoaded }) => {
+  const { isIntro, setTshirt } = useGlobalStore();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [tshirtModel, setTshirtModel] = useState<Object3D | null>(null);
 
@@ -21,22 +25,24 @@ const ThreeCanvas: React.FC = () => {
         console.error('Error adding the t-shirt model to the scene:', error);
         setIsLoading(false);
       });
-  }, [setIsLoading]);
+  }, [setIsLoading, setTshirt]);
 
   useEffect(() => {
     if (tshirtModel && !isLoading) {
       const sceneInit = new SceneInit('myThreeJsCanvas');
       sceneInit.setTShirtModel(tshirtModel);
+      setTshirt(tshirtModel);
       sceneInit.scene.add(tshirtModel);
 
       isIntro ? (sceneInit.isAnimate = true) : (sceneInit.isAnimate = false);
       sceneInit.animate();
 
+      onLoaded();
       return () => {
         sceneInit.stopAnimation();
       };
     }
-  }, [tshirtModel, isLoading, isIntro]);
+  }, [tshirtModel, isLoading, isIntro, setTshirt, onLoaded]);
 
   return <>{isLoading ? <Loader /> : <canvas id='myThreeJsCanvas' />}</>;
 };

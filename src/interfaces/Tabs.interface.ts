@@ -1,4 +1,4 @@
-import { Textures } from './textures.interface';
+import { Textures } from './Textures.interface';
 export interface TabProps {
   id: number;
   title: string;

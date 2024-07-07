@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { GLTFLoader, GLTF } from 'three/examples/jsm/loaders/GLTFLoader.js';
-import { Textures } from '../../interfaces/textures.interface';
+import { LoadedTextures, Textures } from '../../interfaces/Textures.interface';
 
 const loadModel = (path: string): Promise<THREE.Object3D> => {
   const loader = new GLTFLoader();
@@ -27,38 +27,73 @@ const loadShirtModel = (): Promise<THREE.Object3D> => {
   return loadModel(tshirtModelPath);
 };
 
-const loadTextures = (texturePaths: string[]): Promise<THREE.Texture[]> => {
+const loadTextures = (
+  texturePath: string
+): Promise<THREE.Texture | undefined> => {
   const loader = new THREE.TextureLoader();
-  const promises = texturePaths.map(
-    (path) =>
-      new Promise<THREE.Texture>((resolve, reject) => {
-        loader.load(
-          path,
-          (texture) => resolve(texture),
-          undefined,
-          (err) => {
-            console.error('Error loading texture.', err);
-            reject(err);
-          }
-        );
-      })
-  );
-  return Promise.all(promises);
+
+  return new Promise<THREE.Texture | undefined>((resolve, reject) => {
+    if (!texturePath) {
+      resolve(undefined);
+    } else {
+      loader.load(
+        texturePath,
+        (texture) => resolve(texture),
+        undefined,
+        (err) => {
+          console.error('Error loading texture.', err);
+          reject(err);
+        }
+      );
+    }
+  });
 };
 
-const loadAllTextures = async (
-  textures: Textures
-): Promise<{ [key: string]: THREE.Texture[] | THREE.Texture }> => {
-  const frontTextures = await loadTextures(textures.front.map((t) => t.path));
-  const backTextures = await loadTextures(textures.back.map((t) => t.path));
-  const rightHandTexture = await loadTextures([textures.rightHand.path]);
-  const leftHandTexture = await loadTextures([textures.leftHand.path]);
+const loadAllTextures = async (textures: Textures): Promise<LoadedTextures> => {
+  if (!textures) {
+    console.error('Textures are undefined');
+    return {};
+  }
+
+  const loadTexture = async (
+    path?: string
+  ): Promise<THREE.Texture | undefined> => {
+    if (path) {
+      try {
+        const textures = await loadTextures(path);
+        return textures;
+      } catch (error) {
+        console.error('Error loading texture.', error);
+        return undefined;
+      }
+    }
+    return undefined;
+  };
+
+  const frontTexture = await loadTexture(textures.front?.path);
+  const backTexture = await loadTexture(textures.back?.path);
+  const rightHandTexture = await loadTexture(textures.rightHand?.path);
+  const leftHandTexture = await loadTexture(textures.leftHand?.path);
 
   return {
-    front: frontTextures,
-    back: backTextures,
-    rightHand: rightHandTexture[0],
-    leftHand: leftHandTexture[0],
+    front: frontTexture
+      ? { texture: frontTexture, coordinates: textures.front?.coordinates }
+      : undefined,
+    back: backTexture
+      ? { texture: backTexture, coordinates: textures.back?.coordinates }
+      : undefined,
+    rightHand: rightHandTexture
+      ? {
+          texture: rightHandTexture,
+          coordinates: textures.rightHand?.coordinates,
+        }
+      : undefined,
+    leftHand: leftHandTexture
+      ? {
+          texture: leftHandTexture,
+          coordinates: textures.leftHand?.coordinates,
+        }
+      : undefined,
   };
 };
 

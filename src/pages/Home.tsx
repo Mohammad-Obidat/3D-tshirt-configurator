@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useGlobalStore } from '../store/GlobalStore';
-
 import '../styles/Home.css';
 
 const Home: React.FC = () => {

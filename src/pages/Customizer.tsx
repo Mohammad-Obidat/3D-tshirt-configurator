@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Tabs from '../components/Tabs';
 import TabContentViewer from '../components/customizer/TabContentViewer';
-import { stylishTabs } from '../config/constants/stylishTabs.constant';
+import { stylishTabs } from '../config/constants/StylishTabs.constant';
 import { TabProps, TabsProps } from '../interfaces/Tabs.interface';
 import { useGlobalStore } from '../store/GlobalStore';
 import '../styles/Customizer.css';

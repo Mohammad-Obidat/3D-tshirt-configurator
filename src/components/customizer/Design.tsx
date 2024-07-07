@@ -3,6 +3,7 @@ import { Texture } from 'three';
 import { DesignTabs } from '../../config/constants/DesignTabs.constant';
 import { TabProps, TabsProps } from '../../interfaces/Tabs.interface';
 import { loadAllTextures } from '../../config/helpers/ThreeLoaders';
+import Tabs from '../Tabs';
 import '../../styles/Design.css';
 
 const Design: React.FC = () => {
@@ -36,18 +37,7 @@ const Design: React.FC = () => {
 
   return (
     <div className='design-container'>
-      {tabs.map((tab) => (
-        <div
-          key={tab.id}
-          className={`design-item ${tab.isActive ? 'active' : ''}`}
-          onClick={() => setActiveTab(tab.id)}
-        >
-          <div className='img-container'>
-            <img src={tab.imageUrl} alt={tab.title} className='design-img' />
-            <span>{tab.title}</span>
-          </div>
-        </div>
-      ))}
+      <Tabs tabs={tabs} tabsType='design' setActiveTab={setActiveTab} />
     </div>
   );
 };

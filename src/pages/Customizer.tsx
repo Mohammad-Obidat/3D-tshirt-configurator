@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import Tabs from '../components/Tabs';
 import TabContentViewer from '../components/customizer/TabContentViewer';
-import { EditorTabs } from '../config/constants/EditorTabs.constant';
+import { stylishTabs } from '../config/constants/stylishTabs.constant';
 import { TabProps, TabsProps } from '../interfaces/Tabs.interface';
 import { useGlobalStore } from '../store/GlobalStore';
 import '../styles/Customizer.css';
 
 const Customizer: React.FC = () => {
-  const [tabs, setTabs] = useState<TabsProps>(EditorTabs);
-  const [chosenTab, setChosenTab] = useState<TabProps>(EditorTabs[0]);
+  const [tabs, setTabs] = useState<TabsProps>(stylishTabs);
+  const [chosenTab, setChosenTab] = useState<TabProps>(stylishTabs[0]);
   const { isIntro, setIsIntro } = useGlobalStore();
 
   useEffect(() => {
@@ -29,8 +29,8 @@ const Customizer: React.FC = () => {
 
   return (
     <div className='customizerContainer'>
-      <div className='editorTabs'>
-        <Tabs editorTabs={tabs} setActiveTab={setActiveTab} />
+      <div className='stylishTabs'>
+        <Tabs tabs={tabs} tabsType='stylish' setActiveTab={setActiveTab} />
       </div>
       <div className='viewerContainer'>
         <TabContentViewer tab={chosenTab} />

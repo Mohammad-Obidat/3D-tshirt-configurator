@@ -1,20 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { Object3D } from 'three';
 import SceneInit from '../../lib/SceneInit.ts';
-import ShirtModel from '../../config/helpers/LoadModel.ts';
+import loadShirtModel from '../../config/helpers/ThreeLoaders.ts';
 import { useGlobalStore } from '../../store/GlobalStore.tsx';
 import Loader from '../Loader.tsx';
 
 const ThreeCanvas: React.FC = () => {
-  const { isLoading, setIsLoading, setProgress, isIntro } = useGlobalStore();
+  const { isIntro } = useGlobalStore();
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [tshirtModel, setTshirtModel] = useState<Object3D | null>(null);
 
   useEffect(() => {
-    const handleLoad = () => setIsLoading(false);
-    const handleError = () => setIsLoading(false);
-
     setIsLoading(true);
-    ShirtModel(setProgress, handleLoad, handleError)
+    loadShirtModel()
       .then((tshirtModel) => {
         setTshirtModel(tshirtModel);
         setIsLoading(false);
@@ -23,7 +21,7 @@ const ThreeCanvas: React.FC = () => {
         console.error('Error adding the t-shirt model to the scene:', error);
         setIsLoading(false);
       });
-  }, [setIsLoading, setProgress]);
+  }, [setIsLoading]);
 
   useEffect(() => {
     if (tshirtModel && !isLoading) {

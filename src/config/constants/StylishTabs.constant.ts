@@ -1,6 +1,6 @@
 import { TabsProps } from '../../interfaces/Tabs.interface';
 
-export const EditorTabs: TabsProps = [
+export const stylishTabs: TabsProps = [
   {
     id: 1,
     title: 'Design',

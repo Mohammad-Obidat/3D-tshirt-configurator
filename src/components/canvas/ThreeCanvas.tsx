@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Object3D } from 'three';
 import SceneInit from '../../lib/SceneInit.ts';
 import loadShirtModel from '../../config/helpers/ThreeLoaders.ts';
@@ -6,38 +6,45 @@ import { useGlobalStore } from '../../store/GlobalStore.tsx';
 import Loader from '../Loader.tsx';
 
 const ThreeCanvas: React.FC = () => {
+  const canvasRef = useRef<SceneInit | null>(null);
   const { isIntro, setTshirt } = useGlobalStore();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [tshirtModel, setTshirtModel] = useState<Object3D | null>(null);
 
   useEffect(() => {
-    setIsLoading(true);
-    loadShirtModel()
-      .then((tshirtModel) => {
-        setTshirtModel(tshirtModel);
-        setIsLoading(false);
-      })
-      .catch((error) => {
+    const loadModel = async () => {
+      try {
+        setIsLoading(true);
+        const model = await loadShirtModel();
+        setTshirtModel(model);
+      } catch (error) {
         console.error('Error adding the t-shirt model to the scene:', error);
+      } finally {
         setIsLoading(false);
-      });
-  }, [setIsLoading, setTshirt]);
+      }
+    };
+
+    loadModel();
+  }, []);
 
   useEffect(() => {
-    if (tshirtModel && !isLoading) {
-      const sceneInit = new SceneInit('myThreeJsCanvas');
-      sceneInit.setTShirtModel(tshirtModel);
-      setTshirt(tshirtModel);
-      sceneInit.scene.add(tshirtModel);
+    if (tshirtModel && !canvasRef.current) {
+      canvasRef.current = new SceneInit('myThreeJsCanvas');
+    }
 
-      isIntro ? (sceneInit.isAnimate = true) : (sceneInit.isAnimate = false);
-      sceneInit.animate();
+    if (tshirtModel && canvasRef.current) {
+      canvasRef.current.setTShirtModel(tshirtModel);
+      setTshirt(tshirtModel);
+      canvasRef.current.scene.add(tshirtModel);
+
+      canvasRef.current.isAnimate = isIntro;
+      canvasRef.current.animate();
 
       return () => {
-        sceneInit.stopAnimation();
+        canvasRef.current?.stopAnimation();
       };
     }
-  }, [tshirtModel, isLoading, isIntro, setTshirt]);
+  }, [tshirtModel, isIntro, setTshirt]);
 
   return <>{isLoading ? <Loader /> : <canvas id='myThreeJsCanvas' />}</>;
 };

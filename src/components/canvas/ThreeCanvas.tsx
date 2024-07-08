@@ -1,41 +1,22 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Object3D } from 'three';
+import React, { useEffect, useRef } from 'react';
 import SceneInit from '../../lib/SceneInit.ts';
-import loadShirtModel from '../../config/helpers/ThreeLoaders.ts';
+import { ThreeCanvasProps } from '../../interfaces/App.interface.ts';
 import { useGlobalStore } from '../../store/GlobalStore.tsx';
 import Loader from '../Loader.tsx';
 
-const ThreeCanvas: React.FC = () => {
+const ThreeCanvas: React.FC<ThreeCanvasProps> = ({ model, isLoading }) => {
   const canvasRef = useRef<SceneInit | null>(null);
   const { isIntro, setTshirt } = useGlobalStore();
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [tshirtModel, setTshirtModel] = useState<Object3D | null>(null);
 
   useEffect(() => {
-    const loadModel = async () => {
-      try {
-        setIsLoading(true);
-        const model = await loadShirtModel();
-        setTshirtModel(model);
-      } catch (error) {
-        console.error('Error adding the t-shirt model to the scene:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    loadModel();
-  }, []);
-
-  useEffect(() => {
-    if (tshirtModel && !canvasRef.current) {
+    if (model && !canvasRef.current) {
       canvasRef.current = new SceneInit('myThreeJsCanvas');
     }
 
-    if (tshirtModel && canvasRef.current) {
-      canvasRef.current.setTShirtModel(tshirtModel);
-      setTshirt(tshirtModel);
-      canvasRef.current.scene.add(tshirtModel);
+    if (model && canvasRef.current) {
+      canvasRef.current.setTShirtModel(model);
+      setTshirt(model);
+      canvasRef.current.scene.add(model);
 
       canvasRef.current.isAnimate = isIntro;
       canvasRef.current.animate();
@@ -44,7 +25,7 @@ const ThreeCanvas: React.FC = () => {
         canvasRef.current?.stopAnimation();
       };
     }
-  }, [tshirtModel, isIntro, setTshirt]);
+  }, [model, isIntro, setTshirt]);
 
   return <>{isLoading ? <Loader /> : <canvas id='myThreeJsCanvas' />}</>;
 };

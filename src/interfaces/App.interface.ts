@@ -7,3 +7,8 @@ export interface AppState {
   setIsIntro: Dispatch<SetStateAction<boolean>>;
   setTshirt: Dispatch<SetStateAction<Object3D | undefined>>;
 }
+
+export interface ThreeCanvasProps {
+  model: Object3D | undefined;
+  isLoading: boolean;
+}

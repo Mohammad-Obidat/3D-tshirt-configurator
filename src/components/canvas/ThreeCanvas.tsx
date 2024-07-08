@@ -5,11 +5,7 @@ import loadShirtModel from '../../config/helpers/ThreeLoaders.ts';
 import { useGlobalStore } from '../../store/GlobalStore.tsx';
 import Loader from '../Loader.tsx';
 
-interface ThreeCanvasProps {
-  onLoaded: () => void;
-}
-
-const ThreeCanvas: React.FC<ThreeCanvasProps> = ({ onLoaded }) => {
+const ThreeCanvas: React.FC = () => {
   const { isIntro, setTshirt } = useGlobalStore();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [tshirtModel, setTshirtModel] = useState<Object3D | null>(null);
@@ -37,12 +33,11 @@ const ThreeCanvas: React.FC<ThreeCanvasProps> = ({ onLoaded }) => {
       isIntro ? (sceneInit.isAnimate = true) : (sceneInit.isAnimate = false);
       sceneInit.animate();
 
-      onLoaded();
       return () => {
         sceneInit.stopAnimation();
       };
     }
-  }, [tshirtModel, isLoading, isIntro, setTshirt, onLoaded]);
+  }, [tshirtModel, isLoading, isIntro, setTshirt]);
 
   return <>{isLoading ? <Loader /> : <canvas id='myThreeJsCanvas' />}</>;
 };

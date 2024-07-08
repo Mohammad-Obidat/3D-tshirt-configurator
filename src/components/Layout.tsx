@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Outlet } from 'react-router-dom';
 import NavBar from './NavBar';
 import GlobalStoreProvider from '../store/GlobalStore';
@@ -7,16 +7,15 @@ import Footer from './Footer';
 import '../styles/App.css';
 
 const Layout: React.FC = () => {
-  const [isCanvasLoaded, setIsCanvasLoaded] = useState(false);
   return (
     <>
       <NavBar />
       <div className='grid-container'>
         <GlobalStoreProvider>
           <div className='canvas-container'>
-            <ThreeCanvas onLoaded={() => setIsCanvasLoaded(true)} />
+            <ThreeCanvas />
           </div>
-          {isCanvasLoaded && <Outlet />}
+          <Outlet />
         </GlobalStoreProvider>
       </div>
       <Footer />

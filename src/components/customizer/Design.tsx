@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useGlobalStore } from '../../store/GlobalStore';
-import ApplyTextures from '../../lib/ApplyTextures';
+import TextureManager from '../../lib/TextureManager';
 import { DesignTabs } from '../../config/constants/DesignTabs.constant';
 import { TabProps, TabsProps } from '../../interfaces/Tabs.interface';
 import { loadAllTextures } from '../../config/helpers/ThreeLoaders';
@@ -9,6 +9,7 @@ import Tabs from '../Tabs';
 import '../../styles/Design.css';
 
 const Design: React.FC = () => {
+  const textureManagerRef = useRef<TextureManager | null>(null);
   const { tshirt } = useGlobalStore();
   const [tabs, setTabs] = useState<TabsProps>(DesignTabs);
   const [chosenTab, setChosenTab] = useState<TabProps>(DesignTabs[0]);
@@ -44,11 +45,15 @@ const Design: React.FC = () => {
   }, [chosenTab]);
 
   useEffect(() => {
-    if (Object.keys(textures).length > 0 && tshirt) {
-      const applyTextures = new ApplyTextures(tshirt);
-      applyTextures.applyTextureToShirt(textures);
+    if (tshirt) {
+      if (!textureManagerRef.current) {
+        textureManagerRef.current = new TextureManager(tshirt);
+      }
+      if (Object.keys(textures).length > 0) {
+        textureManagerRef.current.switchTexture(textures);
+      }
     }
-  });
+  }, [tshirt, textures]);
 
   return (
     <div className='design-container'>

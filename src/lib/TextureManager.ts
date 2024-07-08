@@ -12,7 +12,21 @@ export default class TextureManager {
   constructor(tshirtModel: THREE.Object3D) {
     this.model = tshirtModel;
     // this.currentTexture = undefined;
-    this.currentMesh = undefined;
+    // this.currentMesh = undefined;
+  }
+
+  applyNewColorMaterial(selectedColor: string): void {
+    if (this.currentMesh) {
+      if (this.currentMesh.material instanceof THREE.MeshBasicMaterial) {
+        this.currentMesh.material.color.set(selectedColor);
+      } else if (Array.isArray(this.currentMesh.material)) {
+        this.currentMesh.material.forEach((material) => {
+          if (material instanceof THREE.MeshBasicMaterial) {
+            material.color.set(selectedColor);
+          }
+        });
+      }
+    }
   }
 
   createTextureMaterial(
@@ -21,7 +35,6 @@ export default class TextureManager {
     return new THREE.MeshBasicMaterial({
       map: texture,
       transparent: true,
-      color: new THREE.Color(0xff0000),
     });
   }
 

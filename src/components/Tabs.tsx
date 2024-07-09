@@ -15,9 +15,15 @@ const Tabs: React.FC<TabsComponentProps> = ({
         <div
           key={tab.id}
           onClick={() => setActiveTab(tab.id)}
-          className={`${tabsType === 'stylish' ? 'tab' : 'design-item'} ${
-            tab.isActive ? 'active' : ''
-          }`}
+          className={`${
+            tabsType === 'stylish'
+              ? 'stylish-tab'
+              : tabsType === 'design'
+              ? 'design-tab'
+              : tabsType === 'controls'
+              ? 'control-tab'
+              : ''
+          } ${tab.isActive ? 'active' : ''}`}
         >
           <Tab
             id={tab.id}

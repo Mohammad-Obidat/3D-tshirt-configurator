@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import SceneInit from '../../lib/SceneInit.ts';
 import { ThreeCanvasProps } from '../../interfaces/App.interface.ts';
 import Loader from '../Loader.tsx';
+import '../../styles/ThreeCanvas.css';
 
 const ThreeCanvas: React.FC<ThreeCanvasProps> = ({
   model,
@@ -27,7 +28,19 @@ const ThreeCanvas: React.FC<ThreeCanvasProps> = ({
     }
   }, [model, isIntro]);
 
-  return <>{isLoading ? <Loader /> : <canvas id='myThreeJsCanvas' />}</>;
+  return (
+    <>
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <>
+          <div className='canvas-container'>
+            <canvas id='myThreeJsCanvas' />
+          </div>
+        </>
+      )}
+    </>
+  );
 };
 
 export default ThreeCanvas;

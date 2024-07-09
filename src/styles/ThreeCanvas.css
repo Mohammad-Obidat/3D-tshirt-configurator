@@ -1,0 +1,6 @@
+.canvas-container {
+  display: grid;
+  grid-area: canvas;
+  grid-template-columns: 1fr 4fr;
+  position: relative;
+}

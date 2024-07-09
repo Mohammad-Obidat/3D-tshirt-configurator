@@ -37,13 +37,7 @@ const App: React.FC = () => {
     <>
       <NavBar navigateTo={navigateTo} />
       <div className='grid-container'>
-        <div className='canvas-container'>
-          <ThreeCanvas
-            model={model}
-            isLoading={isLoading}
-            isIntro={component}
-          />
-        </div>
+        <ThreeCanvas model={model} isLoading={isLoading} isIntro={component} />
         {component === 'home' ? (
           <Home navigateTo={navigateTo} />
         ) : (

@@ -1,4 +1,4 @@
-.customizerContainer {
+.customizer-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -11,10 +11,20 @@
   margin-bottom: 0.5px;
 }
 
-.viewerContainer {
+.customView-container {
+  position: relative;
+}
+
+.viewer-container {
   height: 460px;
   width: 460px;
   background-color: #f9f9f9;
   border: 1px solid #ccc;
   padding: 5px;
+}
+
+.controlTabs-container {
+  position: absolute;
+  top: 8rem;
+  right: -47px;
 }

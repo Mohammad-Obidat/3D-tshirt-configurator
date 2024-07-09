@@ -6,7 +6,7 @@ const Tab: React.FC<TabProps> = ({ title, imageUrl }) => {
     <>
       {imageUrl ? (
         <div className='img-container'>
-          <img src={imageUrl} alt={title} className='design-img' />
+          <img src={imageUrl} alt={title} className='design-img control-img' />
           <span>{title}</span>
         </div>
       ) : (

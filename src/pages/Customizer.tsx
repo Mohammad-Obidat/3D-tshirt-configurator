@@ -2,37 +2,53 @@ import React, { useEffect, useState } from 'react';
 import Tabs from '../components/Tabs';
 import TabContentViewer from '../components/customizer/TabContentViewer';
 import { stylishTabs } from '../config/constants/StylishTabs.constant';
+import { controlsTabs } from '../config/constants/ControlTabx';
 import { TabProps, TabsProps } from '../interfaces/Tabs.interface';
 import { CustomizerProps } from '../interfaces/App.interface';
 import '../styles/Customizer.css';
 
 const Customizer: React.FC<CustomizerProps> = ({ model, navigateTo }) => {
-  const [tabs, setTabs] = useState<TabsProps>(stylishTabs);
-  const [chosenTab, setChosenTab] = useState<TabProps>(stylishTabs[0]);
+  const [stylyTabs, setStylyTabs] = useState<TabsProps>(stylishTabs);
+  const [chosenStyleTab, setChosenStyleTab] = useState<TabProps>(
+    stylishTabs[0]
+  );
+  const [controlTabs, setControlTabs] = useState<TabsProps>(controlsTabs);
+  const [chosenControlTab, setChosenControlTab] = useState<TabProps>(
+    controlsTabs[0]
+  );
 
   useEffect(() => {
     navigateTo('customizer');
   }, [navigateTo]);
 
   const setActiveTab = (id: number) => {
-    const updatedTabs = tabs.map((tab) => {
+    const updatedTabs = stylyTabs.map((tab) => {
       if (tab.id === id) {
-        setChosenTab(tab);
+        setChosenStyleTab(tab);
         return { ...tab, isActive: true };
       } else {
         return { ...tab, isActive: false };
       }
     });
-    setTabs(updatedTabs);
+    setStylyTabs(updatedTabs);
   };
 
   return (
-    <div className='customizerContainer'>
+    <div className='customizer-container'>
       <div className='stylishTabs'>
-        <Tabs tabs={tabs} tabsType='stylish' setActiveTab={setActiveTab} />
+        <Tabs tabs={stylyTabs} tabsType='stylish' setActiveTab={setActiveTab} />
       </div>
-      <div className='viewerContainer'>
-        <TabContentViewer tab={chosenTab} model={model} />
+      <div className='customView-container'>
+        <div className='viewer-container'>
+          <TabContentViewer tab={chosenStyleTab} model={model} />
+        </div>
+        <div className='controlTabs-container'>
+          <Tabs
+            tabs={controlTabs}
+            tabsType='controls'
+            setActiveTab={() => console.log('control')}
+          />
+        </div>
       </div>
       <div className='contact-tabs'></div>
     </div>

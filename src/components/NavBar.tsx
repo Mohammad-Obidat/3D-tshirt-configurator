@@ -6,7 +6,7 @@ const NavBar: React.FC<NavbarProps> = ({ navigateTo }) => {
   return (
     <>
       <nav className='navbar'>
-        <div className='navbarContainer'>
+        <div className='navbar-container'>
           <div className='logo'>
             <img src='/assets/textures/Logo.png' alt='Store Logo' />
           </div>

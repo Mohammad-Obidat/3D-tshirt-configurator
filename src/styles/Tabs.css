@@ -1,4 +1,4 @@
-.tab {
+.stylish-tab {
   padding: 10px 20px;
   border: 1px solid #ccc;
   background-color: #f9f9f9;
@@ -6,15 +6,53 @@
   outline: none;
 }
 
-.tab:not(:last-child) {
+.stylish-tab:not(:last-child) {
   border-right: none;
 }
 
-.tab:hover {
+.stylish-tab:hover {
   background-color: aliceblue;
 }
 
-.tab.active {
+.stylish-tab.active {
   background-color: #ddd;
   font-weight: bold;
+}
+
+.control-tab {
+  width: 35px;
+  height: 40px;
+  position: relative;
+  display: flex;
+  padding: 5px;
+  justify-content: center;
+  border: 1px solid #ccc;
+  align-items: center;
+  background-color: #f9f9f9;
+  cursor: pointer;
+  outline: none;
+}
+
+.control-tab:hover {
+  background-color: #ddd;
+  border: 0.5px solid rgba(119, 119, 119, 0.849);
+}
+
+.control-tab.active {
+  background-color: #ddd;
+  font-weight: bold;
+}
+
+.control-tab > .img-container {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1px;
+}
+
+.control-tab > .img-container > .control-img {
+  width: 30px;
+  height: 30px;
 }

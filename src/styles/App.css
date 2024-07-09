@@ -15,8 +15,3 @@ canvas {
   grid-template-columns: 50% 50%;
   grid-template-areas: 'content canvas ';
 }
-
-.canvas-container {
-  position: relative;
-  grid-area: canvas;
-}

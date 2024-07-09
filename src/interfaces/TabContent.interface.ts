@@ -1,10 +1,10 @@
+import { Object3D } from 'three';
 import TextureManager from '../lib/TextureManager';
 import { TabProps } from './Tabs.interface';
-import { Object3DModel } from './App.interface';
 
 export interface TabContent {
   tab: TabProps;
-  model: Object3DModel;
+  model: Object3D | undefined;
 }
 
 export interface DesignContent {
@@ -12,6 +12,6 @@ export interface DesignContent {
 }
 
 export interface ColorContent {
-  model: Object3DModel;
+  model: Object3D | undefined;
   textureManager: TextureManager | null;
 }

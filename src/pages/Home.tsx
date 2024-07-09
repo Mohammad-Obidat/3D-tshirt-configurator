@@ -1,14 +1,11 @@
 import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { useGlobalStore } from '../store/GlobalStore';
+import { HomeProps } from '../interfaces/App.interface';
 import '../styles/Home.css';
 
-const Home: React.FC = () => {
-  const { setIsIntro } = useGlobalStore();
-
+const Home: React.FC<HomeProps> = ({ navigateTo }) => {
   useEffect(() => {
-    setIsIntro(true);
-  }, [setIsIntro]);
+    navigateTo('home');
+  }, [navigateTo]);
 
   return (
     <div className='content'>
@@ -22,9 +19,9 @@ const Home: React.FC = () => {
       </p>
 
       <button className='customize-btn'>
-        <Link className='home-link' to='/customizer'>
+        <a className='home-link' onClick={() => navigateTo('customizer')}>
           Customize it
-        </Link>
+        </a>
       </button>
     </div>
   );

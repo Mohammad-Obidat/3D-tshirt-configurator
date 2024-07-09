@@ -3,17 +3,16 @@ import Tabs from '../components/Tabs';
 import TabContentViewer from '../components/customizer/TabContentViewer';
 import { stylishTabs } from '../config/constants/StylishTabs.constant';
 import { TabProps, TabsProps } from '../interfaces/Tabs.interface';
-import { useGlobalStore } from '../store/GlobalStore';
+import { CustomizerProps } from '../interfaces/App.interface';
 import '../styles/Customizer.css';
 
-const Customizer: React.FC = () => {
+const Customizer: React.FC<CustomizerProps> = ({ model, navigateTo }) => {
   const [tabs, setTabs] = useState<TabsProps>(stylishTabs);
   const [chosenTab, setChosenTab] = useState<TabProps>(stylishTabs[0]);
-  const { isIntro, setIsIntro } = useGlobalStore();
 
   useEffect(() => {
-    setIsIntro(false);
-  }, [isIntro, setIsIntro]);
+    navigateTo('customizer');
+  }, [navigateTo]);
 
   const setActiveTab = (id: number) => {
     const updatedTabs = tabs.map((tab) => {
@@ -33,7 +32,7 @@ const Customizer: React.FC = () => {
         <Tabs tabs={tabs} tabsType='stylish' setActiveTab={setActiveTab} />
       </div>
       <div className='viewerContainer'>
-        <TabContentViewer tab={chosenTab} />
+        <TabContentViewer tab={chosenTab} model={model} />
       </div>
       <div className='contact-tabs'></div>
     </div>

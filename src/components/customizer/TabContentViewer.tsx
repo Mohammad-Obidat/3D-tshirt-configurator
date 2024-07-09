@@ -1,33 +1,31 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { TabContent } from '../../interfaces/TabContent.interface';
-import { useGlobalStore } from '../../store/GlobalStore';
 import TextureManager from '../../lib/TextureManager';
 import Design from './Design';
 import Colors from './Colors';
 import Text from './Text';
 import Logos from './Logos';
 
-const TabContentViewer: React.FC<TabContent> = ({ tab }) => {
+const TabContentViewer: React.FC<TabContent> = ({ tab, model }) => {
   const textureManagerRef = useRef<TextureManager | null>(null);
-  const { tshirt } = useGlobalStore();
   const [textureManager, setTextureManager] = useState<TextureManager | null>(
     null
   );
 
   useEffect(() => {
-    if (tshirt) {
+    if (model) {
       if (!textureManagerRef.current) {
-        textureManagerRef.current = new TextureManager(tshirt);
+        textureManagerRef.current = new TextureManager(model);
         setTextureManager(textureManagerRef.current);
       }
     }
-  }, [tshirt]);
+  }, [model]);
 
   switch (tab.id && tab.title) {
     case 1 && 'Design':
       return <Design textureManager={textureManager} />;
     case 2 && 'Colors':
-      return <Colors tshirt={tshirt} textureManager={textureManager} />;
+      return <Colors model={model} textureManager={textureManager} />;
     case 3 && 'Text':
       return <Text />;
     case 4 && 'Logos':

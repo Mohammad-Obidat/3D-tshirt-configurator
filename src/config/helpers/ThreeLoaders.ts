@@ -1,8 +1,8 @@
-import * as THREE from 'three';
+import { Object3D, Texture, TextureLoader } from 'three';
 import { GLTFLoader, GLTF } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { LoadedTextures, Textures } from '../../interfaces/Textures.interface';
 
-const loadModel = (path: string): Promise<THREE.Object3D> => {
+const loadModel = (path: string): Promise<Object3D> => {
   const loader = new GLTFLoader();
 
   return new Promise((resolve, reject) => {
@@ -22,17 +22,15 @@ const loadModel = (path: string): Promise<THREE.Object3D> => {
   });
 };
 
-const loadShirtModel = (): Promise<THREE.Object3D> => {
+const loadShirtModel = (): Promise<Object3D> => {
   const tshirtModelPath = '/assets/models/HighNeckTshirt.glb';
   return loadModel(tshirtModelPath);
 };
 
-const loadTextures = (
-  texturePath: string
-): Promise<THREE.Texture | undefined> => {
-  const loader = new THREE.TextureLoader();
+const loadTextures = (texturePath: string): Promise<Texture | undefined> => {
+  const loader = new TextureLoader();
 
-  return new Promise<THREE.Texture | undefined>((resolve, reject) => {
+  return new Promise<Texture | undefined>((resolve, reject) => {
     if (!texturePath) {
       resolve(undefined);
     } else {
@@ -55,9 +53,7 @@ const loadAllTextures = async (textures: Textures): Promise<LoadedTextures> => {
     return {};
   }
 
-  const loadTexture = async (
-    path?: string
-  ): Promise<THREE.Texture | undefined> => {
+  const loadTexture = async (path?: string): Promise<Texture | undefined> => {
     if (path) {
       try {
         const textures = await loadTextures(path);

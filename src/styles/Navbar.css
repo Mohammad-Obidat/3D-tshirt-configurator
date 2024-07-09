@@ -29,14 +29,11 @@
   text-decoration: none;
   border-radius: 5px;
   transition: background-color 0.3s ease;
+  cursor: pointer;
 }
 
 .btn:hover {
   background-color: #777;
-}
-
-.home-link {
-  text-decoration: none;
 }
 
 /* Responsive styles */

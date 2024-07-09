@@ -19,7 +19,7 @@ export interface Textures {
 
 export interface TextureWithCoordinates {
   texture?: Texture;
-  coordinates?: { x: number; y: number };
+  coordinates?: TextureCoordinate;
 }
 
 export interface LoadedTextures {

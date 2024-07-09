@@ -1,8 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavbarProps } from '../interfaces/App.interface';
 import '../styles/Navbar.css';
 
-const NavBar: React.FC = () => {
+const NavBar: React.FC<NavbarProps> = ({ navigateTo }) => {
   return (
     <>
       <nav className='navbar'>
@@ -11,12 +11,12 @@ const NavBar: React.FC = () => {
             <img src='/assets/textures/Logo.png' alt='Store Logo' />
           </div>
           <div className='navbar-buttons'>
-            <Link to='/' className='btn home-link'>
+            <div className='btn' onClick={() => navigateTo('home')}>
               Home
-            </Link>
-            <Link to='/customizer' className='btn home-link'>
+            </div>
+            <div className='btn' onClick={() => navigateTo('customizer')}>
               Customizer
-            </Link>
+            </div>
           </div>
         </div>
       </nav>

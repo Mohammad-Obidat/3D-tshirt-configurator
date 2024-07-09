@@ -1,19 +1,57 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Object3D } from 'three';
+import NavBar from './components/NavBar.tsx';
+import loadShirtModel from './config/helpers/ThreeLoaders.ts';
+import ThreeCanvas from './components/canvas/ThreeCanvas.tsx';
 import Home from './pages/Home.tsx';
 import Customizer from './pages/Customizer.tsx';
-import Layout from './components/Layout.tsx';
+import Footer from './components/Footer.tsx';
+import './styles/App.css';
 
 const App: React.FC = () => {
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [component, setComponent] = useState<string>('home');
+  const [model, setModel] = useState<Object3D | undefined>(undefined);
+
+  const navigateTo = (name: string): void => {
+    setComponent(name);
+  };
+
+  useEffect(() => {
+    const loadModel = async () => {
+      try {
+        setIsLoading(true);
+        const tshirtModel = await loadShirtModel();
+        setModel(tshirtModel);
+      } catch (error) {
+        console.error('Error adding the t-shirt model to the scene:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadModel();
+  }, []);
+
   return (
-    <Router>
-      <Routes>
-        <Route path='/' element={<Layout />}>
-          <Route index element={<Home />} />
-          <Route path='/customizer' element={<Customizer />} />
-        </Route>
-      </Routes>
-    </Router>
+    <>
+      <NavBar navigateTo={navigateTo} />
+      <div className='grid-container'>
+        <div className='canvas-container'>
+          <ThreeCanvas
+            model={model}
+            isLoading={isLoading}
+            isIntro={component}
+          />
+        </div>
+        {component === 'home' ? (
+          <Home navigateTo={navigateTo} />
+        ) : (
+          <Customizer model={model} navigateTo={navigateTo} />
+        )}
+      </div>
+      <Footer />
+    </>
   );
 };
 

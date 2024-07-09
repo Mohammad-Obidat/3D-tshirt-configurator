@@ -3,7 +3,7 @@ import { colors } from '../../config/constants/Colors';
 import { ColorContent } from '../../interfaces/TabContent.interface';
 import '../../styles/Colors.css';
 
-const Colors: React.FC<ColorContent> = ({ tshirt, textureManager }) => {
+const Colors: React.FC<ColorContent> = ({ model, textureManager }) => {
   const [selectedColor, setSelectedColor] = useState<string | null>('white');
 
   const handleColorChange = (
@@ -16,12 +16,12 @@ const Colors: React.FC<ColorContent> = ({ tshirt, textureManager }) => {
   };
 
   useEffect(() => {
-    if (tshirt && textureManager) {
+    if (model && textureManager) {
       if (selectedColor) {
         textureManager.applyNewColorMaterial(selectedColor);
       }
     }
-  }, [tshirt, textureManager, selectedColor]);
+  }, [model, textureManager, selectedColor]);
 
   return (
     <div className='color-container'>

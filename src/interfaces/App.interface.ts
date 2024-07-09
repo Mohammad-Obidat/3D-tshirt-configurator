@@ -1,14 +1,24 @@
-import { Dispatch, SetStateAction } from 'react';
 import { Object3D } from 'three';
 
-export interface AppState {
-  isIntro: boolean;
-  tshirt: Object3D | undefined;
-  setIsIntro: Dispatch<SetStateAction<boolean>>;
-  setTshirt: Dispatch<SetStateAction<Object3D | undefined>>;
+export interface Object3DModel {
+  model: Object3D | undefined;
 }
 
 export interface ThreeCanvasProps {
-  model: Object3D | undefined;
+  model: Object3DModel;
   isLoading: boolean;
+  isIntro: string;
+}
+
+export interface CustomizerProps {
+  model: Object3DModel;
+  navigateTo: (component: string) => void;
+}
+
+export interface HomeProps {
+  navigateTo: (component: string) => void;
+}
+
+export interface NavbarProps {
+  navigateTo: (component: string) => void;
 }

@@ -90,10 +90,9 @@ export default class TextureManager {
       this.model.traverse((child) => {
         if (child instanceof THREE.Mesh) {
           const geometry: THREE.BufferGeometry = child.geometry.clone();
+          this.removeMeshFromChild(child);
 
           if (child.name === 'Cloth_mesh_24' && textures.front) {
-            this.removeMeshFromChild(child);
-
             const frontTexture: TextureWithCoordinates = textures.front;
             const material: THREE.MeshBasicMaterial =
               this.createTextureMaterial(frontTexture.texture);
@@ -114,8 +113,6 @@ export default class TextureManager {
           }
 
           if (child.name === 'Cloth_mesh_3' && textures.back) {
-            this.removeMeshFromChild(child);
-
             const backTexture: TextureWithCoordinates = textures.back;
             const material: THREE.MeshBasicMaterial =
               this.createTextureMaterial(backTexture.texture);

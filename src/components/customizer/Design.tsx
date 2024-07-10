@@ -9,7 +9,7 @@ import '../../styles/Design.css';
 
 const Design: React.FC<DesignContent> = ({ textureManager }) => {
   const [tabs, setTabs] = useState<TabsProps>(DesignTabs);
-  const [chosenTab, setChosenTab] = useState<TabProps>(DesignTabs[0]);
+  const [chosenTab, setChosenTab] = useState<TabProps>();
   const [textures, setTextures] = useState<LoadedTextures>({});
 
   const fetchTextures = async (tab: TabProps) => {

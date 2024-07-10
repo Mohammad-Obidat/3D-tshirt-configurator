@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { colors } from '../../config/constants/Colors';
+import { colors } from '../../config/constants/Colors.constant';
 import { ColorContent } from '../../interfaces/TabContent.interface';
 import '../../styles/Colors.css';
 

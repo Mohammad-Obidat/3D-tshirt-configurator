@@ -2,51 +2,55 @@ import React, { useEffect, useState } from 'react';
 import Tabs from '../components/Tabs';
 import TabContentViewer from '../components/customizer/TabContentViewer';
 import { stylishTabs } from '../config/constants/StylishTabs.constant';
-import { controlsTabs } from '../config/constants/ControlTabx';
-import { TabProps, TabsProps } from '../interfaces/Tabs.interface';
+import { controlsTabs } from '../config/constants/ControlTabs.constant';
 import { CustomizerProps } from '../interfaces/App.interface';
 import '../styles/Customizer.css';
 
 const Customizer: React.FC<CustomizerProps> = ({ model, navigateTo }) => {
-  const [stylyTabs, setStylyTabs] = useState<TabsProps>(stylishTabs);
-  const [chosenStyleTab, setChosenStyleTab] = useState<TabProps>(
-    stylishTabs[0]
-  );
-  const [controlTabs, setControlTabs] = useState<TabsProps>(controlsTabs);
-  const [chosenControlTab, setChosenControlTab] = useState<TabProps>(
-    controlsTabs[0]
-  );
+  const [tabsState, setTabsState] = useState({
+    stylish: { tabs: stylishTabs, chosen: stylishTabs[0] },
+    controls: { tabs: controlsTabs, chosen: controlsTabs[0] },
+  });
 
   useEffect(() => {
     navigateTo('customizer');
   }, [navigateTo]);
 
-  const setActiveTab = (id: number) => {
-    const updatedTabs = stylyTabs.map((tab) => {
+  const setActiveTab = (id: number, type: 'stylish' | 'controls') => {
+    const updatedTabs = tabsState[type].tabs.map((tab) => {
       if (tab.id === id) {
-        setChosenStyleTab(tab);
         return { ...tab, isActive: true };
       } else {
         return { ...tab, isActive: false };
       }
     });
-    setStylyTabs(updatedTabs);
+    setTabsState((prevState) => ({
+      ...prevState,
+      [type]: {
+        tabs: updatedTabs,
+        chosen: updatedTabs.find((tab) => tab.id === id)!,
+      },
+    }));
   };
 
   return (
     <div className='customizer-container'>
       <div className='stylishTabs'>
-        <Tabs tabs={stylyTabs} tabsType='stylish' setActiveTab={setActiveTab} />
+        <Tabs
+          tabs={tabsState.stylish.tabs}
+          tabsType='stylish'
+          setActiveTab={(id) => setActiveTab(id, 'stylish')}
+        />
       </div>
       <div className='customView-container'>
         <div className='viewer-container'>
-          <TabContentViewer tab={chosenStyleTab} model={model} />
+          <TabContentViewer tab={tabsState.stylish.chosen} model={model} />
         </div>
         <div className='controlTabs-container'>
           <Tabs
-            tabs={controlTabs}
+            tabs={tabsState.controls.tabs}
             tabsType='controls'
-            setActiveTab={() => console.log('control')}
+            setActiveTab={(id) => setActiveTab(id, 'controls')}
           />
         </div>
       </div>

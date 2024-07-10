@@ -9,21 +9,23 @@ const Tabs: React.FC<TabsComponentProps> = ({
   tabsType,
   setActiveTab,
 }) => {
+  const tabClassMap: { [key: string]: string } = {
+    stylish: 'stylish-tab',
+    controls: 'control-tab',
+    design: 'design-tab',
+  };
+
+  const handleTabClick = (id: number, tabType: string) => {
+    setActiveTab(id, tabType);
+  };
+
   return (
     <>
       {tabs.map((tab) => (
         <div
           key={tab.id}
-          onClick={() => setActiveTab(tab.id)}
-          className={`${
-            tabsType === 'stylish'
-              ? 'stylish-tab'
-              : tabsType === 'design'
-              ? 'design-tab'
-              : tabsType === 'controls'
-              ? 'control-tab'
-              : ''
-          } ${tab.isActive ? 'active' : ''}`}
+          onClick={() => handleTabClick(tab.id, tabsType)}
+          className={`${tabClassMap[tabsType]} ${tab.isActive ? 'active' : ''}`}
         >
           <Tab
             id={tab.id}

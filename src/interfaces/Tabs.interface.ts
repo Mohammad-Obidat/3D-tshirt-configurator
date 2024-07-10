@@ -12,5 +12,5 @@ export type TabsProps = TabProps[];
 export interface TabsComponentProps {
   tabs: TabsProps;
   tabsType: string;
-  setActiveTab: (id: number) => void;
+  setActiveTab: (id: number, type: string) => void;
 }

@@ -15,8 +15,18 @@ export default class TextureManager {
     // this.currentMesh = undefined;
   }
 
-  applyNewColorMaterial(selectedColor: string): void {
-    if (this.currentMesh) {
+  applyNewColorMaterial(selectedColor: string, selectedType: string): void {
+    if (selectedType === 'main') {
+      this.model?.traverse((child) => {
+        if (child instanceof THREE.Mesh) {
+          if (child.material instanceof THREE.MeshStandardMaterial) {
+            child.material.color.set(selectedColor);
+            child.material.needsUpdate = true;
+          }
+        }
+      });
+    }
+    if (this.currentMesh && selectedType === 'design') {
       if (this.currentMesh.material instanceof THREE.MeshBasicMaterial) {
         this.currentMesh.material.color.set(selectedColor);
       } else if (Array.isArray(this.currentMesh.material)) {
@@ -35,6 +45,7 @@ export default class TextureManager {
     return new THREE.MeshBasicMaterial({
       map: texture,
       transparent: true,
+      color: new THREE.Color(0xff0000),
     });
   }
 

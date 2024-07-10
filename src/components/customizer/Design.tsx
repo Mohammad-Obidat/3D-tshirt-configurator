@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { DesignContent } from '../../interfaces/TabContent.interface';
+import { DesignContentProps } from '../../interfaces/TabContent.interface';
 import { TabProps } from '../../interfaces/Tabs.interface';
 import { LoadedTextures } from '../../interfaces/Textures.interface';
 import { loadAllTextures } from '../../config/helpers/ThreeLoaders';
 import Tabs from '../Tabs';
 import '../../styles/Design.css';
 
-const Design: React.FC<DesignContent> = ({
+const Design: React.FC<DesignContentProps> = ({
   textureManager,
   designObj,
   setActiveTab,

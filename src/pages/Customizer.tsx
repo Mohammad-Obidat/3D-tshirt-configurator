@@ -7,7 +7,7 @@ import { DesignTabs } from '../config/constants/DesignTabs.constant';
 import { colors } from '../config/constants/Colors.constant';
 import { CustomizerProps } from '../interfaces/App.interface';
 import {
-  AppState,
+  CustomizerState,
   ColorState,
   TabType,
 } from '../interfaces/TabContent.interface';
@@ -22,7 +22,7 @@ const Customizer: React.FC<CustomizerProps> = ({ model, navigateTo }) => {
     isAppear: false,
   };
 
-  const [tabsState, setTabsState] = useState<AppState>({
+  const [tabsState, setTabsState] = useState<CustomizerState>({
     stylish: { tabs: stylishTabs, chosen: stylishTabs[0] },
     controls: { tabs: controlsTabs, chosen: controlsTabs[0] },
     design: { tabs: DesignTabs, chosen: DesignTabs[0] },

@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { colors } from '../../config/constants/Colors.constant';
-import { ColorContent } from '../../interfaces/TabContent.interface';
+import { ColorContentProps } from '../../interfaces/TabContent.interface';
 import '../../styles/Colors.css';
 
-const Colors: React.FC<ColorContent> = ({
+const Colors: React.FC<ColorContentProps> = ({
   model,
   textureManager,
   colorObj,

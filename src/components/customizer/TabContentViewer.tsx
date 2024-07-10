@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { TabContent } from '../../interfaces/TabContent.interface';
+import { TabContentProps } from '../../interfaces/TabContent.interface';
 import TextureManager from '../../lib/TextureManager';
 import Design from './Design';
 import Colors from './Colors';
 import Text from './Text';
 import Logos from './Logos';
 
-const TabContentViewer: React.FC<TabContent> = ({
+const TabContentViewer: React.FC<TabContentProps> = ({
   tab,
   model,
   designObj,

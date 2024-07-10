@@ -1,5 +1,6 @@
 import { TabType } from './TabContent.interface';
 import { Textures } from './Textures.interface';
+
 export interface TabProps {
   id: number;
   title: string;

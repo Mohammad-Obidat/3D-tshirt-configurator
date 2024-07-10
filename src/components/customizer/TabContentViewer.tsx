@@ -6,7 +6,13 @@ import Colors from './Colors';
 import Text from './Text';
 import Logos from './Logos';
 
-const TabContentViewer: React.FC<TabContent> = ({ tab, model }) => {
+const TabContentViewer: React.FC<TabContent> = ({
+  tab,
+  model,
+  designObj,
+  colorObj,
+  setActiveTab,
+}) => {
   const textureManagerRef = useRef<TextureManager | null>(null);
   const [textureManager, setTextureManager] = useState<TextureManager | null>(
     null
@@ -23,15 +29,33 @@ const TabContentViewer: React.FC<TabContent> = ({ tab, model }) => {
 
   switch (tab.id && tab.title) {
     case 1 && 'Design':
-      return <Design textureManager={textureManager} />;
+      return (
+        <Design
+          textureManager={textureManager}
+          designObj={designObj}
+          setActiveTab={setActiveTab}
+        />
+      );
     case 2 && 'Colors':
-      return <Colors model={model} textureManager={textureManager} />;
+      return (
+        <Colors
+          model={model}
+          textureManager={textureManager}
+          tabs={colorObj.tabs}
+        />
+      );
     case 3 && 'Text':
       return <Text />;
     case 4 && 'Logos':
       return <Logos />;
     default:
-      return <Design textureManager={textureManager} />;
+      return (
+        <Design
+          textureManager={textureManager}
+          designObj={designObj}
+          setActiveTab={setActiveTab}
+        />
+      );
   }
 };
 

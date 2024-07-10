@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { DesignContent } from '../../interfaces/TabContent.interface';
-import { TabProps, TabsProps } from '../../interfaces/Tabs.interface';
+import { TabProps } from '../../interfaces/Tabs.interface';
 import { LoadedTextures } from '../../interfaces/Textures.interface';
-import { DesignTabs } from '../../config/constants/DesignTabs.constant';
 import { loadAllTextures } from '../../config/helpers/ThreeLoaders';
 import Tabs from '../Tabs';
 import '../../styles/Design.css';
 
-const Design: React.FC<DesignContent> = ({ textureManager }) => {
-  const [tabs, setTabs] = useState<TabsProps>(DesignTabs);
-  const [chosenTab, setChosenTab] = useState<TabProps>();
+const Design: React.FC<DesignContent> = ({
+  textureManager,
+  designObj,
+  setActiveTab,
+}) => {
   const [textures, setTextures] = useState<LoadedTextures>({});
 
   const fetchTextures = async (tab: TabProps) => {
@@ -23,23 +24,11 @@ const Design: React.FC<DesignContent> = ({ textureManager }) => {
     }
   };
 
-  const setActiveTab = (id: number) => {
-    const updatedTabs = tabs.map((tab) => {
-      if (tab.id === id) {
-        setChosenTab(tab);
-        return { ...tab, isActive: true };
-      } else {
-        return { ...tab, isActive: false };
-      }
-    });
-    setTabs(updatedTabs);
-  };
-
   useEffect(() => {
-    if (chosenTab) {
-      fetchTextures(chosenTab);
+    if (designObj.chosen) {
+      fetchTextures(designObj.chosen);
     }
-  }, [chosenTab]);
+  }, [designObj.chosen]);
 
   useEffect(() => {
     if (textureManager) {
@@ -51,7 +40,11 @@ const Design: React.FC<DesignContent> = ({ textureManager }) => {
 
   return (
     <div className='design-container'>
-      <Tabs tabs={tabs} tabsType='design' setActiveTab={setActiveTab} />
+      <Tabs
+        tabs={designObj.tabs}
+        tabsType='design'
+        setActiveTab={setActiveTab}
+      />
     </div>
   );
 };

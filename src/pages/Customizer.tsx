@@ -6,38 +6,53 @@ import { controlsTabs } from '../config/constants/ControlTabs.constant';
 import { DesignTabs } from '../config/constants/DesignTabs.constant';
 import { colors } from '../config/constants/Colors.constant';
 import { CustomizerProps } from '../interfaces/App.interface';
+import {
+  AppState,
+  ColorState,
+  TabType,
+} from '../interfaces/TabContent.interface';
+import { TabProps, TabsProps } from '../interfaces/Tabs.interface';
 import '../styles/Customizer.css';
 
 const Customizer: React.FC<CustomizerProps> = ({ model, navigateTo }) => {
-  const [tabsState, setTabsState] = useState({
+  const initialColorState: ColorState = {
+    tabs: colors,
+    chosen: { main: '', design: '' },
+    chosenType: 'main',
+    isAppear: false,
+  };
+
+  const [tabsState, setTabsState] = useState<AppState>({
     stylish: { tabs: stylishTabs, chosen: stylishTabs[0] },
     controls: { tabs: controlsTabs, chosen: controlsTabs[0] },
-    designs: { tabs: DesignTabs, chosen: DesignTabs[0] },
-    colors: { tabs: colors, chosen: colors[0] },
+    design: { tabs: DesignTabs, chosen: DesignTabs[0] },
+    colors: initialColorState,
   });
 
   useEffect(() => {
     navigateTo('customizer');
   }, [navigateTo]);
 
-  const setActiveTab = (
-    id: number,
-    type: 'stylish' | 'controls' | 'designs'
-  ) => {
-    const updatedTabs = tabsState[type].tabs.map((tab) => {
-      if (tab.id === id) {
-        return { ...tab, isActive: true };
-      } else {
-        return { ...tab, isActive: false };
-      }
+  const setActiveTab = (id: number, type: TabType) => {
+    setTabsState((prevState) => {
+      const updatedTabs = (prevState[type].tabs as TabsProps).map(
+        (tab: TabProps) => ({
+          ...tab,
+          isActive: tab.id === id,
+        })
+      );
+
+      return {
+        ...prevState,
+        [type]: {
+          ...prevState[type],
+          tabs: updatedTabs,
+          chosen:
+            updatedTabs.find((tab: TabProps) => tab.id === id) ||
+            prevState[type].chosen,
+        },
+      };
     });
-    setTabsState((prevState) => ({
-      ...prevState,
-      [type]: {
-        tabs: updatedTabs,
-        chosen: updatedTabs.find((tab) => tab.id === id)!,
-      },
-    }));
   };
 
   return (
@@ -54,9 +69,10 @@ const Customizer: React.FC<CustomizerProps> = ({ model, navigateTo }) => {
           <TabContentViewer
             tab={tabsState.stylish.chosen}
             model={model}
-            designObj={tabsState.designs}
+            designObj={tabsState.design}
             colorObj={tabsState.colors}
-            setActiveTab={(id) => setActiveTab(id, 'designs')}
+            setTabsState={setTabsState}
+            setActiveTab={(id) => setActiveTab(id, 'design')}
           />
         </div>
         <div className='controlTabs-container'>

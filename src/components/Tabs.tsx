@@ -1,6 +1,7 @@
 import React from 'react';
 import Tab from './Tab';
 import { TabsComponentProps } from '../interfaces/Tabs.interface';
+import { TabType } from '../interfaces/TabContent.interface';
 import '../styles/Tabs.css';
 import '../styles/Design.css';
 
@@ -15,7 +16,7 @@ const Tabs: React.FC<TabsComponentProps> = ({
     design: 'design-tab',
   };
 
-  const handleTabClick = (id: number, tabType: string) => {
+  const handleTabClick = (id: number, tabType: TabType) => {
     setActiveTab(id, tabType);
   };
 

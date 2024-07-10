@@ -1,3 +1,4 @@
+import { TabType } from './TabContent.interface';
 import { Textures } from './Textures.interface';
 export interface TabProps {
   id: number;
@@ -11,6 +12,6 @@ export type TabsProps = TabProps[];
 
 export interface TabsComponentProps {
   tabs: TabsProps;
-  tabsType: string;
-  setActiveTab: (id: number, type: string) => void;
+  tabsType: TabType;
+  setActiveTab: (id: number, type: TabType) => void;
 }

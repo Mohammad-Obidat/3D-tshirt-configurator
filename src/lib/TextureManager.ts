@@ -8,6 +8,7 @@ export default class TextureManager {
   private model: THREE.Object3D | undefined;
   // private currentTexture: LoadedTextures | undefined;
   private currentMesh: THREE.Mesh | undefined;
+  private selectedColor: string | undefined;
 
   constructor(tshirtModel: THREE.Object3D) {
     this.model = tshirtModel;
@@ -25,8 +26,8 @@ export default class TextureManager {
           }
         }
       });
-    }
-    if (this.currentMesh && selectedType === 'design') {
+      // this.selectedColor = selectedColor;
+    } else if (this.currentMesh && selectedType === 'design') {
       if (this.currentMesh.material instanceof THREE.MeshBasicMaterial) {
         this.currentMesh.material.color.set(selectedColor);
       } else if (Array.isArray(this.currentMesh.material)) {
@@ -36,6 +37,7 @@ export default class TextureManager {
           }
         });
       }
+      this.selectedColor = selectedColor;
     }
   }
 
@@ -45,7 +47,7 @@ export default class TextureManager {
     return new THREE.MeshBasicMaterial({
       map: texture,
       transparent: true,
-      color: new THREE.Color(0xff0000),
+      color: new THREE.Color(this.selectedColor),
     });
   }
 

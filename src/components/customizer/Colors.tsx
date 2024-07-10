@@ -1,71 +1,79 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import { colors } from '../../config/constants/Colors.constant';
 import { ColorContent } from '../../interfaces/TabContent.interface';
 import '../../styles/Colors.css';
 
-const Colors: React.FC<ColorContent> = ({ model, textureManager, tabs }) => {
-  const [selectedColors, setSelectedColors] = useState<{
-    [key: string]: string;
-  }>({
-    main: 'white',
-    design: 'red',
-  });
-  const [selectedType, setSelectedType] = useState<'main' | 'design'>('main');
-  const [isAppear, setIsAppear] = useState<boolean>(false);
-
-  const toggleColorType = (type: 'main' | 'design'): void => {
-    setIsAppear((prev) => !prev);
-    setSelectedType(type);
-  };
-
+const Colors: React.FC<ColorContent> = ({
+  model,
+  textureManager,
+  colorObj,
+  setTabsState,
+}) => {
   const handleColorChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ): void => {
-    event.preventDefault();
     const { id } = event.target;
-    setSelectedColors((prev) => ({
-      ...prev,
-      [selectedType]: id,
+    setTabsState((prevState) => ({
+      ...prevState,
+      colors: {
+        ...prevState.colors,
+        chosen: {
+          ...prevState.colors.chosen,
+          [prevState.colors.chosenType]: id,
+        },
+      },
+    }));
+  };
+
+  const toggleColorType = (type: 'main' | 'design'): void => {
+    setTabsState((prevState) => ({
+      ...prevState,
+      colors: {
+        ...prevState.colors,
+        chosenType: type,
+        isAppear: !prevState.colors.isAppear,
+      },
     }));
   };
 
   useEffect(() => {
     if (model && textureManager) {
-      textureManager.applyNewColorMaterial(
-        selectedColors[selectedType],
-        selectedType
-      );
+      const color = colorObj.chosen[colorObj.chosenType];
+      if (color) {
+        textureManager.applyNewColorMaterial(color, colorObj.chosenType);
+      }
     }
-  }, [model, textureManager, selectedColors, selectedType]);
+  }, [model, textureManager, colorObj.chosen, colorObj.chosenType]);
 
   return (
     <>
-      <div className='div-color'>
+      <div className='div-color' onClick={() => toggleColorType('main')}>
         <h4>Main color</h4>
-        <div onClick={() => toggleColorType('main')}>
-          <label className={selectedColors.main}>
-            <span className={`${selectedColors.main} color-border`}></span>
+        <div>
+          <label className={colorObj.chosen.main}>
+            <span className={`${colorObj.chosen.main} color-border`}></span>
           </label>
         </div>
       </div>
       <hr />
-      <div className='div-color'>
+      <div className='div-color' onClick={() => toggleColorType('design')}>
         <h4>Design color</h4>
-        <div onClick={() => toggleColorType('design')}>
-          <label className={selectedColors.design}>
-            <span className={`${selectedColors.design} color-border`}></span>
+        <div>
+          <label className={colorObj.chosen.design}>
+            <span className={`${colorObj.chosen.design} color-border`}></span>
           </label>
         </div>
       </div>
       <hr />
-      {isAppear && (
+      {colorObj.isAppear && (
         <div className='color-container'>
-          {tabs.map((color) => (
+          {colors.map((color) => (
             <div key={color}>
               <input
                 type='radio'
                 id={color}
                 name='color'
-                checked={selectedColors[selectedType] === color}
+                checked={colorObj.chosen[colorObj.chosenType] === color}
                 onChange={handleColorChange}
               />
               <label htmlFor={color} className={color}>

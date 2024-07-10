@@ -11,6 +11,7 @@ const TabContentViewer: React.FC<TabContent> = ({
   model,
   designObj,
   colorObj,
+  setTabsState,
   setActiveTab,
 }) => {
   const textureManagerRef = useRef<TextureManager | null>(null);
@@ -41,7 +42,8 @@ const TabContentViewer: React.FC<TabContent> = ({
         <Colors
           model={model}
           textureManager={textureManager}
-          tabs={colorObj.tabs}
+          colorObj={colorObj}
+          setTabsState={setTabsState}
         />
       );
     case 3 && 'Text':

@@ -12,6 +12,9 @@ const Design: React.FC<DesignContent> = ({
   setActiveTab,
 }) => {
   const [textures, setTextures] = useState<LoadedTextures>({});
+  const [selectedDesign, setSelectedDesign] = useState<TabProps>(
+    designObj.chosen
+  );
 
   const fetchTextures = async (tab: TabProps) => {
     if (tab.textures) {
@@ -25,10 +28,11 @@ const Design: React.FC<DesignContent> = ({
   };
 
   useEffect(() => {
-    if (designObj.chosen) {
+    if (designObj.chosen.id !== selectedDesign.id) {
       fetchTextures(designObj.chosen);
+      setSelectedDesign(designObj.chosen);
     }
-  }, [designObj.chosen]);
+  }, [designObj.chosen, selectedDesign]);
 
   useEffect(() => {
     if (textureManager) {

@@ -19,7 +19,7 @@ export interface CustomizerState {
 }
 
 export interface TabContentProps {
-  tab: TabProps;
+  stylishTab: TabProps;
   model: Object3D | undefined;
   designObj: { tabs: TabsProps; chosen: TabProps };
   colorObj: ColorState;

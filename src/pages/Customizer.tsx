@@ -67,7 +67,7 @@ const Customizer: React.FC<CustomizerProps> = ({ model, navigateTo }) => {
       <div className='customView-container'>
         <div className='viewer-container'>
           <TabContentViewer
-            tab={tabsState.stylish.chosen}
+            stylishTab={tabsState.stylish.chosen}
             model={model}
             designObj={tabsState.design}
             colorObj={tabsState.colors}

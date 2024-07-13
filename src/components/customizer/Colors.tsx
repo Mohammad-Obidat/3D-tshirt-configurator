@@ -47,42 +47,44 @@ const Colors: React.FC<ColorContentProps> = ({
 
   return (
     <>
-      <div className='div-color' onClick={() => toggleColorType('main')}>
-        <h4>Main color</h4>
-        <div>
-          <label className={colorObj.chosen.main}>
-            <span className={`${colorObj.chosen.main} color-border`}></span>
-          </label>
+      <div className='color-container'>
+        <div className='div-color' onClick={() => toggleColorType('main')}>
+          <h4>Main color</h4>
+          <div>
+            <label className={colorObj.chosen.main}>
+              <span className={`${colorObj.chosen.main} color-border`}></span>
+            </label>
+          </div>
         </div>
+        <hr />
+        <div className='div-color' onClick={() => toggleColorType('design')}>
+          <h4>Design color</h4>
+          <div>
+            <label className={colorObj.chosen.design}>
+              <span className={`${colorObj.chosen.design} color-border`}></span>
+            </label>
+          </div>
+        </div>
+        <hr />
+        {colorObj.isAppear && (
+          <div className='color-list'>
+            {colors.map((color) => (
+              <div key={color}>
+                <input
+                  type='radio'
+                  id={color}
+                  name='color'
+                  checked={colorObj.chosen[colorObj.chosenType] === color}
+                  onChange={handleColorChange}
+                />
+                <label htmlFor={color} className={color}>
+                  <span className={`${color} color-border`}></span>
+                </label>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
-      <hr />
-      <div className='div-color' onClick={() => toggleColorType('design')}>
-        <h4>Design color</h4>
-        <div>
-          <label className={colorObj.chosen.design}>
-            <span className={`${colorObj.chosen.design} color-border`}></span>
-          </label>
-        </div>
-      </div>
-      <hr />
-      {colorObj.isAppear && (
-        <div className='color-container'>
-          {colors.map((color) => (
-            <div key={color}>
-              <input
-                type='radio'
-                id={color}
-                name='color'
-                checked={colorObj.chosen[colorObj.chosenType] === color}
-                onChange={handleColorChange}
-              />
-              <label htmlFor={color} className={color}>
-                <span className={`${color} color-border`}></span>
-              </label>
-            </div>
-          ))}
-        </div>
-      )}
     </>
   );
 };

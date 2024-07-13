@@ -7,7 +7,7 @@ import Text from './Text';
 import Logos from './Logos';
 
 const TabContentViewer: React.FC<TabContentProps> = ({
-  tab,
+  stylishTab,
   model,
   designObj,
   colorObj,
@@ -28,7 +28,7 @@ const TabContentViewer: React.FC<TabContentProps> = ({
     }
   }, [model]);
 
-  switch (tab.id && tab.title) {
+  switch (stylishTab.id && stylishTab.title) {
     case 1 && 'Design':
       return (
         <Design

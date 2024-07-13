@@ -1,5 +1,12 @@
 @import url('https://fonts.googleapis.com/css?family=Lato:400,300');
 
+.color-container {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
 .div-color {
   display: flex;
   flex-direction: row;
@@ -8,7 +15,7 @@
   align-items: center;
 }
 
-.color-container {
+.color-list {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 10px;

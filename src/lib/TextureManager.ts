@@ -5,7 +5,7 @@ import {
 } from '../interfaces/Textures.interface';
 
 export default class TextureManager {
-  private model: THREE.Object3D | undefined;
+  model: THREE.Object3D | undefined;
   // private currentTexture: LoadedTextures | undefined;
   private currentMesh: THREE.Mesh | undefined;
   private selectedColor: string | undefined;
@@ -94,40 +94,28 @@ export default class TextureManager {
           const geometry: THREE.BufferGeometry = child.geometry.clone();
           this.removeMeshFromChild(child);
 
-          if (child.name === 'Cloth_mesh_24' && textures.front) {
-            const frontTexture: TextureWithCoordinates = textures.front;
+          const applyTexture = (
+            texture: TextureWithCoordinates,
+            id: number,
+            name: string
+          ) => {
             const material: THREE.MeshBasicMaterial =
-              this.createTextureMaterial(frontTexture.texture);
+              this.createTextureMaterial(texture.texture);
             this.adjustGeometry(
               geometry,
-              frontTexture.coordinates?.x || 2,
-              frontTexture.coordinates?.y || -1
+              texture.coordinates?.x || 2,
+              texture.coordinates?.y || -1
             );
             const mesh: THREE.Mesh = new THREE.Mesh(geometry, material);
-            mesh.userData = { id: 1, name: 'front' };
+            mesh.userData = { id, name };
             this.currentMesh = mesh;
-
             child.add(mesh);
-            console.log('child:', child);
-            console.log('mesh:', mesh);
-            // child.material = material;
-            // child.material.needsUpdate = true;
-          }
+          };
 
-          if (child.name === 'Cloth_mesh_3' && textures.back) {
-            const backTexture: TextureWithCoordinates = textures.back;
-            const material: THREE.MeshBasicMaterial =
-              this.createTextureMaterial(backTexture.texture);
-            this.adjustGeometry(
-              geometry,
-              backTexture.coordinates?.x || 2,
-              backTexture.coordinates?.y || -1
-            );
-            const mesh: THREE.Mesh = new THREE.Mesh(geometry, material);
-            mesh.userData = { id: 2, name: 'back' };
-            this.model?.add(mesh);
-            // child.material = material;
-            // child.material.needsUpdate = true;
+          if (child.name === 'Cloth_mesh_24' && textures.front) {
+            applyTexture(textures.front, 1, 'front');
+          } else if (child.name === 'Cloth_mesh_3' && textures.back) {
+            applyTexture(textures.back, 2, 'back');
           }
         }
       });

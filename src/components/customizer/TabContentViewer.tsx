@@ -11,6 +11,7 @@ const TabContentViewer: React.FC<TabContentProps> = ({
   model,
   designObj,
   colorObj,
+  controlTab,
   setTabsState,
   setActiveTab,
 }) => {
@@ -47,7 +48,7 @@ const TabContentViewer: React.FC<TabContentProps> = ({
         />
       );
     case 3 && 'Text':
-      return <Text />;
+      return <Text model={model} controlTab={controlTab} />;
     case 4 && 'Logos':
       return <Logos />;
     default:

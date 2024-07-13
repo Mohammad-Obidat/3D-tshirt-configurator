@@ -1,7 +1,21 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import CanvasTextureManager from '../../lib/CanvasTexture';
+import { TextProps } from '../../interfaces/TabContent.interface';
 
-const Text: React.FC = () => {
+const Text: React.FC<TextProps> = ({ model, controlTab }) => {
+  const canvasTextureManagerRef = useRef<CanvasTextureManager | null>(null);
+  const [canvasTextureManager, setCanvasTextureManager] =
+    useState<CanvasTextureManager | null>(null);
   const [text, setText] = useState<string>('');
+
+  useEffect(() => {
+    if (model) {
+      if (!canvasTextureManagerRef.current) {
+        canvasTextureManagerRef.current = new CanvasTextureManager(model);
+        setCanvasTextureManager(canvasTextureManagerRef.current);
+      }
+    }
+  }, [model]);
 
   const handleInputText = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -11,9 +25,10 @@ const Text: React.FC = () => {
   };
 
   const addText = (): void => {
-    console.log(text);
-
-    setText('');
+    if (text) {
+      canvasTextureManager?.applyTextInput(controlTab.title, text);
+      setText('');
+    }
   };
 
   return (

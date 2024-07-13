@@ -23,6 +23,7 @@ export interface TabContentProps {
   model: Object3D | undefined;
   designObj: { tabs: TabsProps; chosen: TabProps };
   colorObj: ColorState;
+  controlTab: TabProps;
   setTabsState: React.Dispatch<React.SetStateAction<CustomizerState>>;
   setActiveTab: (id: number, type: TabType) => void;
 }
@@ -38,4 +39,9 @@ export interface ColorContentProps {
   textureManager: TextureManager | null;
   colorObj: ColorState;
   setTabsState: React.Dispatch<React.SetStateAction<CustomizerState>>;
+}
+
+export interface TextProps {
+  model: Object3D | undefined;
+  controlTab: TabProps;
 }

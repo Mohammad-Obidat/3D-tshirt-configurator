@@ -73,6 +73,7 @@ export default class SceneInit {
     this.controls.update();
 
     if (this.isAnimate) {
+      this.camera.fov = 7;
       this.autoRotateModel();
     } else {
       this.tShirtModel!.rotation.y = 0;

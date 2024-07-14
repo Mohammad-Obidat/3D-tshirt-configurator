@@ -149,15 +149,30 @@ export default class CanvasTextureManager extends TextureManager {
       Cloth_mesh_15: [1, -0.75],
     };
 
+    const repeatMapping: {
+      [key: string]: { repeat: [number, number]; center: [number, number] };
+    } = {
+      Cloth_mesh_9: { repeat: [5, 3], center: [-0.09, 0.35] },
+      Cloth_mesh_15: { repeat: [5, 3], center: [-0.13, 0.35] },
+    };
+
     const scaleFactor = scaleFactorMapping[targetMeshName] || [2, -1];
+    const repeatSettings = repeatMapping[targetMeshName];
+
+    const wrapMode = repeatSettings
+      ? THREE.RepeatWrapping
+      : THREE.ClampToEdgeWrapping;
+    canvasTexture.wrapT = canvasTexture.wrapS = wrapMode;
+
+    if (repeatSettings) {
+      canvasTexture.repeat.set(...repeatSettings.repeat);
+      canvasTexture.center.set(...repeatSettings.center);
+    }
 
     model.traverse((child) => {
       if (child instanceof THREE.Mesh && child.name === targetMeshName) {
-        canvasTexture.wrapT = canvasTexture.wrapS = THREE.ClampToEdgeWrapping;
-
         const material = this.createTextureMaterial(canvasTexture);
         const geometry = child.geometry.clone();
-
         this.adjustGeometry(geometry, scaleFactor[0], scaleFactor[1]);
 
         const mesh = new THREE.Mesh(geometry, material);

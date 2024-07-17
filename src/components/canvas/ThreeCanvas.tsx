@@ -13,7 +13,7 @@ const ThreeCanvas: React.FC<ThreeCanvasProps> = ({
 
   useEffect(() => {
     if (model && !canvasRef.current) {
-      canvasRef.current = new SceneInit('myThreeJsCanvas');
+      canvasRef.current = new SceneInit();
     }
 
     if (model && canvasRef.current) {

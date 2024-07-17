@@ -15,9 +15,11 @@ export default class SceneInit {
   private directionalLight: THREE.DirectionalLight;
   private animationFrameId: number | null = null;
   private CanvasContainer: HTMLDivElement | null;
+  private canvasId: HTMLCanvasElement | null;
 
-  constructor(canvasId: string) {
+  constructor() {
     this.CanvasContainer = document.querySelector('div.canvas-container');
+    this.canvasId = document.querySelector('canvas#myThreeJsCanvas');
 
     this.scene = new THREE.Scene();
     this.scene.background = new THREE.Color(0xfaebd7);
@@ -30,7 +32,7 @@ export default class SceneInit {
     );
     this.camera.position.z = 10;
 
-    const canvas = document.getElementById(canvasId) as HTMLCanvasElement;
+    const canvas = this.canvasId!;
     this.renderer = new THREE.WebGLRenderer({
       canvas,
       antialias: true,

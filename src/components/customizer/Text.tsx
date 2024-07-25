@@ -1,5 +1,6 @@
 import React, { ChangeEvent, useState } from 'react';
 import { UserInputProps } from '../../interfaces/TabContent.interface';
+import Delete from '../Delete';
 
 const Text: React.FC<UserInputProps> = ({
   canvasTextureManager,
@@ -43,8 +44,9 @@ const Text: React.FC<UserInputProps> = ({
         <hr />
         <div className='stylish-container'>
           {canvasTextureManager?.canvasTextTextures.map((t, i) => (
-            <div key={i} className='stylish-div text-div'>
-              {t.text}
+            <div key={i} className='stylish-div'>
+              <Delete />
+              <div className='text-div'>{t.text}</div>
             </div>
           ))}
         </div>

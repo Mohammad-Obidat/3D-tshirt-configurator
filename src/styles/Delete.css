@@ -1,0 +1,23 @@
+.circle {
+  width: 1em;
+  height: 1em;
+  position: absolute;
+  top: 0.1em;
+  right: 0.1em;
+  background-color: rgba(255, 0, 0, 0.658);
+  border-radius: 50%;
+  font-family: 'Arial', sans-serif;
+}
+
+.circle:hover {
+  background-color: red;
+}
+
+.delete-icon {
+  position: absolute;
+  bottom: 0.007em;
+  right: 0.23em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

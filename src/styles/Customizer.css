@@ -55,9 +55,11 @@
 }
 
 .stylish-div {
-  display: inline-flex;
   width: 5rem;
   height: 5rem;
+  display: inline-flex;
+  justify-content: center;
+  position: relative;
   cursor: pointer;
   background-color: #ffffff8f;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -72,6 +74,7 @@
 }
 
 .text-div {
+  display: flex;
   justify-content: center;
   align-items: center;
   font-weight: 800;

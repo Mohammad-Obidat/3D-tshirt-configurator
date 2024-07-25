@@ -1,4 +1,5 @@
 import React, { ChangeEvent, useRef, useState } from 'react';
+import Delete from '../Delete';
 import { UserInputProps } from '../../interfaces/TabContent.interface';
 import { reader } from '../../config/helpers/FileRader';
 
@@ -64,12 +65,12 @@ const Logos: React.FC<UserInputProps> = ({
         <hr />
         <div className='stylish-container'>
           {canvasTextureManager?.canvasImageTextures.map((img, i) => (
-            <img
-              key={i}
-              src={img.imageUrl}
-              alt='logo'
-              className='stylish-div'
-            />
+            <>
+              <div className='stylish-div'>
+                <Delete />
+                <img key={i} src={img.imageUrl} alt='logo' />
+              </div>
+            </>
           ))}
         </div>
       </div>

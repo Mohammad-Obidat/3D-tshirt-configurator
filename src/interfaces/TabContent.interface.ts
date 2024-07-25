@@ -1,5 +1,6 @@
 import { Object3D } from 'three';
 import TextureManager from '../lib/TextureManager';
+import CanvasTextureManager from '../lib/CanvasTexture';
 import { TabProps, TabsProps } from './Tabs.interface';
 
 export type TabType = 'stylish' | 'controls' | 'design' | 'colors';
@@ -41,7 +42,8 @@ export interface ColorContentProps {
   setTabsState: React.Dispatch<React.SetStateAction<CustomizerState>>;
 }
 
-export interface TextProps {
+export interface UserInputProps {
+  canvasTextureManager: CanvasTextureManager | null;
   model: Object3D | undefined;
   controlTab: TabProps;
 }

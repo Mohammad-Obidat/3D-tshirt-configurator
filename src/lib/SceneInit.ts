@@ -22,7 +22,7 @@ export default class SceneInit {
     this.canvasId = document.querySelector('canvas#myThreeJsCanvas');
 
     this.scene = new THREE.Scene();
-    this.scene.background = new THREE.Color(0xfaebd7);
+    this.scene.background = new THREE.Color(0xf5f7fa);
 
     this.camera = new THREE.PerspectiveCamera(
       this.fov,

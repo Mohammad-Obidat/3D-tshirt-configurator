@@ -81,36 +81,6 @@ export default class CanvasTextureManager extends TextureManager {
     texture!.needsUpdate = true;
   }
 
-  applyTextInput(controlTab: string, textInput: string): void {
-    this.createTextCanvasTexture(controlTab, textInput);
-  }
-
-  createTextCanvasTexture(controlTab: string, userText?: string): void {
-    const textCanvasTexture = this.createCanvasTexture(
-      (context, canvasWidth, canvasHeight) => {
-        context.fillStyle = 'white';
-        context.font = 'bold 48px Arial';
-        context.textAlign = 'center';
-        context.textBaseline = 'middle';
-        context.fillText(userText!, canvasWidth / 2, canvasHeight / 2);
-      }
-    );
-
-    const meshMapping: { [key: string]: string } = {
-      front: 'Cloth_mesh_24',
-      back: 'Cloth_mesh_3',
-      right: 'Cloth_mesh_9',
-      left: 'Cloth_mesh_15',
-    };
-
-    const targetMeshName = meshMapping[controlTab] || 'Cloth_mesh_24';
-    this.applyCanvasTextureToMesh(
-      this.model!,
-      textCanvasTexture,
-      targetMeshName
-    );
-  }
-
   createCanvasTexture(
     drawContent: (
       context: CanvasRenderingContext2D,
@@ -135,6 +105,61 @@ export default class CanvasTextureManager extends TextureManager {
     canvasTexture.needsUpdate = true;
 
     return canvasTexture;
+  }
+
+  createTextCanvasTexture(controlTab: string, userText?: string): void {
+    this.createAndApplyCanvasTexture(
+      controlTab,
+      (context, canvasWidth, canvasHeight) => {
+        context.fillStyle = 'white';
+        context.font = 'bold 48px Arial';
+        context.textAlign = 'center';
+        context.textBaseline = 'middle';
+        context.fillText(userText!, canvasWidth / 2, canvasHeight / 2);
+      }
+    );
+  }
+
+  createImageCanvasTexture(controlTab: string, imageUrl?: string): void {
+    const img = new Image();
+    img.src = imageUrl!;
+    img.onload = () => {
+      this.createAndApplyCanvasTexture(
+        controlTab,
+        (context, canvasWidth, canvasHeight) => {
+          context.drawImage(img, 0, 0, canvasWidth, canvasHeight);
+        }
+      );
+    };
+  }
+
+  applyTextInput(controlTab: string, textInput: string): void {
+    this.createTextCanvasTexture(controlTab, textInput);
+  }
+
+  applyImageInput(controlTab: string, imageUrl?: string): void {
+    this.createImageCanvasTexture(controlTab, imageUrl);
+  }
+
+  private createAndApplyCanvasTexture(
+    controlTab: string,
+    drawFunction: (
+      context: CanvasRenderingContext2D,
+      canvasWidth: number,
+      canvasHeight: number
+    ) => void
+  ): void {
+    const canvasTexture = this.createCanvasTexture(drawFunction);
+
+    const meshMapping: { [key: string]: string } = {
+      front: 'Cloth_mesh_24',
+      back: 'Cloth_mesh_3',
+      right: 'Cloth_mesh_9',
+      left: 'Cloth_mesh_15',
+    };
+
+    const targetMeshName = meshMapping[controlTab] || 'Cloth_mesh_24';
+    this.applyCanvasTextureToMesh(this.model!, canvasTexture, targetMeshName);
   }
 
   applyCanvasTextureToMesh(

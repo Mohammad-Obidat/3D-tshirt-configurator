@@ -1,16 +1,26 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useRef, useState } from 'react';
+import { UserInputProps } from '../../interfaces/TabContent.interface';
 import { reader } from '../../config/helpers/FileRader';
 
-const Logos: React.FC = () => {
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+const Logos: React.FC<UserInputProps> = ({
+  canvasTextureManager,
+  model,
+  controlTab,
+}) => {
+  const [selectedFile, setSelectedFile] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
+    const file = e.target.files?.[0] || null;
 
     if (file) {
       reader(file)
         .then((result) => {
-          setSelectedFile(file);
-          console.log(result);
+          if (typeof result === 'string') {
+            setSelectedFile(result);
+          } else {
+            console.error('File result is not a string');
+          }
         })
         .catch((error: Error) => {
           console.error('Error reading file:', error);
@@ -18,16 +28,33 @@ const Logos: React.FC = () => {
     }
   };
 
+  const addImage = (): void => {
+    setSelectedFile(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+    canvasTextureManager?.applyImageInput(controlTab.title, selectedFile!);
+  };
+
   return (
-    <div>
-      <input
-        type='file'
-        id='fileInput'
-        onChange={handleFileChange}
-        accept='image/*'
-      />
-      <div>{selectedFile && selectedFile.name}</div>
-    </div>
+    <>
+      <div className='userInput-container'>
+        <div className='top-container'>
+          <input
+            type='file'
+            id='fileInput'
+            onChange={handleFileChange}
+            accept='image/*'
+            className='user-input'
+            ref={fileInputRef}
+          />
+          <button type='submit' className='submit-btn' onClick={addImage}>
+            Add Image
+          </button>
+        </div>
+        <hr />
+      </div>
+    </>
   );
 };
 

@@ -1,21 +1,12 @@
-import React, { useEffect, useRef, useState } from 'react';
-import CanvasTextureManager from '../../lib/CanvasTexture';
-import { TextProps } from '../../interfaces/TabContent.interface';
+import React, { useState } from 'react';
+import { UserInputProps } from '../../interfaces/TabContent.interface';
 
-const Text: React.FC<TextProps> = ({ model, controlTab }) => {
-  const canvasTextureManagerRef = useRef<CanvasTextureManager | null>(null);
-  const [canvasTextureManager, setCanvasTextureManager] =
-    useState<CanvasTextureManager | null>(null);
+const Text: React.FC<UserInputProps> = ({
+  canvasTextureManager,
+  model,
+  controlTab,
+}) => {
   const [text, setText] = useState<string>('');
-
-  useEffect(() => {
-    if (model) {
-      if (!canvasTextureManagerRef.current) {
-        canvasTextureManagerRef.current = new CanvasTextureManager(model);
-        setCanvasTextureManager(canvasTextureManagerRef.current);
-      }
-    }
-  }, [model]);
 
   const handleInputText = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -33,7 +24,7 @@ const Text: React.FC<TextProps> = ({ model, controlTab }) => {
 
   return (
     <>
-      <div className='text-container'>
+      <div className='userInput-container'>
         <div className='top-container'>
           <label className='text-label' htmlFor='add-text'>
             Enter Text:
@@ -43,16 +34,16 @@ const Text: React.FC<TextProps> = ({ model, controlTab }) => {
             id='add-text'
             name='add text'
             value={text}
-            className='text-input'
+            className='user-input'
             placeholder='Enter your text here:'
             onChange={handleInputText}
           />
-          <button type='submit' className='text-btn' onClick={addText}>
+          <button type='submit' className='submit-btn' onClick={addText}>
             Add Text
           </button>
         </div>
         <hr />
-        <div className='stylish-container'>
+        {/* <div className='stylish-container'>
           <div className='stylish-div'>
             <label className='text-label' htmlFor='font-family'>
               change the font family:
@@ -87,7 +78,7 @@ const Text: React.FC<TextProps> = ({ model, controlTab }) => {
               name='font color'
             />
           </div>
-        </div>
+        </div> */}
       </div>
     </>
   );

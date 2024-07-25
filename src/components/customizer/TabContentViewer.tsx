@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { TabContentProps } from '../../interfaces/TabContent.interface';
 import TextureManager from '../../lib/TextureManager';
+import CanvasTextureManager from '../../lib/CanvasTexture';
 import Design from './Design';
 import Colors from './Colors';
 import Text from './Text';
@@ -19,12 +20,20 @@ const TabContentViewer: React.FC<TabContentProps> = ({
   const [textureManager, setTextureManager] = useState<TextureManager | null>(
     null
   );
+  const canvasTextureManagerRef = useRef<CanvasTextureManager | null>(null);
+  const [canvasTextureManager, setCanvasTextureManager] =
+    useState<CanvasTextureManager | null>(null);
 
   useEffect(() => {
     if (model) {
       if (!textureManagerRef.current) {
         textureManagerRef.current = new TextureManager(model);
         setTextureManager(textureManagerRef.current);
+      }
+
+      if (!canvasTextureManagerRef.current) {
+        canvasTextureManagerRef.current = new CanvasTextureManager(model);
+        setCanvasTextureManager(canvasTextureManagerRef.current);
       }
     }
   }, [model]);
@@ -48,9 +57,21 @@ const TabContentViewer: React.FC<TabContentProps> = ({
         />
       );
     case 3 && 'Text':
-      return <Text model={model} controlTab={controlTab} />;
+      return (
+        <Text
+          canvasTextureManager={canvasTextureManager}
+          model={model}
+          controlTab={controlTab}
+        />
+      );
     case 4 && 'Logos':
-      return <Logos />;
+      return (
+        <Logos
+          canvasTextureManager={canvasTextureManager}
+          model={model}
+          controlTab={controlTab}
+        />
+      );
     default:
       return (
         <Design

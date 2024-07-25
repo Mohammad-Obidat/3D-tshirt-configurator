@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Lato:400,300');
 
 .color-container {
+  height: 53.5vh;
   background-color: #f9f9f9;
   padding: 20px;
   border-radius: 8px;

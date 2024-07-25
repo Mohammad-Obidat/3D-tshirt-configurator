@@ -44,9 +44,14 @@
   height: 53.5vh;
 }
 
-.top-container,
+.top-container {
+  margin-bottom: 1em;
+}
+
 .stylish-container {
-  margin-bottom: 15px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  margin-bottom: 3em;
 }
 
 .stylish-div {
@@ -59,6 +64,7 @@
   border-radius: 5px;
   padding: 5px;
   margin-right: 1em;
+  margin-bottom: 1em;
 }
 
 .stylish-div:nth-last-child(1) {

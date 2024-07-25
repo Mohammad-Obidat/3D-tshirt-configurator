@@ -78,7 +78,9 @@ export default class TextureManager {
 
   removeMeshFromChild(child: THREE.Object3D): void {
     const meshToRemove = this.findMatchMeshs(child);
-    if (meshToRemove) child.remove(meshToRemove);
+    if (meshToRemove) {
+      child.remove(meshToRemove);
+    }
   }
 
   switchTexture(textures: LoadedTextures): void {

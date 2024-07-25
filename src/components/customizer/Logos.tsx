@@ -28,12 +28,21 @@ const Logos: React.FC<UserInputProps> = ({
     }
   };
 
-  const addImage = (): void => {
+  const addImage = async (): Promise<void> => {
+    if (canvasTextureManager && selectedFile) {
+      try {
+        await canvasTextureManager.applyImageInput(
+          controlTab.title,
+          selectedFile
+        );
+      } catch (error) {
+        console.error('Error applying image input:', error);
+      }
+    }
     setSelectedFile(null);
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
     }
-    canvasTextureManager?.applyImageInput(controlTab.title, selectedFile!);
   };
 
   return (
@@ -53,6 +62,16 @@ const Logos: React.FC<UserInputProps> = ({
           </button>
         </div>
         <hr />
+        <div className='stylish-container'>
+          {canvasTextureManager?.canvasImageTextures.map((img, i) => (
+            <img
+              key={i}
+              src={img.imageUrl}
+              alt='logo'
+              className='stylish-div'
+            />
+          ))}
+        </div>
       </div>
     </>
   );

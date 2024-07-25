@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import { UserInputProps } from '../../interfaces/TabContent.interface';
 
 const Text: React.FC<UserInputProps> = ({
@@ -8,16 +8,14 @@ const Text: React.FC<UserInputProps> = ({
 }) => {
   const [text, setText] = useState<string>('');
 
-  const handleInputText = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ): void => {
+  const handleInputText = (event: ChangeEvent<HTMLInputElement>): void => {
     const newText = event.target.value;
     setText(newText);
   };
 
   const addText = (): void => {
-    if (text) {
-      canvasTextureManager?.applyTextInput(controlTab.title, text);
+    if (canvasTextureManager && text) {
+      canvasTextureManager.applyTextInput(controlTab.title, text);
       setText('');
     }
   };
@@ -43,42 +41,13 @@ const Text: React.FC<UserInputProps> = ({
           </button>
         </div>
         <hr />
-        {/* <div className='stylish-container'>
-          <div className='stylish-div'>
-            <label className='text-label' htmlFor='font-family'>
-              change the font family:
-            </label>
-            <select id='font-family' className='select-font' name='font family'>
-              <option value='Arial'>Arial</option>
-              <option value='Times New Roman'>Times New Roman</option>
-              <option value='Courier New'>Courier New</option>
-              <option value='Brush Script MT'>Brush Script MT</option>
-            </select>
-          </div>
-          <div className='stylish-div'>
-            <label className='text-label' htmlFor='font-size'>
-              change the font size:
-            </label>
-
-            <input
-              type='number'
-              id='font-size'
-              className='text-input stylish-input'
-              name='font size'
-            />
-          </div>
-          <div className='stylish-div'>
-            <label className='text-label' htmlFor='font-color'>
-              change the font color:
-            </label>
-            <input
-              type='color'
-              id='font-color'
-              className='text-input stylish-input'
-              name='font color'
-            />
-          </div>
-        </div> */}
+        <div className='stylish-container'>
+          {canvasTextureManager?.canvasTextTextures.map((t, i) => (
+            <div key={i} className='stylish-div text-div'>
+              {t.text}
+            </div>
+          ))}
+        </div>
       </div>
     </>
   );

@@ -1,18 +1,34 @@
 import * as THREE from 'three';
 import TextureManager from './TextureManager';
 
+interface CanvasTextProps {
+  text: string;
+  canvasTexture: THREE.CanvasTexture;
+}
+
+interface CanvasImageProps {
+  imageUrl: string;
+  canvasTexture: THREE.CanvasTexture;
+}
+
 export default class CanvasTextureManager extends TextureManager {
   private static CANVAS_SIZE = 512;
   private scale: THREE.Vector2;
   private rotation: number;
   private translation: THREE.Vector2;
   private currentTexture: THREE.Texture | undefined;
+  private isText: boolean;
+  canvasTextTextures: Array<CanvasTextProps>;
+  canvasImageTextures: Array<CanvasImageProps>;
 
   constructor(shirtModel: THREE.Object3D) {
     super(shirtModel);
     this.scale = new THREE.Vector2(1, 1);
     this.rotation = 0;
     this.translation = new THREE.Vector2(0, 0);
+    this.canvasTextTextures = [];
+    this.canvasImageTextures = [];
+    this.isText = true;
 
     this.addKeyListeners();
   }
@@ -65,7 +81,6 @@ export default class CanvasTextureManager extends TextureManager {
 
   private updateUVTransform(texture: THREE.Texture | undefined): void {
     // Apply the transformation to the UV coordinates
-
     const uvTransform = new THREE.Matrix3();
 
     uvTransform
@@ -76,24 +91,24 @@ export default class CanvasTextureManager extends TextureManager {
       .translate(this.translation.x, this.translation.y)
       .translate(0.5, 0.5);
 
-    texture!.matrix = uvTransform;
-    texture!.matrixAutoUpdate = false;
-    texture!.needsUpdate = true;
+    if (texture) {
+      texture.matrix = uvTransform;
+      texture.matrixAutoUpdate = false;
+      texture.needsUpdate = true;
+    }
   }
 
-  createCanvasTexture(
+  private async createCanvasTexture(
     drawContent: (
       context: CanvasRenderingContext2D,
       canvasWidth: number,
       canvasHeight: number
     ) => void
-  ): THREE.CanvasTexture {
+  ): Promise<THREE.CanvasTexture> {
     const canvas = document.createElement('canvas');
     const context = canvas.getContext('2d');
 
-    if (!context) {
-      throw new Error('Failed to create canvas context');
-    }
+    if (!context) {throw new Error('Failed to create canvas context');}
 
     canvas.width = CanvasTextureManager.CANVAS_SIZE;
     canvas.height = CanvasTextureManager.CANVAS_SIZE;
@@ -104,11 +119,22 @@ export default class CanvasTextureManager extends TextureManager {
     canvasTexture.anisotropy = 16;
     canvasTexture.needsUpdate = true;
 
+    if (this.isText) {
+      this.canvasTextTextures.push({ text: context.canvas.id, canvasTexture });
+    } else {
+      this.canvasImageTextures.push({
+        imageUrl: context.canvas.id,
+        canvasTexture,
+      });
+    }
     return canvasTexture;
   }
 
-  createTextCanvasTexture(controlTab: string, userText?: string): void {
-    this.createAndApplyCanvasTexture(
+  async createTextCanvasTexture(
+    controlTab: string,
+    userText?: string
+  ): Promise<void> {
+    await this.createAndApplyCanvasTexture(
       controlTab,
       (context, canvasWidth, canvasHeight) => {
         context.fillStyle = 'white';
@@ -116,40 +142,51 @@ export default class CanvasTextureManager extends TextureManager {
         context.textAlign = 'center';
         context.textBaseline = 'middle';
         context.fillText(userText!, canvasWidth / 2, canvasHeight / 2);
+        context.canvas.id = userText!;
       }
     );
   }
 
-  createImageCanvasTexture(controlTab: string, imageUrl?: string): void {
-    const img = new Image();
-    img.src = imageUrl!;
-    img.onload = () => {
-      this.createAndApplyCanvasTexture(
-        controlTab,
-        (context, canvasWidth, canvasHeight) => {
-          context.drawImage(img, 0, 0, canvasWidth, canvasHeight);
-        }
-      );
-    };
+  async createImageCanvasTexture(
+    controlTab: string,
+    imageUrl?: string
+  ): Promise<void> {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.src = imageUrl!;
+      img.onload = async () => {
+        await this.createAndApplyCanvasTexture(
+          controlTab,
+          (context, canvasWidth, canvasHeight) => {
+            context.drawImage(img, 0, 0, canvasWidth, canvasHeight);
+            context.canvas.id = imageUrl!;
+          }
+        );
+        resolve();
+      };
+      img.onerror = reject;
+    });
   }
 
-  applyTextInput(controlTab: string, textInput: string): void {
-    this.createTextCanvasTexture(controlTab, textInput);
+  async applyTextInput(controlTab: string, textInput: string): Promise<void> {
+    this.isText = true;
+    await this.createTextCanvasTexture(controlTab, textInput);
   }
 
-  applyImageInput(controlTab: string, imageUrl?: string): void {
-    this.createImageCanvasTexture(controlTab, imageUrl);
+  async applyImageInput(controlTab: string, imageUrl?: string): Promise<void> {
+    this.isText = false;
+    await this.createImageCanvasTexture(controlTab, imageUrl);
   }
 
-  private createAndApplyCanvasTexture(
+  private async createAndApplyCanvasTexture(
     controlTab: string,
     drawFunction: (
       context: CanvasRenderingContext2D,
       canvasWidth: number,
       canvasHeight: number
     ) => void
-  ): void {
-    const canvasTexture = this.createCanvasTexture(drawFunction);
+  ): Promise<void> {
+    const canvasTexture = await this.createCanvasTexture(drawFunction);
 
     const meshMapping: { [key: string]: string } = {
       front: 'Cloth_mesh_24',

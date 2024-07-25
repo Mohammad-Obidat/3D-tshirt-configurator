@@ -50,8 +50,26 @@
 }
 
 .stylish-div {
-  display: flex;
-  flex-direction: row;
+  display: inline-flex;
+  width: 5rem;
+  height: 5rem;
+  cursor: pointer;
+  background-color: #ffffff8f;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  padding: 5px;
+  margin-right: 1em;
+}
+
+.stylish-div:nth-last-child(1) {
+  margin-right: 0;
+}
+
+.text-div {
+  justify-content: center;
+  align-items: center;
+  font-weight: 800;
+  font-size: large;
 }
 
 .text-label {

@@ -69,14 +69,25 @@ const Text: React.FC<UserInputProps> = ({
           </button>
         </div>
         <hr />
-        <div className='stylish-container'>
-          {canvasTextTextures.map((t, i) => (
-            <div key={i} className='stylish-div'>
-              <Delete dispose={deleteCanvasTexture(t.mesh)} />
-              <div className='text-div'>{t.text}</div>
-            </div>
-          ))}
-        </div>
+        <>
+          {canvasTextureManager?.canvasTextTextures[controlTab.title].length ===
+          0 ? (
+            <>
+              <>No added text for the {controlTab.title} side!</>
+            </>
+          ) : (
+            <>
+              <div className='stylish-container'>
+                {canvasTextTextures.map((t, i) => (
+                  <div key={i} className='stylish-div'>
+                    <Delete dispose={deleteCanvasTexture(t.mesh)} />
+                    <div className='text-div'>{t.text}</div>
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
+        </>
       </div>
     </>
   );

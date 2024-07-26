@@ -3,6 +3,7 @@ import { Mesh } from 'three';
 import Delete from '../Delete';
 import { UserInputProps } from '../../interfaces/TabContent.interface';
 import { reader } from '../../config/helpers/FileRader';
+import { div } from 'three/examples/jsm/nodes/Nodes.js';
 
 const Logos: React.FC<UserInputProps> = ({
   canvasTextureManager,
@@ -90,16 +91,25 @@ const Logos: React.FC<UserInputProps> = ({
           </button>
         </div>
         <hr />
-        <div className='stylish-container'>
-          {canvasImageTextures.map((img, i) => (
+        <>
+          {canvasTextureManager?.canvasImageTextures[controlTab.title]
+            .length === 0 ? (
+            <>No added images for the {controlTab.title} side!</>
+          ) : (
             <>
-              <div key={i} className='stylish-div'>
-                <Delete dispose={deleteCanvasTexture(img.mesh)} />
-                <img src={img.imageUrl} alt='logo' />
+              <div className='stylish-container'>
+                {canvasImageTextures.map((img, i) => (
+                  <>
+                    <div key={i} className='stylish-div'>
+                      <Delete dispose={deleteCanvasTexture(img.mesh)} />
+                      <img src={img.imageUrl} alt='logo' />
+                    </div>
+                  </>
+                ))}
               </div>
             </>
-          ))}
-        </div>
+          )}
+        </>
       </div>
     </>
   );

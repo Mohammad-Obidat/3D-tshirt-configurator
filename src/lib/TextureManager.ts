@@ -68,16 +68,17 @@ export default class TextureManager {
     uvAttribute.needsUpdate = true;
   }
 
-  findMatchMeshs(child: THREE.Object3D): THREE.Object3D | undefined {
+  findMatchMeshs(
+    child: THREE.Object3D,
+    mesh: THREE.Mesh
+  ): THREE.Object3D | undefined {
     if (child.children.length > 0) {
-      return child.children.find(
-        (c) => c.userData.id === this.currentMesh?.userData.id
-      );
+      return child.children.find((c) => c.userData.id === mesh.userData.id);
     }
   }
 
-  removeMeshFromChild(child: THREE.Object3D): void {
-    const meshToRemove = this.findMatchMeshs(child);
+  removeMeshFromChild(child: THREE.Object3D, mesh: THREE.Mesh): void {
+    const meshToRemove = this.findMatchMeshs(child, mesh);
     if (meshToRemove) {
       child.remove(meshToRemove);
     }
@@ -94,7 +95,7 @@ export default class TextureManager {
       this.model.traverse((child) => {
         if (child instanceof THREE.Mesh) {
           const geometry: THREE.BufferGeometry = child.geometry.clone();
-          this.removeMeshFromChild(child);
+          this.removeMeshFromChild(child, this.currentMesh!);
 
           const applyTexture = (
             texture: TextureWithCoordinates,

@@ -1,4 +1,5 @@
-import React, { ChangeEvent, useRef, useState } from 'react';
+import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
+import { Mesh } from 'three';
 import Delete from '../Delete';
 import { UserInputProps } from '../../interfaces/TabContent.interface';
 import { reader } from '../../config/helpers/FileRader';
@@ -10,6 +11,9 @@ const Logos: React.FC<UserInputProps> = ({
 }) => {
   const [selectedFile, setSelectedFile] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const [canvasImageTextures, setCanvasImageTextures] = useState(
+    canvasTextureManager?.canvasImageTextures[controlTab.title] || []
+  );
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] || null;
@@ -36,6 +40,9 @@ const Logos: React.FC<UserInputProps> = ({
           controlTab.title,
           selectedFile
         );
+        setCanvasImageTextures([
+          ...canvasTextureManager.canvasImageTextures[controlTab.title],
+        ]);
       } catch (error) {
         console.error('Error applying image input:', error);
       }
@@ -45,6 +52,26 @@ const Logos: React.FC<UserInputProps> = ({
       fileInputRef.current.value = '';
     }
   };
+
+  const deleteCanvasTexture = (mesh: Mesh): (() => void) => {
+    return () => {
+      if (canvasTextureManager) {
+        canvasTextureManager.removeMeshFromChild(mesh);
+        setCanvasImageTextures([
+          ...canvasTextureManager.canvasImageTextures[controlTab.title],
+        ]);
+      }
+    };
+  };
+
+  useEffect(() => {
+    if (canvasTextureManager) {
+      canvasTextureManager.targetTab = controlTab.title;
+      setCanvasImageTextures([
+        ...canvasTextureManager.canvasImageTextures[controlTab.title],
+      ]);
+    }
+  }, [controlTab, canvasTextureManager]);
 
   return (
     <>
@@ -64,11 +91,11 @@ const Logos: React.FC<UserInputProps> = ({
         </div>
         <hr />
         <div className='stylish-container'>
-          {canvasTextureManager?.canvasImageTextures.map((img, i) => (
+          {canvasImageTextures.map((img, i) => (
             <>
-              <div className='stylish-div'>
-                <Delete />
-                <img key={i} src={img.imageUrl} alt='logo' />
+              <div key={i} className='stylish-div'>
+                <Delete dispose={deleteCanvasTexture(img.mesh)} />
+                <img src={img.imageUrl} alt='logo' />
               </div>
             </>
           ))}

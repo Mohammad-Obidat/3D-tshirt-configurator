@@ -1,9 +1,13 @@
 import React from 'react';
 import '../styles/Delete.css';
 
-const Delete: React.FC = () => {
+interface DeleteProps {
+  dispose: () => void;
+}
+
+const Delete: React.FC<DeleteProps> = ({ dispose }) => {
   return (
-    <div className='circle'>
+    <div className='circle' onClick={dispose}>
       <div className='delete-icon'>x</div>
     </div>
   );

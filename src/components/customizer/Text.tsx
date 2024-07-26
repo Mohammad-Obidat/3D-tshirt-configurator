@@ -1,6 +1,7 @@
-import React, { ChangeEvent, useState } from 'react';
-import { UserInputProps } from '../../interfaces/TabContent.interface';
+import React, { ChangeEvent, useEffect, useState } from 'react';
+import { Mesh } from 'three';
 import Delete from '../Delete';
+import { UserInputProps } from '../../interfaces/TabContent.interface';
 
 const Text: React.FC<UserInputProps> = ({
   canvasTextureManager,
@@ -8,18 +9,44 @@ const Text: React.FC<UserInputProps> = ({
   controlTab,
 }) => {
   const [text, setText] = useState<string>('');
+  const [canvasTextTextures, setCanvasTextTextures] = useState(
+    canvasTextureManager?.canvasTextTextures[controlTab.title] || []
+  );
 
   const handleInputText = (event: ChangeEvent<HTMLInputElement>): void => {
     const newText = event.target.value;
     setText(newText);
   };
 
-  const addText = (): void => {
+  const addText = async (): Promise<void> => {
     if (canvasTextureManager && text) {
-      canvasTextureManager.applyTextInput(controlTab.title, text);
+      await canvasTextureManager.applyTextInput(controlTab.title, text);
       setText('');
+      setCanvasTextTextures([
+        ...canvasTextureManager.canvasTextTextures[controlTab.title],
+      ]);
     }
   };
+
+  const deleteCanvasTexture = (mesh: Mesh): (() => void) => {
+    return () => {
+      if (canvasTextureManager) {
+        canvasTextureManager.deleteCanvasTextMesh(mesh);
+        setCanvasTextTextures([
+          ...canvasTextureManager.canvasTextTextures[controlTab.title],
+        ]);
+      }
+    };
+  };
+
+  useEffect(() => {
+    if (canvasTextureManager) {
+      canvasTextureManager.targetTab = controlTab.title;
+      setCanvasTextTextures([
+        ...canvasTextureManager.canvasTextTextures[controlTab.title],
+      ]);
+    }
+  }, [controlTab, canvasTextureManager]);
 
   return (
     <>
@@ -43,9 +70,9 @@ const Text: React.FC<UserInputProps> = ({
         </div>
         <hr />
         <div className='stylish-container'>
-          {canvasTextureManager?.canvasTextTextures.map((t, i) => (
+          {canvasTextTextures.map((t, i) => (
             <div key={i} className='stylish-div'>
-              <Delete />
+              <Delete dispose={deleteCanvasTexture(t.mesh)} />
               <div className='text-div'>{t.text}</div>
             </div>
           ))}

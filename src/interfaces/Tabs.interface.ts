@@ -4,6 +4,7 @@ import { Textures } from './Textures.interface';
 export interface TabProps {
   id: number;
   title: string;
+  description?: string;
   isActive: boolean;
   imageUrl?: string;
   textures?: Textures;

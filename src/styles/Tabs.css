@@ -20,27 +20,24 @@
 }
 
 .control-tab {
-  width: 35px;
+  width: 90px;
   height: 40px;
-  position: relative;
   display: flex;
-  padding: 5px;
   justify-content: center;
-  border: 1px solid #ccc;
   align-items: center;
-  background-color: #f9f9f9;
+  font-family: system-ui;
+  padding: 0 4px;
   cursor: pointer;
-  outline: none;
 }
 
 .control-tab:hover {
-  background-color: #ddd;
-  border: 0.5px solid rgba(119, 119, 119, 0.849);
+  background-color: #f4f8ff;
 }
 
 .control-tab.active {
-  background-color: #ddd;
-  font-weight: bold;
+  color: #859dec;
+  background-color: #e8f0fe;
+  border-bottom: 0.5px solid #1b77d2;
 }
 
 .control-tab > .img-container {

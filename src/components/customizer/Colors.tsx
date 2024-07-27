@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import ViewerHeader from '../ViewerHeader';
 import { colors } from '../../config/constants/Colors.constant';
 import { ColorContentProps } from '../../interfaces/TabContent.interface';
 import '../../styles/Colors.css';
@@ -51,10 +50,6 @@ const Colors: React.FC<ColorContentProps> = ({
 
   return (
     <>
-      <ViewerHeader
-        title='Choose colors'
-        desc='Decide on your color combination'
-      />
       <div className='color-container' onClick={() => setShowColors(true)}>
         <div className='color-circle'></div>
         <span className='color-text'>Color 1</span>

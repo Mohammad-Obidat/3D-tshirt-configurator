@@ -3,7 +3,6 @@ import { Mesh } from 'three';
 import Delete from '../Delete';
 import { UserInputProps } from '../../interfaces/TabContent.interface';
 import { reader } from '../../config/helpers/FileRader';
-import { div } from 'three/examples/jsm/nodes/Nodes.js';
 
 const Logos: React.FC<UserInputProps> = ({
   canvasTextureManager,

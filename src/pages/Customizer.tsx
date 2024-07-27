@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Tabs from '../components/Tabs';
 import TabContentViewer from '../components/customizer/TabContentViewer';
+import ViewerHeader from '../components/ViewerHeader';
 import { stylishTabs } from '../config/constants/StylishTabs.constant';
 import { controlsTabs } from '../config/constants/ControlTabs.constant';
 import { DesignTabs } from '../config/constants/DesignTabs.constant';
@@ -66,16 +67,20 @@ const Customizer: React.FC<CustomizerProps> = ({ model, navigateTo }) => {
       </div>
       <div className='customView-container'>
         <div className='viewer-container'>
-          {tabsState.stylish.chosen.title !== 'Design' &&
-            tabsState.stylish.chosen.title !== 'Colors' && (
-              <div className='controlTabs-container'>
-                <Tabs
-                  tabs={tabsState.controls.tabs}
-                  tabsType='controls'
-                  setActiveTab={(id) => setActiveTab(id, 'controls')}
-                />
-              </div>
-            )}
+          <ViewerHeader
+            title={tabsState.stylish.chosen.title}
+            desc={tabsState.stylish.chosen.description!}
+          />
+          {tabsState.stylish.chosen.title !== 'Design' && (
+            <div className='controlTabs-container'>
+              <Tabs
+                tabs={tabsState.controls.tabs}
+                tabsType='controls'
+                setActiveTab={(id) => setActiveTab(id, 'controls')}
+              />
+            </div>
+          )}
+          <div id='scrollable'></div>
           <TabContentViewer
             stylishTab={tabsState.stylish.chosen}
             model={model}

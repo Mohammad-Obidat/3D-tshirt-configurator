@@ -12,7 +12,7 @@ const Tabs: React.FC<TabsComponentProps> = ({
 }) => {
   const tabClassMap: { [key: string]: string } = {
     stylish: 'stylish-tab',
-    controls: 'control-tab',
+    target: 'target-tab',
     design: 'design-tab',
   };
 

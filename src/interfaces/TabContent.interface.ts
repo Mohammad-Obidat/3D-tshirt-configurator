@@ -3,7 +3,7 @@ import TextureManager from '../lib/TextureManager';
 import CanvasTextureManager from '../lib/CanvasTexture';
 import { TabProps, TabsProps } from './Tabs.interface';
 
-export type TabType = 'stylish' | 'controls' | 'design' | 'colors';
+export type TabType = 'stylish' | 'target' | 'design' | 'colors';
 
 export interface ColorState {
   tabs: string[];
@@ -14,7 +14,7 @@ export interface ColorState {
 
 export interface CustomizerState {
   stylish: { tabs: TabsProps; chosen: TabProps };
-  controls: { tabs: TabsProps; chosen: TabProps };
+  target: { tabs: TabsProps; chosen: TabProps };
   design: { tabs: TabsProps; chosen: TabProps };
   colors: ColorState;
 }
@@ -24,7 +24,7 @@ export interface TabContentProps {
   model: Object3D | undefined;
   designObj: { tabs: TabsProps; chosen: TabProps };
   colorObj: ColorState;
-  controlTab: TabProps;
+  targetTab: TabProps;
   setTabsState: React.Dispatch<React.SetStateAction<CustomizerState>>;
   setActiveTab: (id: number, type: TabType) => void;
 }
@@ -45,5 +45,5 @@ export interface ColorContentProps {
 export interface UserInputProps {
   canvasTextureManager: CanvasTextureManager | null;
   model: Object3D | undefined;
-  controlTab: TabProps;
+  targetTab: TabProps;
 }

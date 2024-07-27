@@ -19,7 +19,7 @@
   position: relative;
 }
 
-.controlTabs-container {
+.targetTabs-container {
   width: fit-content;
   display: flex;
   margin-bottom: 1em;

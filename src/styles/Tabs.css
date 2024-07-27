@@ -19,7 +19,7 @@
   border-bottom: none;
 }
 
-.control-tab {
+.target-tab {
   width: 90px;
   height: 40px;
   display: flex;
@@ -30,28 +30,23 @@
   cursor: pointer;
 }
 
-.control-tab:hover {
+.target-tab:hover {
   background-color: #f4f8ff;
 }
 
-.control-tab.active {
+.target-tab.active {
   color: #859dec;
   background-color: #e8f0fe;
   border-bottom: 0.5px solid #1b77d2;
 }
 
-.control-tab > .img-container {
+.target-tab > .img-container {
   position: absolute;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 1px;
-}
-
-.control-tab > .img-container > .control-img {
-  width: 30px;
-  height: 30px;
 }
 
 .stylish-tab > .img-container > .stylish-img {

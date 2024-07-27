@@ -3,7 +3,7 @@ import Tabs from '../components/Tabs';
 import TabContentViewer from '../components/customizer/TabContentViewer';
 import ViewerHeader from '../components/ViewerHeader';
 import { stylishTabs } from '../config/constants/StylishTabs.constant';
-import { controlsTabs } from '../config/constants/ControlTabs.constant';
+import { targetTabs } from '../config/constants/TargetTabs.constant';
 import { DesignTabs } from '../config/constants/DesignTabs.constant';
 import { colors } from '../config/constants/Colors.constant';
 import { CustomizerProps } from '../interfaces/App.interface';
@@ -25,7 +25,7 @@ const Customizer: React.FC<CustomizerProps> = ({ model, navigateTo }) => {
 
   const [tabsState, setTabsState] = useState<CustomizerState>({
     stylish: { tabs: stylishTabs, chosen: stylishTabs[0] },
-    controls: { tabs: controlsTabs, chosen: controlsTabs[0] },
+    target: { tabs: targetTabs, chosen: targetTabs[0] },
     design: { tabs: DesignTabs, chosen: DesignTabs[0] },
     colors: initialColorState,
   });
@@ -72,11 +72,11 @@ const Customizer: React.FC<CustomizerProps> = ({ model, navigateTo }) => {
             desc={tabsState.stylish.chosen.description!}
           />
           {tabsState.stylish.chosen.title !== 'Design' && (
-            <div className='controlTabs-container'>
+            <div className='targetTabs-container'>
               <Tabs
-                tabs={tabsState.controls.tabs}
-                tabsType='controls'
-                setActiveTab={(id) => setActiveTab(id, 'controls')}
+                tabs={tabsState.target.tabs}
+                tabsType='target'
+                setActiveTab={(id) => setActiveTab(id, 'target')}
               />
             </div>
           )}
@@ -86,7 +86,7 @@ const Customizer: React.FC<CustomizerProps> = ({ model, navigateTo }) => {
             model={model}
             designObj={tabsState.design}
             colorObj={tabsState.colors}
-            controlTab={tabsState.controls.chosen}
+            targetTab={tabsState.target.chosen}
             setTabsState={setTabsState}
             setActiveTab={(id) => setActiveTab(id, 'design')}
           />

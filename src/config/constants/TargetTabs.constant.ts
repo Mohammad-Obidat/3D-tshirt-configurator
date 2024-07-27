@@ -1,6 +1,6 @@
 import { TabsProps } from '../../interfaces/Tabs.interface';
 
-export const controlsTabs: TabsProps = [
+export const targetTabs: TabsProps = [
   {
     id: 1,
     title: 'front',

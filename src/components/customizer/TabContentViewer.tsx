@@ -12,7 +12,7 @@ const TabContentViewer: React.FC<TabContentProps> = ({
   model,
   designObj,
   colorObj,
-  controlTab,
+  targetTab,
   setTabsState,
   setActiveTab,
 }) => {
@@ -61,7 +61,7 @@ const TabContentViewer: React.FC<TabContentProps> = ({
         <Text
           canvasTextureManager={canvasTextureManager}
           model={model}
-          controlTab={controlTab}
+          targetTab={targetTab}
         />
       );
     case 4 && 'Logos':
@@ -69,7 +69,7 @@ const TabContentViewer: React.FC<TabContentProps> = ({
         <Logos
           canvasTextureManager={canvasTextureManager}
           model={model}
-          controlTab={controlTab}
+          targetTab={targetTab}
         />
       );
     default:

@@ -210,15 +210,15 @@ export default class CanvasTextureManager extends TextureManager {
     });
   }
 
-  async applyTextInput(controlTab: string, textInput: string): Promise<void> {
+  async applyTextInput(targetTab: string, textInput: string): Promise<void> {
     this.isText = true;
-    this.targetTab = controlTab;
+    this.targetTab = targetTab;
     await this.createTextCanvasTexture(textInput);
   }
 
-  async applyImageInput(controlTab: string, imageUrl?: string): Promise<void> {
+  async applyImageInput(targetTab: string, imageUrl?: string): Promise<void> {
     this.isText = false;
-    this.targetTab = controlTab;
+    this.targetTab = targetTab;
     await this.createImageCanvasTexture(imageUrl);
   }
 

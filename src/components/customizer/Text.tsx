@@ -6,11 +6,11 @@ import { UserInputProps } from '../../interfaces/TabContent.interface';
 const Text: React.FC<UserInputProps> = ({
   canvasTextureManager,
   model,
-  controlTab,
+  targetTab,
 }) => {
   const [text, setText] = useState<string>('');
   const [canvasTextTextures, setCanvasTextTextures] = useState(
-    canvasTextureManager?.canvasTextTextures[controlTab.title] || []
+    canvasTextureManager?.canvasTextTextures[targetTab.title] || []
   );
 
   const handleInputText = (event: ChangeEvent<HTMLInputElement>): void => {
@@ -20,10 +20,10 @@ const Text: React.FC<UserInputProps> = ({
 
   const addText = async (): Promise<void> => {
     if (canvasTextureManager && text) {
-      await canvasTextureManager.applyTextInput(controlTab.title, text);
+      await canvasTextureManager.applyTextInput(targetTab.title, text);
       setText('');
       setCanvasTextTextures([
-        ...canvasTextureManager.canvasTextTextures[controlTab.title],
+        ...canvasTextureManager.canvasTextTextures[targetTab.title],
       ]);
     }
   };
@@ -33,7 +33,7 @@ const Text: React.FC<UserInputProps> = ({
       if (canvasTextureManager) {
         canvasTextureManager.deleteCanvasTextMesh(mesh);
         setCanvasTextTextures([
-          ...canvasTextureManager.canvasTextTextures[controlTab.title],
+          ...canvasTextureManager.canvasTextTextures[targetTab.title],
         ]);
       }
     };
@@ -41,12 +41,12 @@ const Text: React.FC<UserInputProps> = ({
 
   useEffect(() => {
     if (canvasTextureManager) {
-      canvasTextureManager.targetTab = controlTab.title;
+      canvasTextureManager.targetTab = targetTab.title;
       setCanvasTextTextures([
-        ...canvasTextureManager.canvasTextTextures[controlTab.title],
+        ...canvasTextureManager.canvasTextTextures[targetTab.title],
       ]);
     }
-  }, [controlTab, canvasTextureManager]);
+  }, [targetTab, canvasTextureManager]);
 
   return (
     <>
@@ -70,10 +70,10 @@ const Text: React.FC<UserInputProps> = ({
         </div>
         <hr />
         <>
-          {canvasTextureManager?.canvasTextTextures[controlTab.title].length ===
+          {canvasTextureManager?.canvasTextTextures[targetTab.title].length ===
           0 ? (
             <>
-              <>No added text for the {controlTab.title} side!</>
+              <>No added text for the {targetTab.title} side!</>
             </>
           ) : (
             <>

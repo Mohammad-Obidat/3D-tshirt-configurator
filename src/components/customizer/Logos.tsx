@@ -7,12 +7,12 @@ import { reader } from '../../config/helpers/FileRader';
 const Logos: React.FC<UserInputProps> = ({
   canvasTextureManager,
   model,
-  controlTab,
+  targetTab,
 }) => {
   const [selectedFile, setSelectedFile] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [canvasImageTextures, setCanvasImageTextures] = useState(
-    canvasTextureManager?.canvasImageTextures[controlTab.title] || []
+    canvasTextureManager?.canvasImageTextures[targetTab.title] || []
   );
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -37,11 +37,11 @@ const Logos: React.FC<UserInputProps> = ({
     if (canvasTextureManager && selectedFile) {
       try {
         await canvasTextureManager.applyImageInput(
-          controlTab.title,
+          targetTab.title,
           selectedFile
         );
         setCanvasImageTextures([
-          ...canvasTextureManager.canvasImageTextures[controlTab.title],
+          ...canvasTextureManager.canvasImageTextures[targetTab.title],
         ]);
       } catch (error) {
         console.error('Error applying image input:', error);
@@ -58,7 +58,7 @@ const Logos: React.FC<UserInputProps> = ({
       if (canvasTextureManager) {
         canvasTextureManager.removeMeshFromChild(mesh);
         setCanvasImageTextures([
-          ...canvasTextureManager.canvasImageTextures[controlTab.title],
+          ...canvasTextureManager.canvasImageTextures[targetTab.title],
         ]);
       }
     };
@@ -66,12 +66,12 @@ const Logos: React.FC<UserInputProps> = ({
 
   useEffect(() => {
     if (canvasTextureManager) {
-      canvasTextureManager.targetTab = controlTab.title;
+      canvasTextureManager.targetTab = targetTab.title;
       setCanvasImageTextures([
-        ...canvasTextureManager.canvasImageTextures[controlTab.title],
+        ...canvasTextureManager.canvasImageTextures[targetTab.title],
       ]);
     }
-  }, [controlTab, canvasTextureManager]);
+  }, [targetTab, canvasTextureManager]);
 
   return (
     <>
@@ -91,9 +91,9 @@ const Logos: React.FC<UserInputProps> = ({
         </div>
         <hr />
         <>
-          {canvasTextureManager?.canvasImageTextures[controlTab.title]
-            .length === 0 ? (
-            <>No added images for the {controlTab.title} side!</>
+          {canvasTextureManager?.canvasImageTextures[targetTab.title].length ===
+          0 ? (
+            <>No added images for the {targetTab.title} side!</>
           ) : (
             <>
               <div className='stylish-container'>

@@ -1,5 +1,7 @@
 .stylish-tab {
-  height: 2em;
+  width: 4em;
+  height: 3em;
+  position: relative;
   padding: 10px 10px;
   border-bottom: 0.5px solid #ccc;
   font-family: 'Times New Roman', Times, serif;
@@ -52,4 +54,14 @@
 .control-tab > .img-container > .control-img {
   width: 30px;
   height: 30px;
+}
+
+.stylish-tab > .img-container > .stylish-img {
+  width: 15px;
+  height: 15px;
+}
+
+.stylish-tab.active > .img-container > .stylish-img {
+  filter: invert(24%) sepia(91%) saturate(558%) hue-rotate(179deg)
+    brightness(97%) contrast(94%);
 }

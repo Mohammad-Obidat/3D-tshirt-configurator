@@ -65,17 +65,15 @@ const Customizer: React.FC<CustomizerProps> = ({ model, navigateTo }) => {
         />
       </div>
       <div className='customView-container'>
-        <div className='viewer-container'>
-          <TabContentViewer
-            stylishTab={tabsState.stylish.chosen}
-            model={model}
-            designObj={tabsState.design}
-            colorObj={tabsState.colors}
-            controlTab={tabsState.controls.chosen}
-            setTabsState={setTabsState}
-            setActiveTab={(id) => setActiveTab(id, 'design')}
-          />
-        </div>
+        <TabContentViewer
+          stylishTab={tabsState.stylish.chosen}
+          model={model}
+          designObj={tabsState.design}
+          colorObj={tabsState.colors}
+          controlTab={tabsState.controls.chosen}
+          setTabsState={setTabsState}
+          setActiveTab={(id) => setActiveTab(id, 'design')}
+        />
         <div className='controlTabs-container'>
           <Tabs
             tabs={tabsState.controls.tabs}

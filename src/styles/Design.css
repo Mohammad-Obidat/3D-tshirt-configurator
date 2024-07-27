@@ -1,13 +1,9 @@
 .design-container {
-  height: 53.5vh;
   display: grid;
   grid-template-columns: auto auto auto;
   grid-template-rows: auto auto auto;
   gap: 0.5em;
-  background-color: #f9f9f9;
   padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .design-tab {

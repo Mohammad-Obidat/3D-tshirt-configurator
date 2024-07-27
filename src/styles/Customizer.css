@@ -17,15 +17,6 @@
   position: relative;
 }
 
-.viewer-container {
-  height: 460px;
-  width: 460px;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  padding: 5px;
-}
-
 .controlTabs-container {
   position: absolute;
   top: 8rem;

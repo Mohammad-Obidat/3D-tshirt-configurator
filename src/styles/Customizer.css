@@ -1,4 +1,5 @@
 .customizer-container {
+  height: 93.5vh;
   display: grid;
   grid-template-columns: auto 5fr;
   background-color: #ffffff;

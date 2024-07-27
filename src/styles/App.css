@@ -10,7 +10,7 @@ canvas {
 }
 
 .grid-container {
-  height: 93.61vh;
+  height: 87.61vh;
   display: grid;
   grid-template-columns: 37% 63%;
   grid-template-areas: 'content canvas';

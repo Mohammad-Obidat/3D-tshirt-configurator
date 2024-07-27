@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import ViewerHeader from '../ViewerHeader';
 import { DesignContentProps } from '../../interfaces/TabContent.interface';
 import { TabProps } from '../../interfaces/Tabs.interface';
 import { LoadedTextures } from '../../interfaces/Textures.interface';
@@ -43,13 +44,16 @@ const Design: React.FC<DesignContentProps> = ({
   }, [textures, textureManager]);
 
   return (
-    <div className='design-container'>
-      <Tabs
-        tabs={designObj.tabs}
-        tabsType='design'
-        setActiveTab={setActiveTab}
-      />
-    </div>
+    <>
+      <ViewerHeader title='Select design' desc='Choose a standard design' />
+      <div className='design-container-tabs'>
+        <Tabs
+          tabs={designObj.tabs}
+          tabsType='design'
+          setActiveTab={setActiveTab}
+        />
+      </div>
+    </>
   );
 };
 

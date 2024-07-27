@@ -1,137 +1,32 @@
 @import url('https://fonts.googleapis.com/css?family=Lato:400,300');
 
 .color-container {
-  height: 53.5vh;
-  background-color: #f9f9f9;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.div-color {
   display: flex;
-  flex-direction: row;
-  padding: 5px 10px;
-  justify-content: space-around;
   align-items: center;
-}
-
-.color-list {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-gap: 10px;
   padding: 10px;
-  margin-top: 20px;
-}
-
-input[type='radio'] {
-  display: none;
-}
-
-input[type='radio']:checked + label span {
-  transform: scale(1.25);
-}
-
-input[type='radio']:checked + label.red {
-  border: 2px solid #a3241f;
-}
-
-input[type='radio']:checked + label.orange {
-  border: 2px solid #c65a18;
-}
-
-input[type='radio']:checked + label.yellow {
-  border: 2px solid #c49c06;
-}
-
-input[type='radio']:checked + label.olive {
-  border: 2px solid #8ca613;
-}
-
-input[type='radio']:checked + label.green {
-  border: 2px solid #1a8037;
-}
-
-input[type='radio']:checked + label.teal {
-  border: 2px solid #00948c;
-}
-
-input[type='radio']:checked + label.blue {
-  border: 2px solid #1a63a3;
-}
-
-input[type='radio']:checked + label.violet {
-  border: 2px solid #4e2e98;
-}
-
-input[type='radio']:checked + label.purple {
-  border: 2px solid #8129a5;
-}
-
-input[type='radio']:checked + label.pink {
-  border: 2px solid #b82a75;
-}
-
-label {
-  display: inline-block;
-  width: 80px;
-  height: 25px;
-  margin-right: 10px;
+  border-bottom: 1px solid #ddd;
   cursor: pointer;
+  transition: background-color 0.3s;
 }
 
-label:hover span {
-  transform: scale(1.25);
+.color-circle {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #ff5722;
+  margin-right: 10px;
 }
 
-label span {
-  display: block;
-  width: 100%;
-  height: 100%;
-  transition: transform 0.2s ease-in-out;
+.color-text {
+  flex: 1;
+  color: #5f6369;
+  font-family: monospace;
+  font-size: 14px;
 }
 
-label.red span {
-  background: #db2828;
-}
-
-label.orange span {
-  background: #f2711c;
-}
-
-label.yellow span {
-  background: #fbbd08;
-}
-
-label.olive span {
-  background: #b5cc18;
-}
-
-label.green span {
-  background: #21ba45;
-}
-
-label.teal span {
-  background: #00b5ad;
-}
-
-label.blue span {
-  background: #2185d0;
-}
-
-label.violet span {
-  background: #6435c9;
-}
-
-label.purple span {
-  background: #a333c8;
-}
-
-label.pink span {
-  background: #e03997;
-}
-
-.color-border {
-  padding: 2px;
-  border: 0.5px solid #9e9d9d9c;
+.right-arrow {
+  width: 15px;
+  height: 15px;
+  filter: invert(26%) sepia(9%) saturate(436%) hue-rotate(171deg)
+    brightness(91%) contrast(88%);
 }

@@ -1,13 +1,10 @@
 .stylish-tab {
-  padding: 10px 20px;
-  border: 1px solid #ccc;
-  background-color: #f9f9f9;
+  height: 2em;
+  padding: 10px 10px;
+  border-bottom: 0.5px solid #ccc;
+  font-family: 'Times New Roman', Times, serif;
+  font-size: smaller;
   cursor: pointer;
-  outline: none;
-}
-
-.stylish-tab:not(:last-child) {
-  border-right: none;
 }
 
 .stylish-tab:hover {
@@ -15,8 +12,8 @@
 }
 
 .stylish-tab.active {
-  background-color: #ddd;
-  font-weight: bold;
+  color: #1a73e9;
+  background-color: #e8f0fe;
 }
 
 .control-tab {

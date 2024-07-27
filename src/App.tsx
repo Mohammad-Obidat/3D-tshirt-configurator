@@ -44,7 +44,7 @@ const App: React.FC = () => {
           <Customizer model={model} navigateTo={navigateTo} />
         )}
       </div>
-      <Footer />
+      {component === 'home' && <Footer />}
     </>
   );
 };

@@ -84,7 +84,7 @@ const Customizer: React.FC<CustomizerProps> = ({ model, navigateTo }) => {
           />
         </div>
       </div>
-      <div className='contact-tabs'></div>
+      {/* <div className='contact-tabs'></div> */}
     </div>
   );
 };

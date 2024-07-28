@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import ColorsViewer from '../ColorsViewer';
 import { colors } from '../../config/constants/Colors.constant';
 import {
@@ -15,46 +15,54 @@ const Colors: React.FC<ColorContentProps> = ({
   setTabsState,
 }) => {
   const [showColors, setShowColors] = useState<boolean>(false);
-  const [chosenColor, setChosenColor] = useState<string>('white');
   const [selectedColorType, setSelectedColorType] = useState<ColorType | null>(
     null
   );
-  const [selectedColors, setSelectedColors] = useState<ChosenColorType>({
+
+  const initialColors: ChosenColorType = {
     main: 'red',
     element_1: 'red',
     element_2: 'red',
     element_3: 'red',
-  });
+  };
+  const [selectedColors, setSelectedColors] =
+    useState<ChosenColorType>(initialColors);
 
-  const handleColorChange = (color: string): void => {
-    const chosenType = colorObj.chosenType;
-    setTabsState((prevState) => ({
-      ...prevState,
-      color: {
-        ...prevState.color,
-        chosen: {
-          ...prevState.color.chosen,
-          [chosenType]: color,
+  const handleColorChange = useCallback(
+    (color: string) => {
+      const chosenType = colorObj.chosenType;
+      setTabsState((prevState) => ({
+        ...prevState,
+        color: {
+          ...prevState.color,
+          chosen: {
+            ...prevState.color.chosen,
+            [chosenType]: color,
+          },
         },
-      },
-    }));
+      }));
 
-    setSelectedColors((prevState) => ({
-      ...prevState,
-      [chosenType]: color,
-    }));
-  };
+      setSelectedColors((prevState) => ({
+        ...prevState,
+        [chosenType]: color,
+      }));
+    },
+    [colorObj.chosenType, setTabsState]
+  );
 
-  const toggleColorType = (type: ColorType): void => {
-    setTabsState((prevState) => ({
-      ...prevState,
-      color: {
-        ...prevState.color,
-        chosenType: type,
-        isAppear: !prevState.color.isAppear,
-      },
-    }));
-  };
+  const toggleColorType = useCallback(
+    (type: ColorType) => {
+      setTabsState((prevState) => ({
+        ...prevState,
+        color: {
+          ...prevState.color,
+          chosenType: type,
+          isAppear: !prevState.color.isAppear,
+        },
+      }));
+    },
+    [setTabsState]
+  );
 
   const selectColor = (type: ColorType): void => {
     if (selectedColorType === type && showColors) {
@@ -71,7 +79,6 @@ const Colors: React.FC<ColorContentProps> = ({
     if (model && textureManager) {
       const color = colorObj.chosen[colorObj.chosenType];
       if (color) {
-        setChosenColor(color);
         textureManager.applyNewColorMaterial(color, colorObj.chosenType);
         setShowColors(false);
       }
@@ -80,7 +87,7 @@ const Colors: React.FC<ColorContentProps> = ({
 
   return (
     <>
-      {textureManager!.colorsType.map((type, i) => (
+      {textureManager?.colorsType.map((type, i) => (
         <div
           key={i}
           className='color-container'
@@ -91,7 +98,7 @@ const Colors: React.FC<ColorContentProps> = ({
             style={{ backgroundColor: selectedColors[type] || 'transparent' }}
           ></div>
           <span className='color-text'>
-            {type === 'main' ? 'Main' : `element ${i}`} Color
+            {type === 'main' ? 'Main' : `Element ${i}`} Color
           </span>
           <img
             src={
@@ -108,7 +115,7 @@ const Colors: React.FC<ColorContentProps> = ({
         <ColorsViewer
           colors={colors}
           handleColorChange={handleColorChange}
-          chosenColor={chosenColor}
+          chosenColor={selectedColors[selectedColorType]}
         />
       )}
     </>

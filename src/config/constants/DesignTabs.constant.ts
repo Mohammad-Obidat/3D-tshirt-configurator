@@ -7,10 +7,10 @@ export const DesignTabs: TabsProps = [
     isActive: true,
     imageUrl: '/assets/images/designs/basic-tshirt.png',
     textures: {
-      front: { path: '', coordinates: { x: 0, y: 0 } },
-      back: { path: '', coordinates: { x: 0, y: 0 } },
-      rightHand: { path: '', coordinates: { x: 0, y: 0 } },
-      leftHand: { path: '', coordinates: { x: 0, y: 0 } },
+      front: [{ id: '', path: '' }],
+      back: [{ id: '', path: '' }],
+      rightHand: [{ id: '', path: '' }],
+      leftHand: [{ id: '', path: '' }],
     },
   },
   {
@@ -19,14 +19,20 @@ export const DesignTabs: TabsProps = [
     isActive: false,
     imageUrl: '/assets/images/designs/double-lines.png',
     textures: {
-      front: {
-        path: '/assets/textures/designs/double-lines/double-lines.png',
-        coordinates: { x: 2, y: -1 },
-      },
-
-      back: { path: '', coordinates: { x: 0, y: 0 } },
-      rightHand: { path: '', coordinates: { x: 0, y: 0 } },
-      leftHand: { path: '', coordinates: { x: 0, y: 0 } },
+      front: [
+        {
+          id: 'element_1',
+          path: '/assets/textures/designs/double-lines/front_1.png',
+        },
+      ],
+      back: [
+        {
+          id: 'element_2',
+          path: '/assets/textures/designs/double-lines/back_1.png',
+        },
+      ],
+      rightHand: [{ id: '', path: '' }],
+      leftHand: [{ id: '', path: '' }],
     },
   },
   {
@@ -35,28 +41,60 @@ export const DesignTabs: TabsProps = [
     isActive: false,
     imageUrl: '/assets/images/designs/trible-lines.png',
     textures: {
-      front: {
-        path: '/assets/textures/designs/trible-lines/trible-lines.png',
-        coordinates: { x: 1.9, y: -0.9 },
-      },
-      back: { path: '', coordinates: { x: 0, y: 0 } },
-      rightHand: { path: '', coordinates: { x: 0, y: 0 } },
-      leftHand: { path: '', coordinates: { x: 0, y: 0 } },
+      front: [
+        {
+          id: 'element_1',
+          path: '/assets/textures/designs/trible-lines/front_1.png',
+        },
+      ],
+      back: [
+        {
+          id: 'element_2',
+          path: '/assets/textures/designs/trible-lines/back_1.png',
+        },
+      ],
+      rightHand: [{ id: '', path: '' }],
+      leftHand: [{ id: '', path: '' }],
     },
   },
   {
     id: 4,
-    title: 'down arrow',
+    title: 'lines',
     isActive: false,
-    imageUrl: '/assets/images/designs/down-arrow.png',
+    imageUrl: '/assets/images/designs/basic-tshirt.png',
     textures: {
-      front: {
-        path: '/assets/textures/designs/down-arrow/down-arrow.png',
-        coordinates: { x: 1.97, y: -0.95 },
-      },
-      back: { path: '', coordinates: { x: 0, y: 0 } },
-      rightHand: { path: '', coordinates: { x: 0, y: 0 } },
-      leftHand: { path: '', coordinates: { x: 0, y: 0 } },
+      front: [
+        {
+          id: 'element_1',
+          path: '/assets/textures/designs/lines/front_1.png',
+        },
+        {
+          id: 'element_2',
+          path: '/assets/textures/designs/lines/front_2.png',
+        },
+      ],
+      back: [
+        {
+          id: 'element_1',
+          path: '/assets/textures/designs/lines/back_1.png',
+        },
+        {
+          id: 'element_2',
+          path: '/assets/textures/designs/lines/back_2.png',
+        },
+      ],
+      rightHand: [
+        {
+          id: 'element_3',
+          path: '/assets/textures/designs/lines/right_1.png',
+        },
+      ],
+      leftHand: [
+        {
+          id: 'element_3',
+          path: '/assets/textures/designs/lines/left_1.png',
+        },
+      ],
     },
   },
 ];

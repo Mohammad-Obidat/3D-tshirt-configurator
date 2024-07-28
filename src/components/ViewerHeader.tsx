@@ -12,10 +12,10 @@ const ViewerHeader: React.FC<viewerHeaderProps> = ({ title, desc }) => {
         {title === 'Design' || title === 'Pattern'
           ? `Select ${title}`
           : title === 'Colors'
-          ? `Choose ${title}`
+          ? 'Choose Colors'
           : title === 'Text'
-          ? `Add ${title}`
-          : `Upload ${title}`}
+          ? 'Add Text'
+          : 'Upload Logos'}
       </h4>
       <p className='description'>{desc}</p>
       <hr />

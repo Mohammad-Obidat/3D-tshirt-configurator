@@ -1,6 +1,11 @@
 import { Object3D, Texture, TextureLoader } from 'three';
 import { GLTFLoader, GLTF } from 'three/examples/jsm/loaders/GLTFLoader.js';
-import { LoadedTextures, Textures } from '../../interfaces/Textures.interface';
+import {
+  LoadedTextures,
+  Textures,
+  TextureObject,
+  TextureProps,
+} from '../../interfaces/Textures.interface';
 
 const loadModel = (path: string): Promise<Object3D> => {
   const loader = new GLTFLoader();
@@ -27,7 +32,7 @@ const loadShirtModel = (): Promise<Object3D> => {
   return loadModel(tshirtModelPath);
 };
 
-const loadTextures = (texturePath: string): Promise<Texture | undefined> => {
+const loadTexture = (texturePath: string): Promise<Texture | undefined> => {
   const loader = new TextureLoader();
 
   return new Promise<Texture | undefined>((resolve, reject) => {
@@ -47,51 +52,49 @@ const loadTextures = (texturePath: string): Promise<Texture | undefined> => {
   });
 };
 
+const loadTextureArray = async (
+  textures?: TextureObject[]
+): Promise<TextureProps[] | undefined> => {
+  if (!textures) return undefined;
+
+  const promises = textures.map(async (textureObj) => {
+    if (textureObj.path) {
+      try {
+        const texture = await loadTexture(textureObj.path);
+        if (texture) {
+          return { texture };
+        }
+      } catch (error) {
+        console.error('Error loading texture.', error);
+      }
+    }
+    return undefined;
+  });
+
+  const results = await Promise.all(promises);
+  return results.filter(
+    (result): result is TextureProps => result !== undefined
+  );
+};
+
 const loadAllTextures = async (textures: Textures): Promise<LoadedTextures> => {
   if (!textures) {
     console.error('Textures are undefined');
     return {};
   }
 
-  const loadTexture = async (path?: string): Promise<Texture | undefined> => {
-    if (path) {
-      try {
-        const textures = await loadTextures(path);
-        return textures;
-      } catch (error) {
-        console.error('Error loading texture.', error);
-        return undefined;
-      }
-    }
-    return undefined;
-  };
-
-  const frontTexture = await loadTexture(textures.front?.path);
-  const backTexture = await loadTexture(textures.back?.path);
-  const rightHandTexture = await loadTexture(textures.rightHand?.path);
-  const leftHandTexture = await loadTexture(textures.leftHand?.path);
+  const frontTextures = await loadTextureArray(textures.front);
+  const backTextures = await loadTextureArray(textures.back);
+  const rightHandTextures = await loadTextureArray(textures.rightHand);
+  const leftHandTextures = await loadTextureArray(textures.leftHand);
 
   return {
-    front: frontTexture
-      ? { texture: frontTexture, coordinates: textures.front?.coordinates }
-      : undefined,
-    back: backTexture
-      ? { texture: backTexture, coordinates: textures.back?.coordinates }
-      : undefined,
-    rightHand: rightHandTexture
-      ? {
-          texture: rightHandTexture,
-          coordinates: textures.rightHand?.coordinates,
-        }
-      : undefined,
-    leftHand: leftHandTexture
-      ? {
-          texture: leftHandTexture,
-          coordinates: textures.leftHand?.coordinates,
-        }
-      : undefined,
+    front: frontTextures,
+    back: backTextures,
+    rightHand: rightHandTextures,
+    leftHand: leftHandTextures,
   };
 };
 
 export default loadShirtModel;
-export { loadModel, loadTextures, loadAllTextures };
+export { loadModel, loadTexture, loadAllTextures };

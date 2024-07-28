@@ -1,8 +1,5 @@
 import * as THREE from 'three';
-import {
-  LoadedTextures,
-  TextureWithCoordinates,
-} from '../interfaces/Textures.interface';
+import { LoadedTextures, TextureProps } from '../interfaces/Textures.interface';
 
 export default class TextureManager {
   model: THREE.Object3D | undefined;
@@ -51,12 +48,10 @@ export default class TextureManager {
     });
   }
 
-  adjustGeometry(
-    geometry: THREE.BufferGeometry,
-    scaleFactorX: number,
-    scaleFactorY: number
-  ): void {
+  adjustGeometry(geometry: THREE.BufferGeometry): void {
     const uvAttribute = geometry.attributes.uv;
+    const scaleFactorX = 1;
+    const scaleFactorY = -1;
 
     for (let i = 0; i < uvAttribute.count; i++) {
       uvAttribute.setXY(
@@ -68,76 +63,71 @@ export default class TextureManager {
     uvAttribute.needsUpdate = true;
   }
 
-  findMatchMeshs(
-    child: THREE.Object3D,
-    mesh: THREE.Mesh
-  ): THREE.Object3D | undefined {
-    if (child.children.length > 0) {
-      return child.children.find((c) => c.userData.id === mesh.userData.id);
-    }
+  findMatchMesh(child: THREE.Object3D, id: number): THREE.Object3D | undefined {
+    return child.children.find((c) => c.userData.id === id);
   }
 
-  removeMeshFromChild(child: THREE.Object3D, mesh: THREE.Mesh): void {
-    const meshToRemove = this.findMatchMeshs(child, mesh);
+  removeMeshFromChild(child: THREE.Object3D, id: number): void {
+    const meshToRemove = this.findMatchMesh(child, id);
     if (meshToRemove) {
       child.remove(meshToRemove);
     }
   }
 
+  applyTextures(
+    textures: TextureProps[],
+    id: number,
+    name: string,
+    child: THREE.Mesh
+  ): void {
+    textures.forEach((texture, index) => {
+      const geometry: THREE.BufferGeometry = child.geometry.clone();
+      const material: THREE.MeshBasicMaterial = this.createTextureMaterial(
+        texture.texture
+      );
+      this.adjustGeometry(geometry);
+      const mesh: THREE.Mesh = new THREE.Mesh(geometry, material);
+      mesh.userData = { id, name, textureIndex: index };
+      this.currentMesh = mesh;
+      child.add(mesh);
+    });
+  }
+
   switchTexture(textures: LoadedTextures): void {
-    // if (this.currentTexture) {
-    //   this.disposeAllTextures(this.currentTexture);
-    // }
-
-    // this.currentTexture = textures;
-
     if (this.model) {
       this.model.traverse((child) => {
         if (child instanceof THREE.Mesh) {
-          const geometry: THREE.BufferGeometry = child.geometry.clone();
-          this.removeMeshFromChild(child, this.currentMesh!);
-
-          const applyTexture = (
-            texture: TextureWithCoordinates,
-            id: number,
-            name: string
-          ) => {
-            const material: THREE.MeshBasicMaterial =
-              this.createTextureMaterial(texture.texture);
-            this.adjustGeometry(
-              geometry,
-              texture.coordinates?.x || 2,
-              texture.coordinates?.y || -1
-            );
-            const mesh: THREE.Mesh = new THREE.Mesh(geometry, material);
-            mesh.userData = { id, name };
-            this.currentMesh = mesh;
-            child.add(mesh);
-          };
-
           if (child.name === 'Cloth_mesh_24' && textures.front) {
-            applyTexture(textures.front, 1, 'front');
+            this.removeMeshFromChild(child, 1);
+            this.applyTextures(textures.front, 1, 'front', child);
           } else if (child.name === 'Cloth_mesh_3' && textures.back) {
-            applyTexture(textures.back, 2, 'back');
+            this.removeMeshFromChild(child, 2);
+            this.applyTextures(textures.back, 2, 'back', child);
+          } else if (child.name === 'Cloth_mesh_9' && textures.rightHand) {
+            this.removeMeshFromChild(child, 3);
+            this.applyTextures(textures.rightHand, 3, 'rightHand', child);
+          } else if (child.name === 'Cloth_mesh_15' && textures.leftHand) {
+            this.removeMeshFromChild(child, 4);
+            this.applyTextures(textures.leftHand, 4, 'leftHand', child);
           }
         }
       });
     }
   }
 
-  disposeTexture(texture: THREE.Texture | undefined): void {
-    if (texture) {
-      texture.dispose();
-    }
-  }
+  // disposeTexture(texture: THREE.Texture | undefined): void {
+  //   if (texture) {
+  //     texture.dispose();
+  //   }
+  // }
 
-  disposeAllTextures(textures: LoadedTextures | undefined): void {
-    if (textures) {
-      for (const key in textures) {
-        if (textures[key]?.texture) {
-          this.disposeTexture(textures[key].texture);
-        }
-      }
-    }
-  }
+  // disposeAllTextures(textures: LoadedTextures | undefined): void {
+  //   if (textures) {
+  //     for (const key in textures) {
+  //       if (textures[key]?.texture) {
+  //         this.disposeTexture(textures[key].texture);
+  //       }
+  //     }
+  //   }
+  // }
 }

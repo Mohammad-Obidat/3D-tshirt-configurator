@@ -15,7 +15,10 @@ const Colors: React.FC<ColorContentProps> = ({
   setTabsState,
 }) => {
   const [showColors, setShowColors] = useState<boolean>(false);
-  const [chosenColor, setChosenColor] = useState<string>('red');
+  const [chosenColor, setChosenColor] = useState<string>('white');
+  const [selectedColorType, setSelectedColorType] = useState<ColorType | null>(
+    null
+  );
   const [selectedColors, setSelectedColors] = useState<ChosenColorType>({
     main: 'red',
     element_1: 'red',
@@ -54,8 +57,14 @@ const Colors: React.FC<ColorContentProps> = ({
   };
 
   const selectColor = (type: ColorType): void => {
-    setShowColors(true);
-    toggleColorType(type);
+    if (selectedColorType === type && showColors) {
+      setShowColors(false);
+      setSelectedColorType(null);
+    } else {
+      setShowColors(true);
+      toggleColorType(type);
+      setSelectedColorType(type);
+    }
   };
 
   useEffect(() => {
@@ -85,13 +94,17 @@ const Colors: React.FC<ColorContentProps> = ({
             {type === 'main' ? 'Main' : `element ${i}`} Color
           </span>
           <img
-            src='/assets/icons/arrow-right.svg'
-            alt='right arrow'
+            src={
+              selectedColorType === type && showColors
+                ? '/assets/icons/down-arrow.svg'
+                : '/assets/icons/right-arrow.svg'
+            }
+            alt='arrow'
             className='right-arrow'
           />
         </div>
       ))}
-      {showColors && (
+      {showColors && selectedColorType && (
         <ColorsViewer
           colors={colors}
           handleColorChange={handleColorChange}

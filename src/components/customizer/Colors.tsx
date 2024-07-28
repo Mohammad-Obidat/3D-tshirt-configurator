@@ -80,7 +80,6 @@ const Colors: React.FC<ColorContentProps> = ({
       const color = colorObj.chosen[colorObj.chosenType];
       if (color) {
         textureManager.applyNewColorMaterial(color, colorObj.chosenType);
-        setShowColors(false);
       }
     }
   }, [model, textureManager, colorObj.chosen, colorObj.chosenType]);
@@ -116,6 +115,7 @@ const Colors: React.FC<ColorContentProps> = ({
           colors={colors}
           handleColorChange={handleColorChange}
           chosenColor={selectedColors[selectedColorType]}
+          selectedColors={selectedColors}
         />
       )}
     </>

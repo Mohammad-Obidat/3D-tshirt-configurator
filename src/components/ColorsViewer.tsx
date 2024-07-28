@@ -3,14 +3,18 @@ import '../styles/ColorsViewer.css';
 
 interface ColorsViewerProps {
   colors: Array<string>;
+  chosenColor: string;
   handleColorChange: (color: string) => void;
 }
 
 const ColorsViewer: React.FC<ColorsViewerProps> = ({
   colors,
+  chosenColor,
   handleColorChange,
 }) => {
-  const [selectedColor, setSelectedColor] = useState<string | null>(null);
+  const [selectedColor, setSelectedColor] = useState<string | null>(
+    chosenColor
+  );
 
   const handleColorClick = (color: string) => {
     handleColorChange(color);

@@ -5,15 +5,16 @@ import { TabProps, TabsProps } from './Tabs.interface';
 
 export type TabType = 'stylish' | 'target' | 'design' | 'color';
 export type ColorType = 'main' | 'element_1' | 'element_2' | 'element_3';
+export type ChosenColorType = {
+  main: string;
+  element_1: string;
+  element_2: string;
+  element_3: string;
+};
 
 export interface ColorState {
   tabs: string[];
-  chosen: {
-    main: string;
-    element_1: string;
-    element_2: string;
-    element_3: string;
-  };
+  chosen: ChosenColorType;
   chosenType: ColorType;
   isAppear: boolean;
 }

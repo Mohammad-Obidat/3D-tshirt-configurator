@@ -10,7 +10,7 @@ export const stylishTabs: TabsProps = [
   },
   {
     id: 2,
-    title: 'Colors',
+    title: 'Color',
     description: 'Decide on your color combination',
     isActive: false,
     imageUrl: '/assets/icons/color.svg',
@@ -31,7 +31,7 @@ export const stylishTabs: TabsProps = [
   },
   {
     id: 5,
-    title: 'Logos',
+    title: 'Logo',
     description: 'Place as many logos as you want',
     isActive: false,
     imageUrl: '/assets/icons/image.svg',

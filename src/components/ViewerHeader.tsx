@@ -11,7 +11,7 @@ const ViewerHeader: React.FC<viewerHeaderProps> = ({ title, desc }) => {
       <h4 className='title-h4'>
         {title === 'Design' || title === 'Pattern'
           ? `Select ${title}`
-          : title === 'Colors'
+          : title === 'Color'
           ? 'Choose Colors'
           : title === 'Text'
           ? 'Add Text'

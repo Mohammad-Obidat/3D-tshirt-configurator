@@ -18,11 +18,11 @@ const Colors: React.FC<ColorContentProps> = ({
     const { id } = event.target;
     setTabsState((prevState) => ({
       ...prevState,
-      colors: {
-        ...prevState.colors,
+      color: {
+        ...prevState.color,
         chosen: {
-          ...prevState.colors.chosen,
-          [prevState.colors.chosenType]: id,
+          ...prevState.color.chosen,
+          [prevState.color.chosenType]: id,
         },
       },
     }));
@@ -31,10 +31,10 @@ const Colors: React.FC<ColorContentProps> = ({
   const toggleColorType = (type: 'main' | 'design'): void => {
     setTabsState((prevState) => ({
       ...prevState,
-      colors: {
-        ...prevState.colors,
+      color: {
+        ...prevState.color,
         chosenType: type,
-        isAppear: !prevState.colors.isAppear,
+        isAppear: !prevState.color.isAppear,
       },
     }));
   };

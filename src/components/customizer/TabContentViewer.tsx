@@ -47,7 +47,7 @@ const TabContentViewer: React.FC<TabContentProps> = ({
           setActiveTab={setActiveTab}
         />
       );
-    case 2 && 'Colors':
+    case 2 && 'Color':
       return (
         <Colors
           model={model}
@@ -64,7 +64,7 @@ const TabContentViewer: React.FC<TabContentProps> = ({
           targetTab={targetTab}
         />
       );
-    case 4 && 'Logos':
+    case 4 && 'Logo':
       return (
         <Logos
           canvasTextureManager={canvasTextureManager}

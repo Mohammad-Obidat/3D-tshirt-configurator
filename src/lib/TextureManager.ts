@@ -48,10 +48,12 @@ export default class TextureManager {
     });
   }
 
-  adjustGeometry(geometry: THREE.BufferGeometry): void {
+  adjustGeometry(
+    geometry: THREE.BufferGeometry,
+    scaleFactorX: number,
+    scaleFactorY: number
+  ): void {
     const uvAttribute = geometry.attributes.uv;
-    const scaleFactorX = 1;
-    const scaleFactorY = -1;
 
     for (let i = 0; i < uvAttribute.count; i++) {
       uvAttribute.setXY(
@@ -85,7 +87,9 @@ export default class TextureManager {
       const material: THREE.MeshBasicMaterial = this.createTextureMaterial(
         texture.texture
       );
-      this.adjustGeometry(geometry);
+      const scaleFactorX = 1;
+      const scaleFactorY = -1;
+      this.adjustGeometry(geometry, scaleFactorX, scaleFactorY);
       const mesh: THREE.Mesh = new THREE.Mesh(geometry, material);
       mesh.userData = { id, name, textureIndex: index };
       this.currentMesh = mesh;

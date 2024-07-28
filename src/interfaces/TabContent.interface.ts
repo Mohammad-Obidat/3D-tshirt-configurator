@@ -3,7 +3,7 @@ import TextureManager from '../lib/TextureManager';
 import CanvasTextureManager from '../lib/CanvasTexture';
 import { TabProps, TabsProps } from './Tabs.interface';
 
-export type TabType = 'stylish' | 'target' | 'design' | 'colors';
+export type TabType = 'stylish' | 'target' | 'design' | 'color';
 
 export interface ColorState {
   tabs: string[];
@@ -16,7 +16,7 @@ export interface CustomizerState {
   stylish: { tabs: TabsProps; chosen: TabProps };
   target: { tabs: TabsProps; chosen: TabProps };
   design: { tabs: TabsProps; chosen: TabProps };
-  colors: ColorState;
+  color: ColorState;
 }
 
 export interface TabContentProps {

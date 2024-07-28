@@ -27,7 +27,7 @@ const Customizer: React.FC<CustomizerProps> = ({ model, navigateTo }) => {
     stylish: { tabs: stylishTabs, chosen: stylishTabs[0] },
     target: { tabs: targetTabs, chosen: targetTabs[0] },
     design: { tabs: DesignTabs, chosen: DesignTabs[0] },
-    colors: initialColorState,
+    color: initialColorState,
   });
 
   useEffect(() => {
@@ -85,7 +85,7 @@ const Customizer: React.FC<CustomizerProps> = ({ model, navigateTo }) => {
             stylishTab={tabsState.stylish.chosen}
             model={model}
             designObj={tabsState.design}
-            colorObj={tabsState.colors}
+            colorObj={tabsState.color}
             targetTab={tabsState.target.chosen}
             setTabsState={setTabsState}
             setActiveTab={(id) => setActiveTab(id, 'design')}

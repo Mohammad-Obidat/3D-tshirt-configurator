@@ -18,7 +18,12 @@ import '../styles/Customizer.css';
 const Customizer: React.FC<CustomizerProps> = ({ model, navigateTo }) => {
   const initialColorState: ColorState = {
     tabs: colors,
-    chosen: { main: '', design: '' },
+    chosen: {
+      main: '',
+      element_1: '',
+      element_2: '',
+      element_3: '',
+    },
     chosenType: 'main',
     isAppear: false,
   };
@@ -71,15 +76,16 @@ const Customizer: React.FC<CustomizerProps> = ({ model, navigateTo }) => {
             title={tabsState.stylish.chosen.title}
             desc={tabsState.stylish.chosen.description!}
           />
-          {tabsState.stylish.chosen.title !== 'Design' && (
-            <div className='targetTabs-container'>
-              <Tabs
-                tabs={tabsState.target.tabs}
-                tabsType='target'
-                setActiveTab={(id) => setActiveTab(id, 'target')}
-              />
-            </div>
-          )}
+          {tabsState.stylish.chosen.title !== 'Design' &&
+            tabsState.stylish.chosen.title !== 'Color' && (
+              <div className='targetTabs-container'>
+                <Tabs
+                  tabs={tabsState.target.tabs}
+                  tabsType='target'
+                  setActiveTab={(id) => setActiveTab(id, 'target')}
+                />
+              </div>
+            )}
           <div id='scrollable'></div>
           <TabContentViewer
             stylishTab={tabsState.stylish.chosen}

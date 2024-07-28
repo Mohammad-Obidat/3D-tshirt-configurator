@@ -62,7 +62,7 @@ const loadTextureArray = async (
       try {
         const texture = await loadTexture(textureObj.path);
         if (texture) {
-          return { texture };
+          return { texture, colorType: textureObj.id };
         }
       } catch (error) {
         console.error('Error loading texture.', error);

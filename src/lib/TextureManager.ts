@@ -1,19 +1,20 @@
 import * as THREE from 'three';
 import { LoadedTextures, TextureProps } from '../interfaces/Textures.interface';
+import { ColorType } from '../interfaces/TabContent.interface';
 
 export default class TextureManager {
   model: THREE.Object3D | undefined;
-  // private currentTexture: LoadedTextures | undefined;
-  private currentMesh: THREE.Mesh | undefined;
+  colorsType: Array<ColorType>;
+  private designMeshs: THREE.Mesh[] | undefined;
   private selectedColor: string | undefined;
 
   constructor(tshirtModel: THREE.Object3D) {
     this.model = tshirtModel;
-    // this.currentTexture = undefined;
-    // this.currentMesh = undefined;
+    this.designMeshs = [];
+    this.colorsType = ['main'];
   }
 
-  applyNewColorMaterial(selectedColor: string, selectedType: string): void {
+  applyNewColorMaterial(selectedColor: string, selectedType: ColorType): void {
     if (selectedType === 'main') {
       this.model?.traverse((child) => {
         if (child instanceof THREE.Mesh) {
@@ -23,17 +24,26 @@ export default class TextureManager {
           }
         }
       });
-      // this.selectedColor = selectedColor;
-    } else if (this.currentMesh && selectedType === 'design') {
-      if (this.currentMesh.material instanceof THREE.MeshBasicMaterial) {
-        this.currentMesh.material.color.set(selectedColor);
-      } else if (Array.isArray(this.currentMesh.material)) {
-        this.currentMesh.material.forEach((material) => {
-          if (material instanceof THREE.MeshBasicMaterial) {
-            material.color.set(selectedColor);
+    } else if (
+      this.designMeshs!.length > 0 &&
+      this.colorsType.includes(selectedType)
+    ) {
+      this.designMeshs
+        ?.filter((mesh) => mesh.userData.colorType === selectedType)
+        .forEach((m) => {
+          {
+            if (m.material instanceof THREE.MeshBasicMaterial) {
+              m.material.color.set(selectedColor);
+            } else if (Array.isArray(m.material)) {
+              m.material.forEach((material) => {
+                if (material instanceof THREE.MeshBasicMaterial) {
+                  material.color.set(selectedColor);
+                }
+              });
+            }
           }
         });
-      }
+
       this.selectedColor = selectedColor;
     }
   }
@@ -65,14 +75,19 @@ export default class TextureManager {
     uvAttribute.needsUpdate = true;
   }
 
-  findMatchMesh(child: THREE.Object3D, id: number): THREE.Object3D | undefined {
-    return child.children.find((c) => c.userData.id === id);
+  findMatchMesh(
+    child: THREE.Object3D,
+    id: number
+  ): THREE.Object3D[] | undefined {
+    return child.children.filter((c) => c.userData.id === id);
   }
 
   removeMeshFromChild(child: THREE.Object3D, id: number): void {
-    const meshToRemove = this.findMatchMesh(child, id);
-    if (meshToRemove) {
-      child.remove(meshToRemove);
+    const meshsToRemove = this.findMatchMesh(child, id);
+    if (meshsToRemove!.length > 0) {
+      meshsToRemove?.forEach((mesh) => {
+        child.remove(mesh);
+      });
     }
   }
 
@@ -82,7 +97,7 @@ export default class TextureManager {
     name: string,
     child: THREE.Mesh
   ): void {
-    textures.forEach((texture, index) => {
+    textures.forEach((texture) => {
       const geometry: THREE.BufferGeometry = child.geometry.clone();
       const material: THREE.MeshBasicMaterial = this.createTextureMaterial(
         texture.texture
@@ -91,14 +106,19 @@ export default class TextureManager {
       const scaleFactorY = -1;
       this.adjustGeometry(geometry, scaleFactorX, scaleFactorY);
       const mesh: THREE.Mesh = new THREE.Mesh(geometry, material);
-      mesh.userData = { id, name, textureIndex: index };
-      this.currentMesh = mesh;
+      mesh.userData = { id, name, colorType: texture.colorType };
+
+      if (!this.colorsType.includes(texture.colorType)) {
+        this.colorsType.push(texture.colorType);
+      }
+      this.designMeshs?.push(mesh);
       child.add(mesh);
     });
   }
 
   switchTexture(textures: LoadedTextures): void {
     if (this.model) {
+      this.colorsType = ['main'];
       this.model.traverse((child) => {
         if (child instanceof THREE.Mesh) {
           if (child.name === 'Cloth_mesh_24' && textures.front) {
@@ -118,20 +138,4 @@ export default class TextureManager {
       });
     }
   }
-
-  // disposeTexture(texture: THREE.Texture | undefined): void {
-  //   if (texture) {
-  //     texture.dispose();
-  //   }
-  // }
-
-  // disposeAllTextures(textures: LoadedTextures | undefined): void {
-  //   if (textures) {
-  //     for (const key in textures) {
-  //       if (textures[key]?.texture) {
-  //         this.disposeTexture(textures[key].texture);
-  //       }
-  //     }
-  //   }
-  // }
 }

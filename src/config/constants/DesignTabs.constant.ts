@@ -22,13 +22,13 @@ export const DesignTabs: TabsProps = [
       front: [
         {
           id: 'element_1',
-          path: '/assets/textures/designs/double-lines/front_1.png',
+          path: '/assets/textures/double-lines/front_1.png',
         },
       ],
       back: [
         {
           id: 'element_2',
-          path: '/assets/textures/designs/double-lines/back_1.png',
+          path: '/assets/textures/double-lines/back_1.png',
         },
       ],
       rightHand: [{ id: '', path: '' }],
@@ -44,13 +44,13 @@ export const DesignTabs: TabsProps = [
       front: [
         {
           id: 'element_1',
-          path: '/assets/textures/designs/trible-lines/front_1.png',
+          path: '/assets/textures/trible-lines/front_1.png',
         },
       ],
       back: [
         {
           id: 'element_2',
-          path: '/assets/textures/designs/trible-lines/back_1.png',
+          path: '/assets/textures/trible-lines/back_1.png',
         },
       ],
       rightHand: [{ id: '', path: '' }],
@@ -66,33 +66,33 @@ export const DesignTabs: TabsProps = [
       front: [
         {
           id: 'element_1',
-          path: '/assets/textures/designs/lines/front_1.png',
+          path: '/assets/textures/lines/front_1.png',
         },
         {
           id: 'element_2',
-          path: '/assets/textures/designs/lines/front_2.png',
+          path: '/assets/textures/lines/front_2.png',
         },
       ],
       back: [
         {
           id: 'element_1',
-          path: '/assets/textures/designs/lines/back_1.png',
+          path: '/assets/textures/lines/back_1.png',
         },
         {
           id: 'element_2',
-          path: '/assets/textures/designs/lines/back_2.png',
+          path: '/assets/textures/lines/back_2.png',
         },
       ],
       rightHand: [
         {
           id: 'element_3',
-          path: '/assets/textures/designs/lines/right_1.png',
+          path: '/assets/textures/lines/right_1.png',
         },
       ],
       leftHand: [
         {
           id: 'element_3',
-          path: '/assets/textures/designs/lines/left_1.png',
+          path: '/assets/textures/lines/left_1.png',
         },
       ],
     },

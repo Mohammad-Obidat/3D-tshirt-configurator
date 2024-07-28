@@ -6,6 +6,7 @@ import Design from './Design';
 import Colors from './Colors';
 import Text from './Text';
 import Logos from './Logos';
+import Pattern from './Pattern';
 
 const TabContentViewer: React.FC<TabContentProps> = ({
   stylishTab,
@@ -56,7 +57,9 @@ const TabContentViewer: React.FC<TabContentProps> = ({
           setTabsState={setTabsState}
         />
       );
-    case 3 && 'Text':
+    case 3 && 'Pattern':
+      return <Pattern setActiveTab={setActiveTab} />;
+    case 4 && 'Text':
       return (
         <Text
           canvasTextureManager={canvasTextureManager}
@@ -64,7 +67,7 @@ const TabContentViewer: React.FC<TabContentProps> = ({
           targetTab={targetTab}
         />
       );
-    case 4 && 'Logo':
+    case 5 && 'Logo':
       return (
         <Logos
           canvasTextureManager={canvasTextureManager}

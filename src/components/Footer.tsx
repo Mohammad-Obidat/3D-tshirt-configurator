@@ -7,7 +7,9 @@ const Footer: React.FC = () => {
       <footer className='footer'>
         <div className='footerContainer'>
           <p>
-            <strong>Made with Love ❤️ Mohammad Obidat</strong>
+            <strong>
+              Made with Love ❤️ <span>𝒟𝑅𝐸𝒮𝒮𝑀𝐸</span>
+            </strong>
           </p>
         </div>
       </footer>

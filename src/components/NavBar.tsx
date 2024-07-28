@@ -8,7 +8,8 @@ const NavBar: React.FC<NavbarProps> = ({ navigateTo }) => {
       <nav className='navbar'>
         <div className='navbar-container'>
           <div className='logo'>
-            <img src='/assets/textures/Logo.png' alt='Store Logo' />
+            <img src='/assets/icons/Logo.png' alt='Store Logo' />
+            <span>𝒟𝑅𝐸𝒮𝒮𝑀𝐸</span>
           </div>
           <div className='navbar-buttons'>
             <div className='btn' onClick={() => navigateTo('home')}>

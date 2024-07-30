@@ -326,7 +326,10 @@ export default class CanvasTextureManager extends TextureManager {
   }
 
   removeMeshFromChild(mesh: THREE.Mesh): void {
-    // super.removeMeshFromChild(this.currentChild![this.targetTab], mesh);
+    super.removeMeshFromChild(
+      this.currentChild![this.targetTab],
+      mesh.userData.id
+    );
 
     if (this.isText) {
       this.deleteCanvasTextMesh(mesh);

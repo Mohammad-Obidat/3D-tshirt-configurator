@@ -98,12 +98,10 @@ const Logos: React.FC<UserInputProps> = ({
             <>
               <div className='stylish-container'>
                 {canvasImageTextures.map((img, i) => (
-                  <>
-                    <div key={i} className='stylish-div'>
-                      <Delete dispose={deleteCanvasTexture(img.mesh)} />
-                      <img src={img.imageUrl} alt='logo' />
-                    </div>
-                  </>
+                  <div key={i} className='stylish-div'>
+                    <Delete dispose={deleteCanvasTexture(img.mesh)} />
+                    <img src={img.imageUrl} alt='logo' />
+                  </div>
                 ))}
               </div>
             </>

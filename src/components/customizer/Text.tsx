@@ -31,7 +31,7 @@ const Text: React.FC<UserInputProps> = ({
   const deleteCanvasTexture = (mesh: Mesh): (() => void) => {
     return () => {
       if (canvasTextureManager) {
-        canvasTextureManager.deleteCanvasTextMesh(mesh);
+        canvasTextureManager.removeMeshFromChild(mesh);
         setCanvasTextTextures([
           ...canvasTextureManager.canvasTextTextures[targetTab.title],
         ]);

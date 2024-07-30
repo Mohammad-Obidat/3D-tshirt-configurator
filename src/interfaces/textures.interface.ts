@@ -1,31 +1,27 @@
 import { Texture } from 'three';
-
-export interface TextureCoordinate {
-  x: number;
-  y: number;
-}
+import { ColorType } from './TabContent.interface';
 
 export interface TextureObject {
+  id: string;
   path: string;
-  coordinates: TextureCoordinate;
 }
 
 export interface Textures {
-  front?: TextureObject;
-  back?: TextureObject;
-  rightHand?: TextureObject;
-  leftHand?: TextureObject;
+  front?: TextureObject[];
+  back?: TextureObject[];
+  rightHand?: TextureObject[];
+  leftHand?: TextureObject[];
 }
 
-export interface TextureWithCoordinates {
-  texture?: Texture;
-  coordinates?: TextureCoordinate;
+export interface TextureProps {
+  texture: Texture;
+  colorType: ColorType;
 }
 
 export interface LoadedTextures {
-  front?: TextureWithCoordinates;
-  back?: TextureWithCoordinates;
-  rightHand?: TextureWithCoordinates;
-  leftHand?: TextureWithCoordinates;
-  [key: string]: TextureWithCoordinates | undefined;
+  front?: TextureProps[];
+  back?: TextureProps[];
+  rightHand?: TextureProps[];
+  leftHand?: TextureProps[];
+  [key: string]: TextureProps[] | undefined;
 }

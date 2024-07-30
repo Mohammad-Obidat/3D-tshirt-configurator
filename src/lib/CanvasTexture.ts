@@ -36,8 +36,18 @@ interface UserImageInput {
   left: CanvasImageProps[];
   [key: string]: CanvasImageProps[];
 }
+
+const PART_COORDINATES: {
+  [key: string]: { x: number; y: number; width: number; height: number };
+} = {
+  front: { x: 0, y: 150, width: 1000, height: 1200 },
+  back: { x: 1000, y: 150, width: 1000, height: 1200 },
+  right: { x: 200, y: 1500, width: 500, height: 700 },
+  left: { x: 1350, y: 1450, width: 500, height: 700 },
+};
+
 export default class CanvasTextureManager extends TextureManager {
-  private static CANVAS_SIZE = 512;
+  private static CANVAS_SIZE = 2048;
   private scale: THREE.Vector2;
   private rotation: number;
   private translation: THREE.Vector2;
@@ -168,10 +178,22 @@ export default class CanvasTextureManager extends TextureManager {
       throw new Error('Failed to create canvas context');
     }
 
+    const part = PART_COORDINATES[this.targetTab];
     canvas.width = CanvasTextureManager.CANVAS_SIZE;
     canvas.height = CanvasTextureManager.CANVAS_SIZE;
     context.clearRect(0, 0, canvas.width, canvas.height);
-    drawContent(context, canvas.width, canvas.height);
+
+    // Clip and translate to the specific part's area
+    context.save();
+    context.beginPath();
+    context.rect(part.x, part.y, part.width, part.height);
+    context.clip();
+    context.translate(part.x, part.y);
+
+    // Draw the content within the specified area
+    drawContent(context, part.width, part.height);
+
+    context.restore();
 
     const canvasTexture = new THREE.CanvasTexture(canvas);
     canvasTexture.anisotropy = 16;
@@ -240,32 +262,7 @@ export default class CanvasTextureManager extends TextureManager {
     canvasTexture: THREE.Texture,
     targetMeshName: string
   ): void {
-    const scaleFactorMapping: { [key: string]: [number, number] } = {
-      Cloth_mesh_24: [2, -1],
-      Cloth_mesh_3: [0.65, -1],
-      Cloth_mesh_9: [1, -0.75],
-      Cloth_mesh_15: [1, -0.75],
-    };
-
-    const repeatMapping: {
-      [key: string]: { repeat: [number, number]; center: [number, number] };
-    } = {
-      Cloth_mesh_9: { repeat: [5, 3], center: [-0.09, 0.35] },
-      Cloth_mesh_15: { repeat: [5, 3], center: [-0.13, 0.35] },
-    };
-
-    const scaleFactor = scaleFactorMapping[targetMeshName] || [2, -1];
-    const repeatSettings = repeatMapping[targetMeshName];
-
-    const wrapMode = repeatSettings
-      ? THREE.RepeatWrapping
-      : THREE.ClampToEdgeWrapping;
-    canvasTexture.wrapT = canvasTexture.wrapS = wrapMode;
-
-    if (repeatSettings) {
-      canvasTexture.repeat.set(...repeatSettings.repeat);
-      canvasTexture.center.set(...repeatSettings.center);
-    }
+    canvasTexture.wrapT = canvasTexture.wrapS = THREE.ClampToEdgeWrapping;
 
     model.traverse((child) => {
       if (child instanceof THREE.Mesh && child.name === targetMeshName) {
@@ -273,7 +270,8 @@ export default class CanvasTextureManager extends TextureManager {
 
         const material = this.createTextureMaterial(canvasTexture);
         const geometry = child.geometry.clone();
-        this.adjustGeometry(geometry, scaleFactor[0], scaleFactor[1]);
+
+        this.adjustGeometry(geometry);
 
         const mesh = new THREE.Mesh(geometry, material);
         mesh.userData.id = `${this.canvasTextureId}${this.meshId}`;

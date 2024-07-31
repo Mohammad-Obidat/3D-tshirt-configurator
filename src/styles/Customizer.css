@@ -28,17 +28,8 @@
 }
 
 /* text && logos components */
-
-.userInput-container {
-  background-color: #f9f9f9;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  height: 53.5vh;
-}
-
 .top-container {
-  margin-bottom: 1em;
+  padding: 1em;
 }
 
 .stylish-container {
@@ -81,7 +72,7 @@
 }
 
 .user-input {
-  width: 98%;
+  width: 95%;
   padding: 8px;
   margin-bottom: 10px;
   border: 1px solid #ccc;
@@ -118,4 +109,32 @@ hr {
   border: none;
   border-top: 1px solid #ccc;
   margin: 20px 0;
+}
+
+.file-upload-container {
+  border: 1px solid #ddd;
+  padding: 20px;
+  text-align: center;
+  max-width: 300px;
+  margin: 0 auto;
+  border-radius: 8px;
+  font-family: Arial, sans-serif;
+  cursor: pointer;
+}
+
+.upload-icon {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.file-upload-container > .logo-para {
+  margin: 5px 0;
+  color: #666;
+}
+
+.upload-img {
+  width: 25px;
+  height: 25px;
+  filter: invert(31%) sepia(7%) saturate(43%) hue-rotate(0deg) brightness(91%)
+    contrast(87%);
 }

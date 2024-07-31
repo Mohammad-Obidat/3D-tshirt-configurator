@@ -15,25 +15,49 @@ const Logos: React.FC<UserInputProps> = ({
     canvasTextureManager?.canvasImageTextures[targetTab.title] || []
   );
 
-  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0] || null;
+  useEffect(() => {
+    if (canvasTextureManager) {
+      canvasTextureManager.targetTab = targetTab.title;
+      setCanvasImageTextures([
+        ...canvasTextureManager.canvasImageTextures[targetTab.title],
+      ]);
+    }
+  }, [targetTab, canvasTextureManager]);
 
-    if (file) {
-      reader(file)
-        .then((result) => {
-          if (typeof result === 'string') {
-            setSelectedFile(result);
-          } else {
-            console.error('File result is not a string');
-          }
-        })
-        .catch((error: Error) => {
-          console.error('Error reading file:', error);
-        });
+  const handleClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
     }
   };
 
-  const addImage = async (): Promise<void> => {
+  const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    const allowedTypes = ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'];
+
+    if (file) {
+      if (file.size > 10 * 1024 * 1024) {
+        console.error('File size exceeds 10MB.');
+        return;
+      }
+      if (!allowedTypes.includes(file.type)) {
+        console.error('File type not allowed.');
+        return;
+      }
+      try {
+        const result = await reader(file);
+        if (typeof result === 'string') {
+          setSelectedFile(result);
+        } else {
+          console.error('File result is not a string');
+        }
+      } catch (error) {
+        console.error('Error reading file:', error);
+      }
+    }
+    e.target.value = '';
+  };
+
+  const addImage = async () => {
     if (canvasTextureManager && selectedFile) {
       try {
         await canvasTextureManager.applyImageInput(
@@ -46,75 +70,70 @@ const Logos: React.FC<UserInputProps> = ({
       } catch (error) {
         console.error('Error applying image input:', error);
       }
+      setSelectedFile(null);
     }
-    setSelectedFile(null);
-    if (fileInputRef.current) {
-      fileInputRef.current.value = '';
-    }
-  };
-
-  const deleteCanvasTexture = (mesh: Mesh): (() => void) => {
-    return () => {
-      if (canvasTextureManager) {
-        canvasTextureManager.removeMeshFromChild(mesh);
-        setCanvasImageTextures([
-          ...canvasTextureManager.canvasImageTextures[targetTab.title],
-        ]);
-      }
-    };
   };
 
   useEffect(() => {
+    if (selectedFile) {
+      addImage();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedFile]);
+
+  const deleteCanvasTexture = (mesh: Mesh) => {
     if (canvasTextureManager) {
-      canvasTextureManager.targetTab = targetTab.title;
+      canvasTextureManager.removeMeshFromChild(mesh);
       setCanvasImageTextures([
         ...canvasTextureManager.canvasImageTextures[targetTab.title],
       ]);
     }
-  }, [targetTab, canvasTextureManager]);
+  };
 
   return (
     <>
-      <div className='userInput-container'>
-        <div className='top-container'>
-          <input
-            type='file'
-            id='fileInput'
-            onChange={handleFileChange}
-            accept='image/*'
-            className='user-input'
-            ref={fileInputRef}
+      <div className='file-upload-container' onClick={handleClick}>
+        <input
+          id='fileInput'
+          type='file'
+          accept='image/*'
+          ref={fileInputRef}
+          style={{ display: 'none' }}
+          onChange={handleFileChange}
+        />
+        <div className='upload-icon'>
+          <img
+            src='/assets/icons/upload.svg'
+            alt='upload logo'
+            className='upload-img'
           />
-          <button type='submit' className='submit-btn' onClick={addImage}>
-            Add Image
-          </button>
         </div>
-        <hr />
-        <>
-          {canvasTextureManager?.canvasImageTextures[targetTab.title].length ===
-          0 ? (
-            <>
-              No added images for the{' '}
-              {targetTab.title === 'rightSleeve'
-                ? 'right sleeve!'
-                : targetTab.title === 'leftSleeve'
-                ? 'left sleeve!'
-                : `${targetTab.title} side!`}
-            </>
-          ) : (
-            <>
-              <div className='stylish-container'>
-                {canvasImageTextures.map((img, i) => (
-                  <div key={i} className='stylish-div'>
-                    <Delete dispose={deleteCanvasTexture(img.mesh)} />
-                    <img src={img.imageUrl} alt='logo' />
-                  </div>
-                ))}
-              </div>
-            </>
-          )}
-        </>
+        <p className='logo-para'>(Max size: 10MB)</p>
+        <p className='logo-para'>
+          We accept file types like EPS (recommended) png / jpg / jpeg / gif
+        </p>
       </div>
+      <hr />
+      {canvasTextureManager?.canvasImageTextures[targetTab.title].length ===
+      0 ? (
+        <div>
+          No added images for the{' '}
+          {targetTab.title === 'rightSleeve'
+            ? 'right sleeve!'
+            : targetTab.title === 'leftSleeve'
+            ? 'left sleeve!'
+            : `${targetTab.title} side!`}
+        </div>
+      ) : (
+        <div className='stylish-container'>
+          {canvasImageTextures.map((img, i) => (
+            <div key={i} className='stylish-div'>
+              <Delete dispose={() => deleteCanvasTexture(img.mesh)} />
+              <img src={img.imageUrl} alt='logo' />
+            </div>
+          ))}
+        </div>
+      )}
     </>
   );
 };

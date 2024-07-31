@@ -50,50 +50,48 @@ const Text: React.FC<UserInputProps> = ({
 
   return (
     <>
-      <div className='userInput-container'>
-        <div className='top-container'>
-          <label className='text-label' htmlFor='add-text'>
-            Enter Text:
-          </label>
-          <input
-            type='text'
-            id='add-text'
-            name='add text'
-            value={text}
-            className='user-input'
-            placeholder='Enter your text here:'
-            onChange={handleInputText}
-          />
-          <button type='submit' className='submit-btn' onClick={addText}>
-            Add Text
-          </button>
-        </div>
-        <hr />
-        <>
-          {canvasTextureManager?.canvasTextTextures[targetTab.title].length ===
-          0 ? (
-            <>
-              No added text for the{' '}
-              {targetTab.title === 'rightSleeve'
-                ? 'right sleeve!'
-                : targetTab.title === 'leftSleeve'
-                ? 'left sleeve!'
-                : `${targetTab.title} side!`}
-            </>
-          ) : (
-            <>
-              <div className='stylish-container'>
-                {canvasTextTextures.map((t, i) => (
-                  <div key={i} className='stylish-div'>
-                    <Delete dispose={deleteCanvasTexture(t.mesh)} />
-                    <div className='text-div'>{t.text}</div>
-                  </div>
-                ))}
-              </div>
-            </>
-          )}
-        </>
+      <div className='top-container'>
+        <label className='text-label' htmlFor='add-text'>
+          Enter Text
+        </label>
+        <input
+          type='text'
+          id='add-text'
+          name='add text'
+          value={text}
+          className='user-input'
+          placeholder='Enter your text here ...'
+          onChange={handleInputText}
+        />
+        <button type='submit' className='submit-btn' onClick={addText}>
+          Add Text
+        </button>
       </div>
+      <hr />
+      <>
+        {canvasTextureManager?.canvasTextTextures[targetTab.title].length ===
+        0 ? (
+          <>
+            No added text for the{' '}
+            {targetTab.title === 'rightSleeve'
+              ? 'right sleeve!'
+              : targetTab.title === 'leftSleeve'
+              ? 'left sleeve!'
+              : `${targetTab.title} side!`}
+          </>
+        ) : (
+          <>
+            <div className='stylish-container'>
+              {canvasTextTextures.map((t, i) => (
+                <div key={i} className='stylish-div'>
+                  <Delete dispose={deleteCanvasTexture(t.mesh)} />
+                  <div className='text-div'>{t.text}</div>
+                </div>
+              ))}
+            </div>
+          </>
+        )}
+      </>
     </>
   );
 };

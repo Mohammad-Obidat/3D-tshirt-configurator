@@ -63,7 +63,12 @@ const Text: React.FC<UserInputProps> = ({
           placeholder='Enter your text here ...'
           onChange={handleInputText}
         />
-        <button type='submit' className='submit-btn' onClick={addText}>
+        <button
+          type='submit'
+          className='submit-btn'
+          onClick={addText}
+          disabled={text.length > 0 ? false : true}
+        >
           Add Text
         </button>
       </div>

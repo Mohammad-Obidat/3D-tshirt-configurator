@@ -122,12 +122,12 @@ export default class TextureManager {
           } else if (child.name === 'Cloth_mesh_3' && textures.back) {
             this.removeMeshFromChild(child, 2);
             this.applyTextures(textures.back, 2, 'back', child);
-          } else if (child.name === 'Cloth_mesh_9' && textures.rightHand) {
+          } else if (child.name === 'Cloth_mesh_9' && textures.rightSleeve) {
             this.removeMeshFromChild(child, 3);
-            this.applyTextures(textures.rightHand, 3, 'rightHand', child);
-          } else if (child.name === 'Cloth_mesh_15' && textures.leftHand) {
+            this.applyTextures(textures.rightSleeve, 3, 'rightSleeve', child);
+          } else if (child.name === 'Cloth_mesh_15' && textures.leftSleeve) {
             this.removeMeshFromChild(child, 4);
-            this.applyTextures(textures.leftHand, 4, 'leftHand', child);
+            this.applyTextures(textures.leftSleeve, 4, 'leftSleeve', child);
           }
         }
       });

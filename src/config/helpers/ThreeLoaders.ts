@@ -85,14 +85,14 @@ const loadAllTextures = async (textures: Textures): Promise<LoadedTextures> => {
 
   const frontTextures = await loadTextureArray(textures.front);
   const backTextures = await loadTextureArray(textures.back);
-  const rightHandTextures = await loadTextureArray(textures.rightHand);
-  const leftHandTextures = await loadTextureArray(textures.leftHand);
+  const rightSleeveTextures = await loadTextureArray(textures.rightSleeve);
+  const leftSleeveTextures = await loadTextureArray(textures.leftSleeve);
 
   return {
     front: frontTextures,
     back: backTextures,
-    rightHand: rightHandTextures,
-    leftHand: leftHandTextures,
+    rightSleeve: rightSleeveTextures,
+    leftSleeve: leftSleeveTextures,
   };
 };
 

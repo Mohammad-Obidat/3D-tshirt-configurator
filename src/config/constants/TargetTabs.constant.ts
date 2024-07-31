@@ -13,12 +13,12 @@ export const targetTabs: TabsProps = [
   },
   {
     id: 3,
-    title: 'right',
+    title: 'rightSleeve',
     isActive: false,
   },
   {
     id: 4,
-    title: 'left',
+    title: 'leftSleeve',
     isActive: false,
   },
 ];

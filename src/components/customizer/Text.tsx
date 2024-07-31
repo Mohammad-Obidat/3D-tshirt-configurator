@@ -73,7 +73,12 @@ const Text: React.FC<UserInputProps> = ({
           {canvasTextureManager?.canvasTextTextures[targetTab.title].length ===
           0 ? (
             <>
-              <>No added text for the {targetTab.title} side!</>
+              No added text for the{' '}
+              {targetTab.title === 'rightSleeve'
+                ? 'right sleeve!'
+                : targetTab.title === 'leftSleeve'
+                ? 'left sleeve!'
+                : `${targetTab.title} side!`}
             </>
           ) : (
             <>

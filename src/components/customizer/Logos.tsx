@@ -93,7 +93,14 @@ const Logos: React.FC<UserInputProps> = ({
         <>
           {canvasTextureManager?.canvasImageTextures[targetTab.title].length ===
           0 ? (
-            <>No added images for the {targetTab.title} side!</>
+            <>
+              No added images for the{' '}
+              {targetTab.title === 'rightSleeve'
+                ? 'right sleeve!'
+                : targetTab.title === 'leftSleeve'
+                ? 'left sleeve!'
+                : `${targetTab.title} side!`}
+            </>
           ) : (
             <>
               <div className='stylish-container'>

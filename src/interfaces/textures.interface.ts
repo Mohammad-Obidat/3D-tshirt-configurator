@@ -9,8 +9,8 @@ export interface TextureObject {
 export interface Textures {
   front?: TextureObject[];
   back?: TextureObject[];
-  rightHand?: TextureObject[];
-  leftHand?: TextureObject[];
+  rightSleeve?: TextureObject[];
+  leftSleeve?: TextureObject[];
 }
 
 export interface TextureProps {
@@ -21,7 +21,7 @@ export interface TextureProps {
 export interface LoadedTextures {
   front?: TextureProps[];
   back?: TextureProps[];
-  rightHand?: TextureProps[];
-  leftHand?: TextureProps[];
+  rightSleeve?: TextureProps[];
+  leftSleeve?: TextureProps[];
   [key: string]: TextureProps[] | undefined;
 }

@@ -4,8 +4,8 @@ import TextureManager from './TextureManager';
 interface TargetChild {
   front: THREE.Mesh;
   back: THREE.Mesh;
-  right: THREE.Mesh;
-  left: THREE.Mesh;
+  rightSleeve: THREE.Mesh;
+  leftSleeve: THREE.Mesh;
   [key: string]: THREE.Mesh;
 }
 
@@ -24,16 +24,16 @@ interface CanvasImageProps {
 interface UserTextInput {
   front: CanvasTextProps[];
   back: CanvasTextProps[];
-  right: CanvasTextProps[];
-  left: CanvasTextProps[];
+  rightSleeve: CanvasTextProps[];
+  leftSleeve: CanvasTextProps[];
   [key: string]: CanvasTextProps[];
 }
 
 interface UserImageInput {
   front: CanvasImageProps[];
   back: CanvasImageProps[];
-  right: CanvasImageProps[];
-  left: CanvasImageProps[];
+  rightSleeve: CanvasImageProps[];
+  leftSleeve: CanvasImageProps[];
   [key: string]: CanvasImageProps[];
 }
 
@@ -42,8 +42,8 @@ const PART_COORDINATES: {
 } = {
   front: { x: 0, y: 150, width: 1000, height: 1200 },
   back: { x: 1000, y: 150, width: 1000, height: 1200 },
-  right: { x: 200, y: 1500, width: 500, height: 700 },
-  left: { x: 1350, y: 1450, width: 500, height: 700 },
+  rightSleeve: { x: 200, y: 1500, width: 500, height: 700 },
+  leftSleeve: { x: 1350, y: 1450, width: 500, height: 700 },
 };
 
 export default class CanvasTextureManager extends TextureManager {
@@ -74,26 +74,26 @@ export default class CanvasTextureManager extends TextureManager {
     this.currentChild = {
       front: new THREE.Mesh(),
       back: new THREE.Mesh(),
-      right: new THREE.Mesh(),
-      left: new THREE.Mesh(),
+      rightSleeve: new THREE.Mesh(),
+      leftSleeve: new THREE.Mesh(),
     };
     this.meshMapping = {
       front: 'Cloth_mesh_24',
       back: 'Cloth_mesh_3',
-      right: 'Cloth_mesh_9',
-      left: 'Cloth_mesh_15',
+      rightSleeve: 'Cloth_mesh_9',
+      leftSleeve: 'Cloth_mesh_15',
     };
     this.canvasTextTextures = {
       front: [],
       back: [],
-      right: [],
-      left: [],
+      rightSleeve: [],
+      leftSleeve: [],
     };
     this.canvasImageTextures = {
       front: [],
       back: [],
-      right: [],
-      left: [],
+      rightSleeve: [],
+      leftSleeve: [],
     };
 
     this.addKeyListeners();

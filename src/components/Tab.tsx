@@ -2,6 +2,15 @@ import React from 'react';
 import { TabProps } from '../interfaces/Tabs.interface';
 
 const Tab: React.FC<TabProps> = ({ title, imageUrl }) => {
+  const separateTitle = (title: string): string => {
+    if (title === 'rightSleeve' || title === 'leftSleeve') {
+      const newTitle = title.replace(/([a-z])([A-Z])/, '$1 $2').toLowerCase();
+      return newTitle;
+    }
+
+    return title;
+  };
+
   return (
     <>
       {imageUrl ? (
@@ -10,7 +19,7 @@ const Tab: React.FC<TabProps> = ({ title, imageUrl }) => {
           <div>{title}</div>
         </div>
       ) : (
-        <>{title}</>
+        <>{separateTitle(title)}</>
       )}
     </>
   );

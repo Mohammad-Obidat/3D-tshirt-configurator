@@ -9,8 +9,8 @@ export const DesignTabs: TabsProps = [
     textures: {
       front: [{ id: '', path: '' }],
       back: [{ id: '', path: '' }],
-      rightHand: [{ id: '', path: '' }],
-      leftHand: [{ id: '', path: '' }],
+      rightSleeve: [{ id: '', path: '' }],
+      leftSleeve: [{ id: '', path: '' }],
     },
   },
   {
@@ -31,8 +31,8 @@ export const DesignTabs: TabsProps = [
           path: '/assets/textures/double-lines/back_1.png',
         },
       ],
-      rightHand: [{ id: '', path: '' }],
-      leftHand: [{ id: '', path: '' }],
+      rightSleeve: [{ id: '', path: '' }],
+      leftSleeve: [{ id: '', path: '' }],
     },
   },
   {
@@ -53,8 +53,8 @@ export const DesignTabs: TabsProps = [
           path: '/assets/textures/trible-lines/back_1.png',
         },
       ],
-      rightHand: [{ id: '', path: '' }],
-      leftHand: [{ id: '', path: '' }],
+      rightSleeve: [{ id: '', path: '' }],
+      leftSleeve: [{ id: '', path: '' }],
     },
   },
   {
@@ -83,13 +83,13 @@ export const DesignTabs: TabsProps = [
           path: '/assets/textures/lines/back_2.png',
         },
       ],
-      rightHand: [
+      rightSleeve: [
         {
           id: 'element_3',
           path: '/assets/textures/lines/right_1.png',
         },
       ],
-      leftHand: [
+      leftSleeve: [
         {
           id: 'element_3',
           path: '/assets/textures/lines/left_1.png',

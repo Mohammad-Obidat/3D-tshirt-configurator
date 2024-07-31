@@ -18,10 +18,11 @@ const Home: React.FC<HomeProps> = ({ navigateTo }) => {
         your own style.
       </p>
 
-      <button className='customize-btn'>
-        <a className='home-link' onClick={() => navigateTo('customizer')}>
-          Customize it
-        </a>
+      <button
+        className='customize-btn'
+        onClick={() => navigateTo('customizer')}
+      >
+        <a className='home-link'>Customize it</a>
       </button>
     </div>
   );

@@ -11,7 +11,6 @@ export default class SceneInit {
   private near: number = 0.1;
   private far: number = 1000;
   private controls: OrbitControls;
-  private ambientLight: THREE.AmbientLight;
   private directionalLight: THREE.DirectionalLight;
   private animationFrameId: number | null = null;
   private CanvasContainer: HTMLDivElement | null;
@@ -52,12 +51,9 @@ export default class SceneInit {
     this.controls.maxDistance = 10;
     this.controls.mouseButtons.RIGHT = null;
 
-    this.ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-    this.ambientLight.castShadow = true;
-    this.camera.add(this.ambientLight);
-
     this.directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-    this.directionalLight.position.set(10, 10, 10);
+    this.directionalLight.position.set(5, 10, 10);
+    this.directionalLight.intensity = 10;
     this.directionalLight.castShadow = true;
     this.camera.add(this.directionalLight);
 

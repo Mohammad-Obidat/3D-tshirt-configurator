@@ -22,3 +22,12 @@ export const targetTabs: TabsProps = [
     isActive: false,
   },
 ];
+
+export const PART_COORDINATES: {
+  [key: string]: { x: number; y: number; width: number; height: number };
+} = {
+  front: { x: 0, y: 150, width: 1000, height: 1200 },
+  back: { x: 1000, y: 150, width: 1000, height: 1200 },
+  rightSleeve: { x: 200, y: 1500, width: 500, height: 700 },
+  leftSleeve: { x: 1350, y: 1450, width: 500, height: 700 },
+};

@@ -1,50 +1,13 @@
 import * as THREE from 'three';
 import TextureManager from './TextureManager';
-
-interface TargetChild {
-  front: THREE.Mesh;
-  back: THREE.Mesh;
-  rightSleeve: THREE.Mesh;
-  leftSleeve: THREE.Mesh;
-  [key: string]: THREE.Mesh;
-}
-
-interface CanvasTextProps {
-  text: string;
-  mesh: THREE.Mesh;
-  canvasTexture: THREE.Texture;
-}
-
-interface CanvasImageProps {
-  imageUrl: string;
-  mesh: THREE.Mesh;
-  canvasTexture: THREE.Texture;
-}
-
-interface UserTextInput {
-  front: CanvasTextProps[];
-  back: CanvasTextProps[];
-  rightSleeve: CanvasTextProps[];
-  leftSleeve: CanvasTextProps[];
-  [key: string]: CanvasTextProps[];
-}
-
-interface UserImageInput {
-  front: CanvasImageProps[];
-  back: CanvasImageProps[];
-  rightSleeve: CanvasImageProps[];
-  leftSleeve: CanvasImageProps[];
-  [key: string]: CanvasImageProps[];
-}
-
-const PART_COORDINATES: {
-  [key: string]: { x: number; y: number; width: number; height: number };
-} = {
-  front: { x: 0, y: 150, width: 1000, height: 1200 },
-  back: { x: 1000, y: 150, width: 1000, height: 1200 },
-  rightSleeve: { x: 200, y: 1500, width: 500, height: 700 },
-  leftSleeve: { x: 1350, y: 1450, width: 500, height: 700 },
-};
+import { PART_COORDINATES } from '../config/constants/TargetTabs.constant';
+import {
+  CanvasImageProps,
+  CanvasTextProps,
+  TargetChild,
+  UserImageInput,
+  UserTextInput,
+} from '../interfaces/CanvasTexture.interface';
 
 export default class CanvasTextureManager extends TextureManager {
   private static CANVAS_SIZE = 2048;
